@@ -1,0 +1,18 @@
+---
+// Substance Use pages: data in src/data/substance-use.js, layout in components/ServiceTemplate.astro
+// (brief: same 10-section Service template as Mental Health). Crisis note adds the SAMHSA helpline.
+import ServiceTemplate from '../../components/ServiceTemplate.astro';
+import { PAGES } from '../../data/substance-use.js';
+
+export function getStaticPaths() {
+  return PAGES.map((p) => ({ params: { slug: p.slug }, props: { page: p } }));
+}
+const { page } = Astro.props;
+---
+<ServiceTemplate
+  page={page}
+  root={{ name: 'Substance Use', href: '/substance-use/' }}
+  trust={['OASAS-licensed', 'Most Medicaid plans', 'In person or telehealth']}
+  crisis={{ samhsa: true }}
+  finalText="Outpatient care close to home. We’ll check your Medicaid plan on the call."
+/>

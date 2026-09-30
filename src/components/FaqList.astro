@@ -4,7 +4,7 @@
 import Icon from './Icon.astro';
 import { SITE } from '../data/site.js';
 
-interface Faq { q: string; a: string; link?: { href: string; label: string }; gate?: string }
+interface Faq { q: string; a: string; link?: { href: string; label: string }; links?: { href: string; label: string }[]; gate?: string }
 interface Props { title: string; faqs: Faq[]; lead?: string; eyebrow?: string; id?: string }
 const { title, faqs, lead = 'Still wondering about something? Ask us. There’s no wrong question.', eyebrow = 'FAQ', id = 'faq-title' } = Astro.props;
 const shown = faqs.filter((f) => !f.gate);
@@ -27,6 +27,7 @@ const shown = faqs.filter((f) => !f.gate);
           <p class="measure pb-5 pr-2 text-ink/90 lg:pr-14">
             {f.a}
             {f.link && <> <a href={f.link.href} class="text-link whitespace-nowrap">{f.link.label}</a></>}
+            {f.links && f.links.map((l, i) => <>{i > 0 ? ' · ' : ' '}<a href={l.href} class="text-link whitespace-nowrap">{l.label}</a></>)}
           </p>
         </details>
       ))}

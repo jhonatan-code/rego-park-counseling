@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Evaluations section).
+Last update: 2026-09-30 (after Substance Use section).
 
 ---
 
@@ -40,10 +40,23 @@ Last update: 2026-09-30 (after Evaluations section).
 | 2.5 | Typical session frequency | "usually once a week [confirm]" | MH hub steps | E | ☐ |
 | 2.6 | Group therapy for depression/anxiety, or only substance use? | Depression FAQ about group therapy is **hidden** until confirmed | Depression FAQ | E | ☐ |
 | 2.7 | Court-referred anger management? Format (class, group, individual)? | Court section **hidden**; meta description without "court-referred"; FAQ answers carry "[Confirm]" | Anger Management | E | ☐ |
-| 2.8 | Is IOP offered? | Never mentioned (outpatient only) | Substance Use pages (next) | E | ☐ |
+| 2.8 | Is IOP offered? | Never mentioned (outpatient only). If yes, a new page could target "intensive outpatient programs in nyc" (1,000/mo) | Substance Use | E | ☐ |
 | 2.9 | Couples counseling real? | Page not built, not in menu | Therapies | E | ☐ |
 | 2.10 | LGBTQ+ affirming care can be featured? | Page not built, not in menu | Who We Serve | E | ☐ |
 | 2.11 | Is ATI (Alternatives to Incarceration) an actual program? | Not named | Court-Involved (next) | E | ☐ |
+
+## 2a. Substance Use (medication and referrals are the riskiest claims: brackets here are launch blockers)
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 2a.1 | Referral path when someone needs medication for addiction (MAT) or detox: who do we refer to? Can we name the primary care company? | "[confirm referral path]" in the required opioid line and the Suboxone/methadone FAQ | Drug Use Treatment | E | ☐ **Launch blocker** |
+| 2a.2 | Which substances does the team treat? | 7 chips "[Confirm list]" | Drug Use Treatment | E | ☐ |
+| 2a.3 | Typical schedule: sessions per week, typical length of treatment | "[Confirm typical schedule.]" | SU hub FAQ | E | ☐ |
+| 2a.4 | What treatment can include (individual, group, family, relapse prevention, telehealth) | List marked "[confirm]" | SU hub | E | ☐ |
+| 2a.5 | Which services run at which clinic (group therapy, family sessions, substance use at Fresh Meadows?) | See 1.11 | SU pages, locations | E | ☐ |
+| 2a.6 | Clinical stance on goals: abstinence only, or reduction also supported? | "[Confirm clinical stance.]" | Alcohol FAQ | E | ☐ |
+| 2a.7 | Naloxone: does the clinic give it out or train on it? Current NY program wording? | "[confirm current program wording]" | Drug Use Treatment | E | ☐ |
+| 2a.8 | Is adolescent care truly not offered? (confirms the /adolescent-substance-use-treatment/ → /substance-use/ redirect) | Redirect in place | vercel.json | E | ☐ |
 
 ## 2b. Evaluations (price, speed and approvals decide the booking — highest priority here)
 
@@ -114,9 +127,15 @@ Last update: 2026-09-30 (after Evaluations section).
 | 6.10 | Evaluation pages: banner form reads "Book an Evaluation / Book My Evaluation" and sends `form_location` = `evaluation-hub`, `evaluation-substance-abuse-evaluation` or `evaluation-dwi-evaluation` (brief wanted an "Evaluation" preset; the form has no "help with" field). | 2026-09-30 |
 | 6.11 | Old posts /substance-abuse-evaluation/ and /drug-and-alcohol-evaluation/ 301 into /evaluations/substance-abuse-evaluation/ (redirect map v2 + brief "Old URLs merged in"). P: keep their strongest wording on the page. | 2026-09-30 |
 | 6.12 | FAQ answers that are only a [bracket] stay visible on the page but are left out of the FAQPage schema until answered. | 2026-09-30 |
+| 6.13 | Mental Health and Substance Use condition pages share one component (`components/ServiceTemplate.astro`); a design fix lands on all 9 pages. | 2026-09-30 |
+| 6.14 | "Outpatient rehab" used only where the brief puts it (SU hub H2 + FAQ, alcohol FAQ); never "rehab" alone. | 2026-09-30 |
+| 6.15 | Alcohol and Drug signs lists got a lead-in line the brief didn't have ("It may be time to talk to someone if you notice:", "Reach out if you notice:") — P to review. | 2026-09-30 |
+| 6.16 | SU crisis note adds the SAMHSA helpline 1-800-662-4357; Drug page adds the overdose/naloxone line. | 2026-09-30 |
 | 6.7 | Anger Management signs list got a lead-in line the brief didn't have ("It may be time to get help if you notice:") — P to review. | 2026-09-30 |
 
 ## 7. Content to review (P)
+
+- New posts to add to "Helpful Reading" once published: How to Help Someone With a Drinking Problem (Nov 2, also linked from the Alcohol "Worried about someone" block), Why Do I Feel Depressed After Drinking? (Dec 7, Alcohol + Dual Diagnosis), Signs Someone Is Using Drugs (Feb 1, Drug Use).
 
 - Evaluation posts need the "Need an evaluation in New York? Book at our Queens clinic" box near the top (blog phase), linking to the matching page.
 - DWI "Learn more" gets First DWI in NY (Oct 19), Aggravated DWI (Jan 18), Ignition Interlock (Mar 1) once published.

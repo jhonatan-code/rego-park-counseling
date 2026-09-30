@@ -124,6 +124,81 @@
       "source": "/counseling/dui-dwi-treatment/",
       "destination": "/evaluations/dwi-evaluation/",
       "permanent": true
+    },
+    {
+      "source": "/outpatient-substance-use-treatment/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/adolescent-substance-use-treatment/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/addiction-services/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/dual-diagnosis-treatment/",
+      "destination": "/substance-use/dual-diagnosis/",
+      "permanent": true
+    },
+    {
+      "source": "/intensive-outpatient-treatment-program/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/alcohol-abuse-therapy/",
+      "destination": "/substance-use/alcohol-use-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/drug-addiction-therapy/",
+      "destination": "/substance-use/drug-use-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/drug-counseling/",
+      "destination": "/substance-use/drug-use-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/alcohol-counseling/",
+      "destination": "/substance-use/alcohol-use-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/intensive-outpatient-drug-rehab/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/mental-health-and-substance-abuse-treatment/",
+      "destination": "/substance-use/dual-diagnosis/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling-service/substance-abuse/",
+      "destination": "/substance-use/",
+      "permanent": true
+    },
+    {
+      "source": "/drug-counseling/",
+      "destination": "/substance-use/drug-use-treatment/",
+      "permanent": true
+    },
+    {
+      "source": "/dual-diagnosis",
+      "destination": "/substance-use/dual-diagnosis/",
+      "permanent": true
+    },
+    {
+      "source": "/addiction-treatment",
+      "destination": "/substance-use/",
+      "permanent": true
     }
   ]
 }

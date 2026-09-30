@@ -2,8 +2,8 @@
 // Crisis line on every mental health page (brief: 911 for danger, 988 Suicide & Crisis Lifeline 24/7).
 // Calm Harbor styling, never alarm red (brand manual 03).
 import Icon from './Icon.astro';
-interface Props { veterans?: boolean }
-const { veterans = false } = Astro.props;
+interface Props { veterans?: boolean; samhsa?: boolean; overdose?: boolean }
+const { veterans = false, samhsa = false, overdose = false } = Astro.props;
 ---
 <aside class="bg-porch" aria-labelledby="crisis-note">
   <div class="container-x pb-16 lg:pb-24">
@@ -13,7 +13,7 @@ const { veterans = false } = Astro.props;
         <div>
           <h2 id="crisis-note" class="text-xl lg:text-2xl">In crisis? Get help now.</h2>
           <p class="mt-1 measure">
-            If you are in danger, call <a href="tel:911" class="font-bold text-harbor underline">911</a>. For a mental health crisis, call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>, the Suicide &amp; Crisis Lifeline, 24/7.{veterans && ' Veterans can press 1 after dialing 988.'} Rego Park Counseling is not an emergency service.
+            If you are in danger, call <a href="tel:911" class="font-bold text-harbor underline">911</a>. For a {samhsa ? 'mental health or substance use' : 'mental health'} crisis, call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>, the Suicide &amp; Crisis Lifeline, 24/7.{veterans && ' Veterans can press 1 after dialing 988.'}{overdose && ' In an overdose, call 911 and use naloxone (Narcan) if you have it.'}{samhsa && <> For treatment referrals, the SAMHSA National Helpline is free and confidential, 24/7: <a href="tel:18006624357" class="font-bold text-harbor underline">1-800-662-4357</a>.</>} Rego Park Counseling is not an emergency service.
           </p>
         </div>
       </div>

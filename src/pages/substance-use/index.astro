@@ -1,0 +1,140 @@
+---
+// Substance Use hub (Substance Use Pages Content brief, §1). Rhythm distinct from the Mental Health hub:
+// banner with form → intro split with photo → "what we treat" link block → "What Is Outpatient Rehab?"
+// (the one secondary heading allowed to say "outpatient rehab") + what treatment includes → steps →
+// "Is outpatient right for you?" safety panel → programs → locations + Medicaid → FAQ → crisis → final band.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import LocationCards from '../../components/LocationCards.astro';
+import InsuranceLine from '../../components/InsuranceLine.astro';
+import FaqList from '../../components/FaqList.astro';
+import CrisisNote from '../../components/CrisisNote.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE } from '../../data/site.js';
+import { HUB } from '../../data/substance-use.js';
+import { clean } from '../../data/mental-health.js';
+
+const url = `${SITE.url}/substance-use/`;
+const crumbs = [{ name: 'Substance Use', href: '/substance-use/' }];
+const schema = [
+  { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: 'Outpatient Substance Use Treatment in Queens', about: { '@type': 'MedicalCondition', name: 'Substance use disorder' }, audience: { '@type': 'Patient' }, provider: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
+  { '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: HUB.faqs.filter((f) => clean(f.a)).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) },
+];
+---
+<Base
+  title="Outpatient Substance Use Treatment in Queens, NY | Rego Park Counseling"
+  description="OASAS-licensed outpatient treatment for alcohol and drug use in Rego Park and Fresh Meadows, Queens. Counseling, groups and telehealth. Most Medicaid plans."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    title="Outpatient Substance Use Treatment in Queens"
+    sub="Get help for alcohol or drug use while you keep living at home, working and caring for your family. Licensed by New York State OASAS."
+    crumbs={crumbs}
+    trust={['OASAS-licensed', 'Most Medicaid plans', 'In person or telehealth']}
+    formId="cb-substance-use"
+  />
+
+  {/* Intro */}
+  <section class="section-y" aria-labelledby="intro-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <div class="relative order-2 lg:order-1">
+        <NearbyRing class="pointer-events-none absolute -bottom-16 -left-16 hidden size-[260px] lg:block" />
+        <img src="/images/home/group-counseling-session.webp" alt="Small group of adults talking in a counseling session" width="800" height="560" loading="lazy" class="relative aspect-[4/3] w-full rounded-[var(--radius-panel)] object-cover" />
+      </div>
+      <div class="order-1 lg:order-2">
+        <p class="eyebrow">No overnight stays</p>
+        <h2 id="intro-title" class="mt-3">Recovery That Fits Your Life</h2>
+        <p class="lead measure mt-5">Addiction is a health condition, not a moral failing. At Rego Park Counseling, you meet with licensed counselors in your own neighborhood, on a schedule that works for you. No overnight stays. No judgment. Just a plan built around your life.</p>
+      </div>
+    </div>
+  </section>
+
+  {/* What we treat — link block */}
+  <section class="section-y bg-white" aria-labelledby="treat-title">
+    <div class="container-x">
+      <h2 id="treat-title">Treatment for Alcohol and Drug Use</h2>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {HUB.treat.map((t) => (
+          <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] bg-harbor p-6 text-white transition-colors duration-200 hover:bg-harbor-deep">
+            <span class="inline-flex size-12 items-center justify-center rounded-full bg-white/10 text-sky"><Icon name={t.icon as any} /></span>
+            <h3 class="mt-5 text-xl !text-white"><a href={t.href} class="stretched-link">{t.label}</a></h3>
+            <p class="mt-2 flex-1 text-white/85">{t.text}</p>
+            <Icon name="arrow-right" size={22} class="mt-4 text-sky transition-transform duration-200 group-hover:translate-x-1" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* What is outpatient rehab */}
+  <section class="section-y" aria-labelledby="rehab-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">How outpatient treatment works</p>
+        <h2 id="rehab-title" class="mt-3">What Is Outpatient Rehab?</h2>
+        <p class="lead measure mt-5">Outpatient rehab means you come to the clinic for counseling sessions and go home the same day. It works well for people who are medically stable, have a safe place to live and want support without leaving work or family.</p>
+      </div>
+      <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
+        <div class="flex items-baseline justify-between gap-3">
+          <h3 class="text-xl">What treatment can include</h3>
+          <span class="text-base text-slate">[confirm]</span>
+        </div>
+        <ul class="mt-5 divide-y divide-line">
+          {HUB.includes.map((i) => (
+            <li class="flex items-center gap-4 py-3.5">
+              <span class="icon-dot size-10"><Icon name={i.icon as any} size={20} /></span>
+              {i.href ? <a href={i.href} class="flex-1 text-lg font-bold text-harbor hover:underline">{i.label}</a> : <span class="flex-1 text-lg font-bold text-ink">{i.label}</span>}
+              {i.href && <Icon name="arrow-right" size={18} class="text-cyan" />}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* What to expect */}
+  <section class="section-y bg-sand" aria-labelledby="expect-title">
+    <div class="container-x">
+      <h2 id="expect-title" class="text-center">What to Expect</h2>
+      <ol class="relative mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+        <li aria-hidden="true" class="absolute left-[16.6%] right-[16.6%] top-7 hidden border-t-2 border-dashed border-harbor/40 md:block"></li>
+        {HUB.steps.map((s, i) => (
+          <li class="relative flex gap-4 md:flex-col md:items-center md:text-center">
+            <span class="relative inline-flex size-14 flex-none items-center justify-center rounded-full bg-harbor font-display text-2xl font-extrabold text-white ring-8 ring-sand">{i + 1}</span>
+            <div>
+              <h3 class="md:mt-4">{s.title.replace(/\.$/, '')}</h3>
+              <p class="mt-2 text-slate md:mx-auto md:max-w-[32ch]">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* Is outpatient right for me + programs */}
+  <section class="section-y" aria-labelledby="right-title">
+    <div class="container-x grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+      <div class="rounded-[var(--radius-panel)] border-l-[6px] border-harbor bg-sky-wash p-6 lg:p-8">
+        <h2 id="right-title" class="text-2xl lg:text-[30px]">Is Outpatient Treatment Right for You?</h2>
+        <p class="lead mt-4">Outpatient care may fit if you can stay safe between sessions. If you may need medical detox, or you are in danger, call your doctor or <a href="tel:911" class="font-bold text-harbor underline">911</a> first. We can help you plan outpatient care after detox.</p>
+      </div>
+      <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
+        <h2 class="text-2xl lg:text-[30px]">Programs</h2>
+        <ul class="mt-5 space-y-2">
+          {HUB.programs.map((p) => (
+            <li><a href={p.href} class="group flex min-h-12 items-center justify-between gap-3 rounded-[var(--radius-card)] bg-porch px-4 font-bold text-harbor hover:bg-sky-wash">{p.label}<Icon name="arrow-right" size={18} class="text-cyan transition-transform duration-200 group-hover:translate-x-1" /></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <LocationCards title="Substance Use Counseling in Rego Park and Fresh Meadows" telehealth="Prefer to stay home? Ask about telehealth." />
+  <InsuranceLine />
+  <FaqList title="Outpatient Substance Use Treatment FAQs" faqs={HUB.faqs} />
+  <CrisisNote samhsa />
+  <FinalCta title="Start Outpatient Treatment in Queens" text="Outpatient care close to home. We’ll check your Medicaid plan on the call." />
+</Base>

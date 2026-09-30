@@ -23,6 +23,15 @@ export const POSTS = {
   'how-to-control-your-anger': 'How to Control Your Anger: Practical Tips and Strategies',
   'does-insurance-cover-anger-management-therapy': 'Does Insurance Cover Anger Management Therapy?',
   'anger-management-strategies': 'What Are the Different Anger Management Strategies?',
+  // Substance Use section
+  'is-alcoholism-genetic-hereditary-links-and-factors': 'Is Alcoholism Genetic? Hereditary Links and Factors',
+  'weed-addiction-treatment': 'Weed Addiction Treatment Designed for Older Adults',
+  'marijuana-addiction-treatment': 'Marijuana Addiction Treatment for Seniors',
+  'adderall-addiction-treatment': 'Adderall Addiction Treatment Options for Older Adults',
+  'how-long-to-rewire-brain-from-addiction': 'How Long Does It Take to Rewire Your Brain From Addiction?',
+  'addiction-and-mental-health-how-they-are-connected': 'Addiction and Mental Health: How They Are Connected',
+  'how-does-substance-abuse-affect-mental-health': 'How Does Substance Abuse Affect Mental Health?',
+  'bipolar-and-alcohol-addiction': 'Understanding the Link Between Bipolar and Alcohol Addiction',
 };
 
 // Anchor text + one line for "Related services" cards (anchor = the target page's phrase).
@@ -40,6 +49,10 @@ export const SERVICES = {
   '/programs/core/': { label: 'CORE (HARP)', icon: 'core', text: 'Community support for HARP-eligible Medicaid members.' },
   '/programs/social-care-network/': { label: 'Social Care Network', icon: 'home', text: 'Help with housing, food and rides to care.' },
   '/who-we-serve/court-involved/': { label: 'Court-Involved', icon: 'scale', text: 'Counseling and paperwork for court, probation or parole.' },
+  '/evaluations/dwi-evaluation/': { label: 'DWI Evaluation', icon: 'car', text: 'The alcohol and drug evaluation your court or DMV may require.' },
+  '/substance-use/': { label: 'Outpatient Substance Use Treatment', icon: 'sprout', text: 'OASAS-licensed counseling. You go home every night.' },
+  '/substance-use/drug-use-treatment/': { label: 'Drug Use Treatment', icon: 'sprout', text: 'Outpatient counseling for any drug, without judgment.' },
+  '/mental-health/': { label: 'Mental Health Clinic', icon: 'brain', text: 'OMH-licensed counseling for anxiety, depression, trauma and more.' },
 };
 
 const STD_EXPECT = (what) => [
