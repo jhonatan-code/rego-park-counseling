@@ -4,12 +4,12 @@ Local build of the new www.regoparkcounseling.com. See `CLAUDE.md` for sources a
 
 ```
 npm install
-npm run dev      # http://localhost:4321
+npm run dev      # http://localhost:4321 (this session runs it on :4330)
 npm run build
 ```
 
 ## Built (2026-09-30)
-- Header: utility bar, logo, 7 items with mega panels (hover + keyboard, Escape closes), phone, one magenta "Request a Callback" (opens a dialog on every page). Mobile: full-screen accordion menu + sticky Call | Request a Callback bar.
+- Header: utility bar, logo, 8 items (About first, Contact Us last) with mega panels (hover + keyboard, Escape closes), ONE magenta call button. Mobile: full-screen accordion menu + sticky Call | Request a Callback bar. One form per page (home section 2, inner pages in the banner); "Request a Callback" links scroll to it.
 - Footer: NAP per clinic, 5 link columns, licensing, independent-clinic line, legal links.
 - Home: all brief sections except 12 (Reviews, skipped at launch: 3.2 from 20). Organization + MedicalClinic ×2 + WebSite + FAQPage schema.
 - About Us, Our Team, Contact (About Section Content brief): banner with H1/paragraph left and the form right (user rule for inner pages). Our Team stays noindex + out of the sitemap while staff entries are placeholders (`src/data/team.js`).
@@ -21,7 +21,7 @@ npm run build
 - Neighborhoods + transit lines in section 6 (brief marks them "proposed").
 - Team photos, names, credentials, languages (team section shows placeholders; "A team that reflects Queens" waits for languages).
 - Real clinic/team photos: every image except the 99th Street entrance is stock from the current site.
-- Logo vector (PNG is 347×75) and emblem crop for favicon (no favicon yet → 404 in console).
+- Logo vector (PNG is 347×75) and emblem crop for favicon (empty favicon placeholder until then).
 - CTM: create the RPC FormReactor, map custom fields (Oriana), set env vars. Until then the form shows "not connected yet".
 - Google Business Profile URLs for schema `sameAs`.
 - Pavel: refine home copy and FAQ answers in `src/data/home.js`.
