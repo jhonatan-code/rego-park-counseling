@@ -5,7 +5,7 @@
 import { CLINICS, fullAddress } from '../data/site.js';
 const pins = CLINICS.filter((c) => c.geo).map((c) => ({ name: c.name, address: fullAddress(c), lat: c.geo.lat, lng: c.geo.lng, href: c.href }));
 ---
-<div class="rpc-map relative h-full min-h-[320px] w-full overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash" data-pins={JSON.stringify(pins)} role="region" aria-label="Map of our Rego Park and Fresh Meadows clinics">
+<div class="rpc-map relative isolate z-0 h-full min-h-[320px] w-full overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash" data-pins={JSON.stringify(pins)} role="region" aria-label="Map of our Rego Park and Fresh Meadows clinics">
   <p class="absolute inset-0 flex items-center justify-center p-6 text-center text-base text-slate">Loading map…</p>
 </div>
 

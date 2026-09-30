@@ -75,8 +75,8 @@ const year = new Date().getFullYear();
   </div>
 
   {/* Link columns */}
-  <div class="container-x relative mt-12 border-t border-white/15 pt-10 lg:mt-16">
-    <nav aria-label="Footer" class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5">
+  <div class="container-x relative mt-12 lg:mt-16">
+    <nav aria-label="Footer" class="grid border-t border-white/15 pt-10 grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5">
       {cols.map((col) => (
         <div>
           <a href={col.href} class="font-display text-lg font-extrabold text-white hover:underline">{col.title}</a>

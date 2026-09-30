@@ -77,10 +77,20 @@ export const CLINICS = [
   },
 ];
 
-// Header navigation (brief, "Menu items and the pages under each"). Order is deliberate:
-// the three biggest search clusters first. Items marked `pending` stay out until confirmed.
+// Header navigation (brief, "Menu items and the pages under each"), reordered by the user on 2026-09-30:
+// About first, then the three biggest search clusters, Contact Us last. Items marked `pending` stay out until confirmed.
 // `desc` = one-line helper shown in the mega panels (plain language, brand voice).
 export const NAV = [
+  {
+    label: 'About',
+    href: '/about/',
+    intro: 'A neighborhood clinic for Queens.',
+    links: [
+      { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
+      { label: 'Our Team', href: '/about/our-team/', desc: 'Meet our licensed counselors' },
+      { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
+    ],
+  },
   {
     label: 'Mental Health',
     href: '/mental-health/',
@@ -152,17 +162,7 @@ export const NAV = [
   },
   { label: 'Locations', href: '/locations/', intro: 'Three clinics, one team, one number.', locations: true },
   { label: 'Insurance', href: '/insurance/' },
-  {
-    label: 'About',
-    href: '/about/',
-    intro: 'A neighborhood clinic for Queens.',
-    links: [
-      { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
-      { label: 'Our Team', href: '/about/our-team/', desc: 'Meet our licensed counselors' },
-      { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
-      { label: 'Contact', href: '/contact/', desc: 'Call, request a callback or visit' },
-    ],
-  },
+  { label: 'Contact Us', href: '/contact/' },
 ];
 
 // Drop items that are still waiting for client confirmation.

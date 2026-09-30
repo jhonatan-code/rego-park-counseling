@@ -4,11 +4,11 @@ import Icon from './Icon.astro';
 import { SITE } from '../data/site.js';
 ---
 <div class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-3 pb-[max(10px,env(safe-area-inset-bottom))] pt-2.5 shadow-[0_-8px_24px_-12px_rgba(10,85,119,0.25)] backdrop-blur lg:hidden">
-  <div class="grid grid-cols-2 gap-2.5">
-    <a href={SITE.phoneHref} class="btn-secondary !px-3" data-cta="call" data-location="mobile-bar">
+  <div class="grid grid-cols-[0.8fr_1.2fr] gap-2">
+    <a href={SITE.phoneHref} class="btn-call !px-3" data-cta="call" data-location="mobile-bar">
       <Icon name="phone" size={20} /> Call
     </a>
-    <a href="/contact/" class="btn-call !px-3" data-open-callback data-location="mobile-bar">
+    <a href="/contact/" class="btn-secondary !px-2" data-open-callback data-location="mobile-bar">
       Request a Callback
     </a>
   </div>

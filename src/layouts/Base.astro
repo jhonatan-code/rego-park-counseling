@@ -3,7 +3,6 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
-import CallbackDialog from '../components/CallbackDialog.astro';
 import { SITE, CLINICS } from '../data/site.js';
 // Above-the-fold fonts, preloaded (latin subset). Two families, four weights (brand manual 12, Speed).
 import nunitoWoff2 from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
@@ -84,8 +83,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </main>
     <Footer />
     <MobileCallBar />
-    <CallbackDialog />
     <script>
+      // "Request a Callback" buttons: go to this page's form if it has one, else /contact/.
+      document.querySelectorAll<HTMLAnchorElement>('[data-open-callback]').forEach((a) => {
+        const form = document.getElementById('callback');
+        a.href = form ? '#callback' : '/contact/';
+        if (form) a.addEventListener('click', () => setTimeout(() => (form.querySelector('input[name=name]') as HTMLInputElement | null)?.focus({ preventScroll: true }), 450));
+      });
       // GA4 events through GTM (brief, "Tracking"): click_to_call and directions_click, with a location parameter.
       document.addEventListener('click', (e) => {
         const a = (e.target as HTMLElement).closest<HTMLElement>('[data-cta]');

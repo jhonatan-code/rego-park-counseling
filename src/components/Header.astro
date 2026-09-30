@@ -1,6 +1,7 @@
 ---
 // Header (Header & Home Page Brief, "Header and navigation"; brand manual 10 "Header · desktop").
-// Utility bar (desktop only) → main bar: logo left · 7 items center · phone + the ONE magenta button right.
+// Utility bar (desktop only) → main bar: logo left · 8 items center · ONE button right: the magenta call button
+// (user, 2026-09-30: a second header button is unnecessary).
 // Every commercial page is one hover away: each item opens a mega panel (hover or keyboard focus on desktop).
 // Mobile: logo left, phone icon + hamburger right; full-screen menu with the 7 items as accordions.
 import Icon from './Icon.astro';
@@ -35,7 +36,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
 </div>
 
 <header id="site-header" class="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
-  <div class="container-header relative flex h-[72px] items-center justify-between gap-4 lg:h-20">
+  <div class="container-header relative flex h-[72px] items-center justify-between gap-3 lg:h-20">
     <a href="/" class="flex-none" aria-label="Rego Park Counseling, home">
       <img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" class="h-auto w-[170px] sm:w-[200px] xl:w-[220px]" fetchpriority="high" />
     </a>
@@ -51,7 +52,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
               <a
                 href={item.href}
                 class:list={[
-                  'relative flex items-center gap-1 whitespace-nowrap px-2.5 font-display text-[16px] font-bold text-harbor transition-colors duration-200 min-[1480px]:px-3',
+                  'relative flex items-center gap-0.5 whitespace-nowrap px-2 font-display text-[16px] font-bold text-harbor transition-colors duration-200',
                   'after:absolute after:inset-x-2 after:bottom-0 after:h-[3px] after:rounded-full after:bg-cyan after:opacity-0 after:transition-opacity after:duration-200',
                   'hover:after:opacity-100 group-focus-within/nav:after:opacity-100',
                   isActive(item.href) && 'after:opacity-100',
@@ -62,7 +63,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
                 aria-controls={hasPanel ? id : undefined}
               >
                 {item.label}
-                {hasPanel && <Icon name="chevron-down" size={14} class="mt-0.5 hidden transition-transform duration-200 group-hover/nav:rotate-180 min-[1440px]:block" />}
+                {hasPanel && <Icon name="chevron-down" size={12} class="mt-0.5 hidden transition-transform duration-200 group-hover/nav:rotate-180 min-[1366px]:block" />}
               </a>
 
               {hasPanel && (
@@ -152,14 +153,10 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
     </nav>
 
     <div class="flex flex-none items-center gap-2 lg:gap-4">
-      <a href={SITE.phoneHref} class="hidden items-center gap-2 font-display text-[17px] font-extrabold text-harbor hover:text-harbor-deep min-[1480px]:inline-flex" data-cta="call" data-location="header">
-        <Icon name="phone" size={20} />
-        <span>{SITE.phone}</span>
-      </a>
-      <a href={SITE.phoneHref} class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash xl:size-11 xl:border xl:border-line min-[1480px]:hidden" aria-label={`Call ${SITE.phone}`} data-cta="call" data-location="header">
+      <a href={SITE.phoneHref} class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash lg:hidden" aria-label={`Call ${SITE.phone}`} data-cta="call" data-location="header">
         <Icon name="phone" size={22} />
       </a>
-      <a href="/contact/" class="btn-call hidden lg:inline-flex" data-open-callback data-location="header">Request a Callback</a>
+      <a href={SITE.phoneHref} class="btn-call hidden !px-4 lg:inline-flex" data-cta="call" data-location="header"><Icon name="phone" size={20} /> {SITE.phone}</a>
       <button type="button" class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash xl:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-open>
         <Icon name="menu" size={26} />
       </button>
