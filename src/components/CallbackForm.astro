@@ -3,12 +3,11 @@
 // fields, one full-width button, small reassurance lines under it); colors, type and radii follow the RPC
 // brand manual (magenta = callback action, Harbor focus ring, 16px floor, 8px inputs).
 // Fields (user, 2026-09-30, same set as Sunview): name*, number*, Membership Policy ID (optional), Insurance
-// Carrier (optional), plus preferred clinic and what we can help with. This overrides the brand manual's
+// Carrier (optional). Preferred clinic and "what can we help with" were removed by the user. This overrides the brand manual's
 // "no insurance ID" rule. No email, no health details. Posts FormData to /api/lead/ (server-side CTM proxy) with source page,
-// form location and chosen clinic, then pushes dataLayer {event:'callback_submit', location}.
+// form location, then pushes dataLayer {event:'callback_submit', form_location}.
 // A failed CTM call is never shown as success.
-import Icon from './Icon.astro';
-import { SITE, CLINICS } from '../data/site.js';
+import { SITE } from '../data/site.js';
 
 interface Props {
   formId: string;
@@ -16,11 +15,9 @@ interface Props {
   heading?: string;
 }
 const { formId, location, heading = 'Request a Callback' } = Astro.props;
-const HELP = ['Mental health', 'Substance use', 'Evaluation', 'Not sure yet'];
 const lbl = 'mb-1.5 block text-base leading-snug text-slate';
 const field =
   'h-12 w-full min-w-0 rounded-[var(--radius-input)] border border-slate/40 bg-white px-3.5 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25 aria-[invalid=true]:border-attention';
-const chevron = 'pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-slate';
 ---
 <form
   class="rpc-callback w-full max-w-[500px] rounded-[var(--radius-panel)] bg-white p-5 text-ink shadow-[0_2px_6px_rgba(0,0,0,0.14),0_24px_48px_rgba(7,65,91,0.28)] sm:p-7"
@@ -62,25 +59,6 @@ const chevron = 'pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2
       <label class={lbl} for={`${formId}-carrier`}>Insurance Carrier (optional)</label>
       <input id={`${formId}-carrier`} class={field} type="text" name="insurance_carrier" maxlength="60" autocomplete="off" />
     </div>
-    <div>
-      <label class={lbl} for={`${formId}-clinic`}>Preferred clinic</label>
-      <div class="relative">
-        <select id={`${formId}-clinic`} name="clinic" class:list={[field, 'appearance-none pr-10']}>
-          {CLINICS.map((c) => <option value={c.name}>{c.name}{c.status === 'soon' ? ' (opening soon)' : ''}</option>)}
-        </select>
-        <Icon name="chevron-down" size={18} class={chevron} />
-      </div>
-    </div>
-    <div>
-      <label class={lbl} for={`${formId}-help`}>What can we help with?</label>
-      <div class="relative">
-        <select id={`${formId}-help`} name="help_with" class:list={[field, 'appearance-none pr-10']}>
-          {HELP.map((h) => <option value={h === 'Not sure yet' ? 'Not sure' : h}>{h}</option>)}
-        </select>
-        <Icon name="chevron-down" size={18} class={chevron} />
-      </div>
-    </div>
-
     {/* Honeypot: hidden from people and autofill */}
     <div class="hidden" aria-hidden="true">
       <label>Leave this empty <input type="text" name="hp_field" tabindex="-1" autocomplete="off" /></label>
@@ -147,7 +125,7 @@ const chevron = 'pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.error || 'We couldn’t send your request.');
         const w = window as any;
-        (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', location: String(fd.get('clinic') || ''), form_location: form.dataset.location });
+        (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: form.dataset.location });
         form.reset();
         show('Thank you. We’ll call you back soon, usually the same business day.', true);
       } catch (err) {

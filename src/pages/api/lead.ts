@@ -5,8 +5,6 @@ import type { APIRoute } from 'astro';
 // [Oriana to map fields] custom_fields names below are proposals until the RPC reactor exists.
 export const prerender = false;
 
-const CLINICS = ['Rego Park', 'Fresh Meadows', 'Yonkers'];
-const HELP = ['Mental health', 'Substance use', 'Evaluation', 'Not sure'];
 const RATE_WINDOW_MS = 15 * 60 * 1000;
 const RATE_MAX = 8;
 const hits = new Map<string, number[]>();
@@ -29,8 +27,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const name = str(fd.get('name'), 80);
   let digits = str(fd.get('phone'), 30).replace(/\D/g, '');
   if (digits.length === 11 && digits.startsWith('1')) digits = digits.slice(1);
-  const clinic = CLINICS.includes(str(fd.get('clinic'))) ? str(fd.get('clinic')) : 'Not chosen';
-  const help = HELP.includes(str(fd.get('help_with'))) ? str(fd.get('help_with')) : 'Not sure';
   if (name.length < 2) return json(400, { ok: false, error: 'Please tell us your name.' });
   if (digits.length !== 10) return json(400, { ok: false, error: 'Please enter a 10-digit phone number.' });
 
@@ -47,8 +43,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   // Optional on the form; backfilled because CTM rejects a lead when a required custom field is blank (Sunview lesson).
   params.set('custom_fields[membership_policy_id]', str(fd.get('policy_id'), 40) || 'Not provided');
   params.set('custom_fields[insurance_carrier]', str(fd.get('insurance_carrier'), 60) || 'Not provided');
-  params.set('custom_fields[preferred_clinic]', clinic);
-  params.set('custom_fields[help_with]', help);
   params.set('custom_fields[source_page]', str(fd.get('page'), 200) || '/');
   params.set('custom_fields[form_location]', str(fd.get('form_location'), 40) || 'unknown');
   const sid = str(fd.get('visitor_sid'), 120);
