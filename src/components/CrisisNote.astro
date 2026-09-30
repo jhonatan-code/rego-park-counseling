@@ -1,0 +1,26 @@
+---
+// Crisis line on every mental health page (brief: 911 for danger, 988 Suicide & Crisis Lifeline 24/7).
+// Calm Harbor styling, never alarm red (brand manual 03).
+import Icon from './Icon.astro';
+interface Props { veterans?: boolean }
+const { veterans = false } = Astro.props;
+---
+<aside class="bg-porch" aria-labelledby="crisis-note">
+  <div class="container-x pb-16 lg:pb-24">
+    <div class="flex flex-col gap-5 rounded-[var(--radius-panel)] border-l-[6px] border-harbor bg-sky-wash p-6 md:flex-row md:items-center md:justify-between lg:px-8">
+      <div class="flex items-start gap-4">
+        <span class="icon-dot bg-white"><Icon name="phone" /></span>
+        <div>
+          <h2 id="crisis-note" class="text-xl lg:text-2xl">In crisis? Get help now.</h2>
+          <p class="mt-1 measure">
+            If you are in danger, call <a href="tel:911" class="font-bold text-harbor underline">911</a>. For a mental health crisis, call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>, the Suicide &amp; Crisis Lifeline, 24/7.{veterans && ' Veterans can press 1 after dialing 988.'} Rego Park Counseling is not an emergency service.
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-none gap-3">
+        <a href="tel:988" class="btn-neutral">Call 988</a>
+        <a href="sms:988" class="btn-secondary">Text 988</a>
+      </div>
+    </div>
+  </div>
+</aside>

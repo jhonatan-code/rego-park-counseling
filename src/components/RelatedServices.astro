@@ -1,0 +1,43 @@
+---
+// Related services (3 linked cards, anchor = target page phrase) + related blog posts (root-level URLs).
+import Icon from './Icon.astro';
+import { SERVICES, POSTS } from '../data/mental-health.js';
+
+interface Props { related: string[]; posts?: string[]; title?: string }
+const { related, posts = [], title = 'Related Services' } = Astro.props;
+---
+<section class="section-y bg-sky-wash" aria-labelledby="related-title">
+  <div class:list={['container-x grid gap-10', posts.length > 0 && 'lg:grid-cols-[1.8fr_1fr] lg:gap-12']}>
+    <div>
+      <h2 id="related-title">{title}</h2>
+      <ul class:list={['mt-8 grid gap-4', posts.length > 0 ? 'md:grid-cols-3' : 'md:grid-cols-3']}>
+        {related.map((href) => {
+          const s = SERVICES[href];
+          return (
+            <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] bg-white p-6">
+              <span class="icon-dot"><Icon name={s.icon as any} /></span>
+              <h3 class="mt-4 text-xl"><a href={href} class="stretched-link">{s.label}</a></h3>
+              <p class="mt-2 flex-1 text-base text-slate">{s.text}</p>
+              <Icon name="arrow-right" size={20} class="mt-4 text-cyan transition-transform duration-200 group-hover:translate-x-1" />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+    {posts.length > 0 && (
+      <div>
+        <h2 class="text-2xl lg:text-[26px]">Helpful Reading</h2>
+        <ul class="mt-8 divide-y divide-sky rounded-[var(--radius-panel)] bg-white px-5">
+          {posts.map((slug) => (
+            <li>
+              <a href={`/${slug}/`} class="group flex items-start gap-3 py-4 font-bold text-harbor">
+                <Icon name="book" size={20} class="mt-0.5 flex-none text-cyan" />
+                <span class="group-hover:underline">{POSTS[slug]}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>

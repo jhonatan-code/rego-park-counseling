@@ -19,6 +19,66 @@
       "source": "/about/our-team/:slug/",
       "destination": "/our-team/:slug/",
       "permanent": true
+    },
+    {
+      "source": "/counseling-service/mental-health/",
+      "destination": "/mental-health/",
+      "permanent": true
+    },
+    {
+      "source": "/services/",
+      "destination": "/mental-health/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling",
+      "destination": "/mental-health/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/",
+      "destination": "/mental-health/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/anxiety-counseling/",
+      "destination": "/mental-health/anxiety-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/online-therapy-for-anxiety/",
+      "destination": "/mental-health/anxiety-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/depression-counseling/",
+      "destination": "/mental-health/depression-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/ptsd-counseling/",
+      "destination": "/mental-health/ptsd-trauma-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/online-trauma-therapy/",
+      "destination": "/mental-health/ptsd-trauma-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/bipolar-counseling/",
+      "destination": "/mental-health/bipolar-disorder-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/schizophrenia-counseling/",
+      "destination": "/mental-health/schizophrenia-counseling/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/anger-management-for-substance-use/",
+      "destination": "/mental-health/anger-management/",
+      "permanent": true
     }
   ]
 }

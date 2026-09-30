@@ -1,0 +1,180 @@
+---
+// Mental Health hub (Mental Health Pages Content brief, §1). Different rhythm from the condition template:
+// banner with form → intro split with photo → conditions grid (main link block) → how care works → therapy
+// options (photo cards) → locations (+telehealth) → Medicaid band → why us → FAQ → crisis → final band.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import LocationCards from '../../components/LocationCards.astro';
+import FaqList from '../../components/FaqList.astro';
+import CrisisNote from '../../components/CrisisNote.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE } from '../../data/site.js';
+import { HUB, SERVICES, clean } from '../../data/mental-health.js';
+
+const url = `${SITE.url}/mental-health/`;
+const crumbs = [{ name: 'Mental Health', href: '/mental-health/' }];
+const schema = [
+  {
+    '@type': 'MedicalWebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: 'Mental Health Clinic in Queens',
+    audience: { '@type': 'Patient' },
+    provider: { '@id': `${SITE.url}/#organization` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: HUB.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })),
+  },
+];
+---
+<Base
+  title="Mental Health Clinic in Queens, NY | Rego Park Counseling"
+  description="OMH-licensed outpatient mental health clinic in Rego Park and Fresh Meadows, Queens. Counseling for anxiety, depression, trauma and more. Most Medicaid plans."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    title="Mental Health Clinic in Queens"
+    sub="Licensed outpatient counseling for adults in Rego Park and Fresh Meadows, in person or by telehealth. Most Medicaid plans accepted."
+    crumbs={crumbs}
+    formId="cb-mental-health"
+    trust={['Licensed by the NYS Office of Mental Health (OMH)']}
+  />
+
+  {/* Intro */}
+  <section class="section-y" aria-labelledby="intro-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">Outpatient mental health</p>
+        <h2 id="intro-title" class="mt-3">Outpatient Mental Health Care, Close to Home</h2>
+        <p class="lead measure mt-5">Life in Queens moves fast, and sometimes the stress, sadness or worry does not let up. Rego Park Counseling is a licensed outpatient mental health clinic where you can talk to a counselor near home, on a schedule that fits your life. You keep living at home, working and caring for your family while you get support.</p>
+      </div>
+      <div class="relative">
+        <NearbyRing class="pointer-events-none absolute -left-16 -top-16 hidden size-[260px] lg:block" />
+        <img src="/images/home/counselor-talking-with-adult-client.webp" alt="Counselor listening to an adult client in a bright room" width="800" height="560" loading="lazy" class="relative aspect-[4/3] w-full rounded-[var(--radius-panel)] object-cover" />
+      </div>
+    </div>
+  </section>
+
+  {/* Conditions we treat — the main link block */}
+  <section class="section-y bg-white" aria-labelledby="conditions-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">What we help with</p>
+        <h2 id="conditions-title" class="mt-3">Conditions We Treat</h2>
+      </div>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {HUB.conditions.map((c) => {
+          const s = SERVICES[c.href];
+          return (
+            <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] border border-line bg-porch p-6 transition-colors duration-200 hover:border-sky hover:bg-sky-wash lg:p-7">
+              <div class="flex items-center justify-between">
+                <span class="icon-dot bg-white"><Icon name={s.icon as any} /></span>
+                <Icon name="arrow-right" size={22} class="text-cyan transition-transform duration-200 group-hover:translate-x-1" />
+              </div>
+              <h3 class="mt-5 text-2xl">{c.name}</h3>
+              <p class="mt-2 flex-1 text-slate">{c.text}</p>
+              <a href={c.href} class="stretched-link mt-4 font-bold text-harbor">{s.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+      <a href="/substance-use/dual-diagnosis/" class="group mt-6 flex flex-col gap-2 rounded-[var(--radius-panel)] bg-harbor p-5 text-white sm:flex-row sm:items-center sm:justify-between lg:px-7">
+        <span class="flex items-center gap-3 text-lg"><Icon name="link" size={22} class="flex-none text-sky" />Also struggling with alcohol or drugs? We treat both together.</span>
+        <span class="inline-flex flex-none items-center gap-1.5 font-bold group-hover:underline">Dual Diagnosis <Icon name="arrow-right" size={18} /></span>
+      </a>
+    </div>
+  </section>
+
+  {/* How care works */}
+  <section class="section-y bg-sand" aria-labelledby="how-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">How care works</p>
+        <h2 id="how-title" class="mt-3">How Outpatient Counseling Works at Rego Park Counseling</h2>
+        <a href={SITE.phoneHref} class="btn-call mt-8" data-cta="call" data-location="mh-how"><Icon name="phone" size={20} /> Make the first call</a>
+      </div>
+      <ol class="space-y-4">
+        {HUB.steps.map((s, i) => (
+          <li class="flex gap-5 rounded-[var(--radius-panel)] bg-white p-5 lg:p-6">
+            <span class="inline-flex size-12 flex-none items-center justify-center rounded-full bg-harbor font-display text-xl font-extrabold text-white">{i + 1}</span>
+            <div>
+              <h3 class="text-xl">{s.title.replace(/\.$/, '')}</h3>
+              <p class="mt-1 text-slate">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* Therapy options */}
+  <section class="section-y bg-white" aria-labelledby="therapy-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Types of therapy</p>
+        <h2 id="therapy-title" class="mt-3">Therapy Options</h2>
+      </div>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {HUB.therapies.map((t) => (
+          <li class="card-focus group relative overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white">
+            <img src={t.image} alt={t.alt} width="800" height="560" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            <div class="p-6">
+              <h3 class="text-xl"><a href={t.href} class="stretched-link">{t.label}</a></h3>
+              <p class="mt-2 text-slate">{t.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 flex items-center gap-2 text-lg"><Icon name="telehealth" size={22} class="text-harbor" /> Telehealth sessions are available for many services. <a href="/programs/telehealth/" class="text-link">Telehealth</a></p>
+    </div>
+  </section>
+
+  {/* Where to get care */}
+  <LocationCards
+    title="Mental Health Counseling in Rego Park and Fresh Meadows"
+    telehealth="Telehealth sessions are available for many services."
+    fmLabel="Now welcoming new mental health patients [confirm]"
+  />
+
+  {/* Insurance */}
+  <section class="section-y relative overflow-hidden bg-sky-wash" aria-labelledby="ins-title">
+    <NearbyRing class="pointer-events-none absolute -bottom-52 -right-40 size-[560px]" />
+    <div class="container-x relative">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Insurance</p>
+        <h2 id="ins-title" class="mt-3">We Accept Most Medicaid Plans</h2>
+        <p class="lead mt-4">Most of our patients use Medicaid. Call us and we will check your plan before your first visit. HARP members may also qualify for CORE services.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="mh-insurance"><Icon name="phone" size={20} /> Check my plan</a>
+          <a href="/insurance/" class="btn-secondary">Insurance</a>
+          <a href="/programs/core/" class="btn-secondary">CORE</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Why us */}
+  <section class="section-y" aria-labelledby="why-title">
+    <div class="container-x">
+      <h2 id="why-title" class="max-w-2xl">Why Choose Our Queens Mental Health Clinic</h2>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {HUB.why.map((w) => (
+          <li class="rounded-[var(--radius-panel)] border-t-4 border-harbor bg-white p-6">
+            <span class="icon-dot"><Icon name={w.icon as any} /></span>
+            <p class="mt-4 text-lg font-bold text-ink">{w.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FaqList title="Mental Health Clinic FAQs" faqs={HUB.faqs} />
+  <CrisisNote />
+  <FinalCta title="Talk to a Counselor in Queens" text="Licensed, outpatient and close to home. We’ll check your Medicaid plan on the call." />
+</Base>

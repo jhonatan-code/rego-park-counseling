@@ -1,0 +1,35 @@
+---
+// FAQ accordion (same look as the home FAQ). All answers stay in the HTML (brief: FAQPage schema + AI answers).
+// Items with a `gate` are skipped: they carry a claim the client hasn't confirmed yet.
+import Icon from './Icon.astro';
+import { SITE } from '../data/site.js';
+
+interface Faq { q: string; a: string; link?: { href: string; label: string }; gate?: string }
+interface Props { title: string; faqs: Faq[]; lead?: string; eyebrow?: string; id?: string }
+const { title, faqs, lead = 'Still wondering about something? Ask us. There’s no wrong question.', eyebrow = 'FAQ', id = 'faq-title' } = Astro.props;
+const shown = faqs.filter((f) => !f.gate);
+---
+<section class="section-y" aria-labelledby={id}>
+  <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.7fr] lg:gap-16">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id={id} class="mt-3">{title}</h2>
+      <p class="lead mt-3">{lead}</p>
+      <a href={SITE.phoneHref} class="mt-6 inline-flex items-center gap-2 font-display text-xl font-extrabold text-harbor hover:underline" data-cta="call" data-location="faq"><Icon name="phone" size={22} /> {SITE.phone}</a>
+    </div>
+    <div class="divide-y divide-line rounded-[var(--radius-panel)] border border-line bg-white px-5 lg:px-8">
+      {shown.map((f, i) => (
+        <details class="group/faq py-1" open={i === 0}>
+          <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+            <h3 class="text-lg font-bold lg:text-xl">{f.q}</h3>
+            <span class="inline-flex size-10 flex-none items-center justify-center rounded-full bg-sky-wash text-harbor transition-transform duration-200 group-open/faq:rotate-45"><Icon name="plus" size={20} /></span>
+          </summary>
+          <p class="measure pb-5 pr-2 text-ink/90 lg:pr-14">
+            {f.a}
+            {f.link && <> <a href={f.link.href} class="text-link whitespace-nowrap">{f.link.label}</a></>}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
