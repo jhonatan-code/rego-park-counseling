@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Locations section).
+Last update: 2026-09-30 (after Evaluations section).
 
 ---
 
@@ -44,6 +44,23 @@ Last update: 2026-09-30 (after Locations section).
 | 2.9 | Couples counseling real? | Page not built, not in menu | Therapies | E | ☐ |
 | 2.10 | LGBTQ+ affirming care can be featured? | Page not built, not in menu | Who We Serve | E | ☐ |
 | 2.11 | Is ATI (Alternatives to Incarceration) an actual program? | Not named | Court-Involved (next) | E | ☐ |
+
+## 2b. Evaluations (price, speed and approvals decide the booking — highest priority here)
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 2b.1 | Price of each evaluation (show it, or "call for pricing")? Payment methods? | FAQ: "Call us for current pricing… [Or show the price — confirm]"; cost block in brackets | Evaluations hub, SA, DWI | E | ☐ |
+| 2b.2 | Does Medicaid cover evaluations? | "[Confirm.]" | Hub FAQ, cost blocks | E | ☐ |
+| 2b.3 | How fast can a new person be seen? How fast is the report ready? | Trust chips "[Seen within X days]", "[Report in X days]" in the banner | All 3 pages | E | ☐ |
+| 2b.4 | Appointment length; evenings or Saturdays? | "[confirm length, e.g. 60 to 90 minutes]" | All 3 pages | E | ☐ |
+| 2b.5 | In person only, or telehealth evaluations too? Accepted by courts / DMV? | "[Confirm]" | Hub + both FAQs | E | ☐ |
+| 2b.6 | Is a drug test part of the evaluation? | "[Confirm policy.]" | SA steps + FAQ | E | ☐ |
+| 2b.7 | Screening tools to name (AUDIT, DAST…) — only if he wants them listed | Bracket | SA steps | E | ☐ |
+| 2b.8 | What the report includes, who receives it, how it's sent | Bracket | All 3 pages | E | ☐ |
+| 2b.9 | Exact approvals held: OASAS; any DMV or Drinking Driver Program relationship | Only "OASAS-licensed" is claimed. DWI "After a DDP referral" line is **hidden**; DDP FAQ has "[Confirm how RPC relates to DDP]" | DWI | E | ☐ |
+| 2b.10 | Evaluations at Rego Park only, or Fresh Meadows too? | Rego Park card as "Main evaluations site" + "[confirm Fresh Meadows]" | SA, DWI, locations table | E | ☐ |
+| 2b.11 | Evaluations for employers, schools or licensing boards: yes or no? | Cards with "[confirm]" | SA "Who needs one" | E | ☐ |
+| 2b.12 | Progress and completion letters for people who continue into treatment | "[confirm]" | DWI "If treatment is recommended" | E | ☐ |
 
 ## 3. Team and authors
 
@@ -94,9 +111,15 @@ Last update: 2026-09-30 (after Locations section).
 | 6.6 | Reviews section skipped on Home (3.2 from 20). | 2026-09-30 |
 | 6.8 | Location final bands can't "preselect the clinic" (the form has no clinic field). Each page sends its own `form_location`; Yonkers waitlist sends `yonkers-waitlist` with a "Notify Me When You Open" button (brief wanted email optional + "what can we help with": not added, one form everywhere). | 2026-09-30 |
 | 6.9 | Location pages: no `openingHoursSpecification` in schema until hours are confirmed (brief: nothing in brackets ships as a guess). | 2026-09-30 |
+| 6.10 | Evaluation pages: banner form reads "Book an Evaluation / Book My Evaluation" and sends `form_location` = `evaluation-hub`, `evaluation-substance-abuse-evaluation` or `evaluation-dwi-evaluation` (brief wanted an "Evaluation" preset; the form has no "help with" field). | 2026-09-30 |
+| 6.11 | Old posts /substance-abuse-evaluation/ and /drug-and-alcohol-evaluation/ 301 into /evaluations/substance-abuse-evaluation/ (redirect map v2 + brief "Old URLs merged in"). P: keep their strongest wording on the page. | 2026-09-30 |
+| 6.12 | FAQ answers that are only a [bracket] stay visible on the page but are left out of the FAQPage schema until answered. | 2026-09-30 |
 | 6.7 | Anger Management signs list got a lead-in line the brief didn't have ("It may be time to get help if you notice:") — P to review. | 2026-09-30 |
 
 ## 7. Content to review (P)
+
+- Evaluation posts need the "Need an evaluation in New York? Book at our Queens clinic" box near the top (blog phase), linking to the matching page.
+- DWI "Learn more" gets First DWI in NY (Oct 19), Aggravated DWI (Jan 18), Ignition Interlock (Mar 1) once published.
 
 - Home: all body copy and the 8 FAQ answers in `src/data/home.js` are working drafts.
 - Hand-picked home posts (Medicaid + 2 evaluation posts) — confirm.

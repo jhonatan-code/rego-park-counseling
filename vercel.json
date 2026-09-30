@@ -94,6 +94,36 @@
       "source": "/counseling/mental-health-counseling-fresh-meadows-ny/",
       "destination": "/locations/fresh-meadows/",
       "permanent": true
+    },
+    {
+      "source": "/substance-use-assessment/",
+      "destination": "/evaluations/substance-abuse-evaluation/",
+      "permanent": true
+    },
+    {
+      "source": "/drug-and-alcohol-evaluation/",
+      "destination": "/evaluations/substance-abuse-evaluation/",
+      "permanent": true
+    },
+    {
+      "source": "/substance-abuse-evaluation/",
+      "destination": "/evaluations/substance-abuse-evaluation/",
+      "permanent": true
+    },
+    {
+      "source": "/substance-use-counselor-assessment/",
+      "destination": "/evaluations/substance-abuse-evaluation/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/substance-use-evaluation/",
+      "destination": "/evaluations/substance-abuse-evaluation/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/dui-dwi-treatment/",
+      "destination": "/evaluations/dwi-evaluation/",
+      "permanent": true
     }
   ]
 }

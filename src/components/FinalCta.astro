@@ -5,8 +5,8 @@ import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
 import { SITE } from '../data/site.js';
 
-interface Props { title: string; text: string; tone?: 'sand' | 'sky' }
-const { title, text, tone = 'sand' } = Astro.props;
+interface Props { title: string; text: string; tone?: 'sand' | 'sky'; note?: string; secondary?: string }
+const { title, text, tone = 'sand', note, secondary = 'Request a Callback' } = Astro.props;
 ---
 <section class:list={['relative overflow-hidden', tone === 'sand' ? 'bg-sand' : 'bg-sky-wash']} aria-labelledby="final-cta">
   <NearbyRing class="pointer-events-none absolute -right-48 -top-64 size-[560px]" />
@@ -14,10 +14,11 @@ const { title, text, tone = 'sand' } = Astro.props;
     <div class="max-w-2xl">
       <h2 id="final-cta">{title}</h2>
       <p class="lead mt-3">{text}</p>
+      {note && <p class="mt-3 flex items-start gap-2 text-base text-slate"><Icon name="info" size={18} class="mt-0.5 flex-none text-harbor" />{note}</p>}
     </div>
     <div class="flex flex-col gap-3 sm:flex-row lg:flex-none">
       <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="final-cta"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
-      <a href="#callback" class="btn-secondary" data-open-callback data-location="final-cta">Request a Callback</a>
+      <a href="#callback" class="btn-secondary" data-open-callback data-location="final-cta">{secondary}</a>
     </div>
   </div>
 </section>

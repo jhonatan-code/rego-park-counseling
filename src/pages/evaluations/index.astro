@@ -1,0 +1,121 @@
+---
+// Evaluations hub (Evaluations Pages Content brief, §1): banner with form ("Book an Evaluation") →
+// two big "which evaluation" cards → how it works → why us → learn more → short FAQ → final band.
+// Commercial pages own local, ready-to-book searches; blog posts keep the national "what is" searches and link up.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import FaqList from '../../components/FaqList.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE } from '../../data/site.js';
+import { HUB, TRUST, EVAL_POSTS, NOT_LEGAL_ADVICE } from '../../data/evaluations.js';
+import { clean } from '../../data/mental-health.js';
+
+const url = `${SITE.url}/evaluations/`;
+const crumbs = [{ name: 'Evaluations', href: '/evaluations/' }];
+const schema = [
+  { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: 'Substance Abuse and DWI Evaluations in Queens', provider: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
+  {
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: 'Substance abuse and DWI evaluations',
+    serviceType: 'Drug and alcohol evaluation',
+    provider: { '@id': `${SITE.url}/#organization` },
+    areaServed: [{ '@type': 'City', name: 'Queens, NY' }, { '@type': 'City', name: 'New York, NY' }],
+  },
+  { '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: HUB.faqs.filter((f) => clean(f.a)).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) },
+];
+---
+<Base
+  title="Substance Abuse & DWI Evaluations in Queens, NY | Rego Park Counseling"
+  description="Drug, alcohol and DWI evaluations in Rego Park, Queens, from an OASAS-licensed clinic. Fast appointments for court, DMV or employer requirements. Call today."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    title="Substance Abuse and DWI Evaluations in Queens"
+    sub="Need an evaluation for court, the DMV, your job or yourself? Get a professional assessment from an OASAS-licensed clinic in Rego Park."
+    crumbs={crumbs}
+    trust={TRUST}
+    formId="cb-evaluations"
+    formHeading="Book an Evaluation"
+    formButton="Book My Evaluation"
+    formLocation="evaluation-hub"
+  />
+
+  {/* Which evaluation */}
+  <section class="section-y" aria-labelledby="which-title">
+    <div class="container-x">
+      <h2 id="which-title">Which Evaluation Do You Need?</h2>
+      <ul class="mt-10 grid gap-6 md:grid-cols-2">
+        {HUB.cards.map((c) => (
+          <li class="card-focus group relative grid overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white lg:grid-cols-[0.9fr_1fr]">
+            <img src={c.image} alt={c.alt} width="720" height="450" loading="lazy" class="aspect-[16/10] h-full w-full object-cover lg:aspect-auto" />
+            <div class="flex flex-col p-6 lg:p-7">
+              <span class="icon-dot"><Icon name={c.icon as any} /></span>
+              <h3 class="mt-4 text-2xl"><a href={c.href} class="stretched-link">{c.label}</a></h3>
+              <p class="mt-2 flex-1 text-slate">{c.text}</p>
+              {c.legal && <p class="mt-3 text-base text-slate">Information, not legal advice.</p>}
+              <span class="mt-4 inline-flex items-center gap-1.5 font-bold text-harbor">{c.label} <Icon name="arrow-right" size={18} class="transition-transform duration-200 group-hover:translate-x-1" /></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 flex items-start gap-3 rounded-[var(--radius-panel)] bg-sand p-5 text-lg lg:px-7">
+        <Icon name="clipboard" size={22} class="mt-1 flex-none text-harbor" />
+        <span>Not sure which one you need? <a href={SITE.phoneHref} class="text-link" data-cta="call" data-location="eval-hub-unsure">Call us</a>, and bring any letter or paperwork you received.</span>
+      </p>
+    </div>
+  </section>
+
+  {/* How it works */}
+  <section class="section-y bg-sky-wash" aria-labelledby="how-title">
+    <div class="container-x">
+      <h2 id="how-title" class="text-center">How an Evaluation Works</h2>
+      <ol class="relative mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+        <li aria-hidden="true" class="absolute left-[16.6%] right-[16.6%] top-7 hidden border-t-2 border-dashed border-harbor/40 md:block"></li>
+        {HUB.steps.map((s, i) => (
+          <li class="relative flex gap-4 md:flex-col md:items-center md:text-center">
+            <span class="relative inline-flex size-14 flex-none items-center justify-center rounded-full bg-harbor font-display text-2xl font-extrabold text-white ring-8 ring-sky-wash">{i + 1}</span>
+            <div>
+              <h3 class="md:mt-4">{s.title.replace(/\.$/, '')}</h3>
+              <p class="mt-2 text-slate md:mx-auto md:max-w-[34ch]">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* Why us */}
+  <section class="section-y" aria-labelledby="why-title">
+    <div class="container-x">
+      <h2 id="why-title">Why People Choose Us for Evaluations</h2>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {HUB.why.map((w) => (
+          <li class="rounded-[var(--radius-panel)] border-t-4 border-harbor bg-white p-6">
+            <span class="icon-dot"><Icon name={w.icon as any} /></span>
+            <p class="mt-4 text-lg font-bold text-ink">{w.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Learn more */}
+  <section class="pb-16 lg:pb-24" aria-labelledby="learn-title">
+    <div class="container-x">
+      <div class="rounded-[var(--radius-panel)] bg-white p-6 lg:p-8">
+        <h2 id="learn-title" class="text-2xl lg:text-[28px]">Learn More</h2>
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {HUB.posts.map((k) => (
+            <li><a href={EVAL_POSTS[k].href} class="group flex h-full items-start gap-3 rounded-[var(--radius-card)] bg-sky-wash p-4 font-bold text-harbor"><Icon name="book" size={20} class="mt-0.5 flex-none text-cyan" /><span class="group-hover:underline">{EVAL_POSTS[k].title}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <FaqList title="Evaluation FAQs" faqs={HUB.faqs} lead="Deadline coming up? Call us with your paperwork." />
+  <FinalCta title="Book Your Evaluation in Queens" text="Tell us who requested the evaluation and when it is due." note={`DWI: ${NOT_LEGAL_ADVICE}`} secondary="Book an Evaluation" />
+</Base>

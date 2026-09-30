@@ -6,4 +6,5 @@ export const BUILT = [
   '/mental-health/ptsd-trauma-counseling/', '/mental-health/bipolar-disorder-counseling/',
   '/mental-health/schizophrenia-counseling/', '/mental-health/anger-management/',
   '/locations/', '/locations/rego-park/', '/locations/fresh-meadows/', '/locations/yonkers/',
+  '/evaluations/', '/evaluations/substance-abuse-evaluation/', '/evaluations/dwi-evaluation/',
 ];
