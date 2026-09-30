@@ -1,6 +1,24 @@
 {
   "redirects": [
-    { "source": "/contact-us/", "destination": "/contact/", "permanent": true },
-    { "source": "/contact-us-2/", "destination": "/contact/", "permanent": true }
+    {
+      "source": "/contact-us/",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us-2/",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/about/our-team/",
+      "destination": "/our-team/",
+      "permanent": true
+    },
+    {
+      "source": "/about/our-team/:slug/",
+      "destination": "/our-team/:slug/",
+      "permanent": true
+    }
   ]
 }

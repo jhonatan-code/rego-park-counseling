@@ -29,3 +29,4 @@ npm run build
 - About/Team/Contact brackets: license numbers, neighborhoods list, licenses mix + languages, leadership names/bios, staff list with consent, reviewers, careers contact, Fresh Meadows own phone, hours, transit/bus lines, referral email/fax, callback promise ("usually the same business day" used everywhere; brief says "within one business day — confirm").
 - Contact brief asked for extra fields (clinic, need, best time) and a /thank-you/ redirect: not applied (user's one-form decision). Recommend the /thank-you/ redirect for the conversion once CTM is live.
 - /contact-us/ and /contact-us-2/ 301 in vercel.json; the full Redirect Map goes in at launch.
+- Deviation from sitemap v2 (user, 2026-09-30): Our Team lives at `/our-team/` (not `/about/our-team/`), person pages at `/our-team/{slug}/` (Elev8 SOP; max two levels). Still in the About menu. `/about/our-team/*` 301s in vercel.json. Tell Julian.

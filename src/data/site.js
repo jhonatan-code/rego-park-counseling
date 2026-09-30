@@ -87,7 +87,7 @@ export const NAV = [
     intro: 'A neighborhood clinic for Queens.',
     links: [
       { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
-      { label: 'Our Team', href: '/about/our-team/', desc: 'Meet our licensed counselors' },
+      { label: 'Our Team', href: '/our-team/', desc: 'Meet our licensed counselors' },
       { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
     ],
   },

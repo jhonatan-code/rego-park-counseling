@@ -10,6 +10,8 @@ import { SITE, NAV, CLINICS, live } from '../data/site.js';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => href !== '/' && path.startsWith(href);
+// A menu item is active on its hub and on any page listed in its panel (Our Team → About).
+const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some((l: any) => isActive(l.href));
 ---
 <div class="hidden bg-harbor text-white lg:block">
   <div class="container-header flex h-10 items-center justify-between gap-6 text-base">
@@ -55,9 +57,9 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href);
                   'relative flex items-center gap-0.5 whitespace-nowrap px-2 font-display text-[16px] font-bold text-harbor transition-colors duration-200',
                   'after:absolute after:inset-x-2 after:bottom-0 after:h-[3px] after:rounded-full after:bg-cyan after:opacity-0 after:transition-opacity after:duration-200',
                   'hover:after:opacity-100 group-focus-within/nav:after:opacity-100',
-                  isActive(item.href) && 'after:opacity-100',
+                  itemActive(item) && 'after:opacity-100',
                 ]}
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-current={path === item.href ? 'page' : undefined}
                 aria-haspopup={hasPanel ? 'true' : undefined}
                 aria-expanded={hasPanel ? 'false' : undefined}
                 aria-controls={hasPanel ? id : undefined}

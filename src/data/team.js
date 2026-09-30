@@ -1,4 +1,4 @@
-// Team data for /about/our-team/ (About Section Content brief, §2).
+// Team data for /our-team/ (About Section Content brief, §2).
 // RULES: only real staff with written consent to be shown; credentials exactly as on their license;
 // no patient photos; no testimonials attached to a named clinician.
 // Until Emmanuel sends the staff list, entries are PLACEHOLDERS (placeholder: true). While any placeholder is

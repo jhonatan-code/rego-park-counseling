@@ -7,7 +7,7 @@ import { BUILT } from './src/data/built.js';
 import { HAS_PLACEHOLDERS } from './src/data/team.js';
 
 // XML sitemap = home + built pages that are indexable. Placeholders and noindex pages stay out.
-const INDEXABLE = ['/', ...BUILT.filter((u) => !(u === '/about/our-team/' && HAS_PLACEHOLDERS))];
+const INDEXABLE = ['/', ...BUILT.filter((u) => !(u === '/our-team/' && HAS_PLACEHOLDERS))];
 
 // Production domain (brief: canonical is the www host; the server rule forces https + www).
 export default defineConfig({

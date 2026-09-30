@@ -1,5 +1,6 @@
 ---
-// Our Team (About Section Content brief, §2). Banner with form → intro → Leadership (large horizontal
+// Our Team (About Section Content brief, §2). URL /our-team/ (user, 2026-09-30: no /about/ parent; person pages
+// will live at /our-team/{slug}/, the Elev8 SOP pattern). Still listed under About in the menu. Banner with form → intro → Leadership (large horizontal
 // profiles) → team grid (profile cards) → article reviewers + careers (two small side-by-side bands) → closing.
 // Filters are skipped: the brief only wants them above 8 people.
 import Base from '../../layouts/Base.astro';
@@ -16,8 +17,8 @@ const real = [...LEADERSHIP, ...TEAM].filter((p) => !p.placeholder);
 const schema = real.length
   ? [{
       '@type': 'ProfilePage',
-      '@id': `${SITE.url}/about/our-team/#webpage`,
-      url: `${SITE.url}/about/our-team/`,
+      '@id': `${SITE.url}/our-team/#webpage`,
+      url: `${SITE.url}/our-team/`,
       mainEntity: real.map((p) => ({
         '@type': 'Person',
         name: p.name,
@@ -32,7 +33,7 @@ const schema = real.length
 <Base
   title="Our Counselors and Clinicians | Rego Park Counseling, Queens"
   description="Meet the licensed counselors and clinicians at Rego Park Counseling in Rego Park and Fresh Meadows, Queens. Real people, close to home."
-  breadcrumbs={[{ name: 'About Us', href: '/about/' }, { name: 'Our Team', href: '/about/our-team/' }]}
+  breadcrumbs={[{ name: 'Our Team', href: '/our-team/' }]}
   schema={schema}
   noindex={HAS_PLACEHOLDERS}
 >
@@ -40,7 +41,7 @@ const schema = real.length
     title="Meet Our Team"
     sub="Licensed counselors and clinicians from Queens, for Queens. Real people who listen, without judgment."
     eyebrow="Our team"
-    crumbs={[{ name: 'About Us', href: '/about/' }, { name: 'Our Team', href: '/about/our-team/' }]}
+    crumbs={[{ name: 'Our Team', href: '/our-team/' }]}
     formId="cb-team"
     formHeading="Talk to Our Team"
   />
