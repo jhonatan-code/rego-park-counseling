@@ -30,4 +30,4 @@ Anything missing → take it from the official site (content, images) before inv
 - `src/pages/api/lead.ts` — CTM FormReactor proxy; env `CTM_FORMREACTOR_ENDPOINT` / `CTM_FORMREACTOR_KEY`.
 
 ## Open items
-See README.md "Pending".
+`docs/PENDING.md` is the running list. After every page: add new questions/gates/decisions there, mark answered ones ☑ with the answer and date.
