@@ -1,0 +1,296 @@
+[
+ {
+  "url": "/locations/",
+  "section": "Locations",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": "counseling center queens"
+ },
+ {
+  "url": "/locations/rego-park/",
+  "section": "Locations",
+  "type": "Location",
+  "status": "Confirmed",
+  "kw": "counseling rego park"
+ },
+ {
+  "url": "/locations/fresh-meadows/",
+  "section": "Locations",
+  "type": "Location",
+  "status": "Confirmed",
+  "kw": "mental health clinic fresh meadows"
+ },
+ {
+  "url": "/locations/yonkers/",
+  "section": "Locations",
+  "type": "Location",
+  "status": "Pending data",
+  "kw": "therapist yonkers"
+ },
+ {
+  "url": "/mental-health/",
+  "section": "Mental Health",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": "mental health clinic queens"
+ },
+ {
+  "url": "/mental-health/anxiety-counseling/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "anxiety counseling queens"
+ },
+ {
+  "url": "/mental-health/depression-counseling/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "depression counseling queens"
+ },
+ {
+  "url": "/mental-health/ptsd-trauma-counseling/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "ptsd treatment queens"
+ },
+ {
+  "url": "/mental-health/bipolar-disorder-counseling/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "bipolar disorder treatment nyc"
+ },
+ {
+  "url": "/mental-health/schizophrenia-counseling/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "schizophrenia treatment queens"
+ },
+ {
+  "url": "/mental-health/anger-management/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "anger management queens"
+ },
+ {
+  "url": "/mental-health/psychiatry/",
+  "section": "Mental Health",
+  "type": "Service",
+  "status": "PENDING \u2014 Julian to confirm",
+  "kw": "psychiatrist queens"
+ },
+ {
+  "url": "/substance-use/",
+  "section": "Substance Use",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": "outpatient substance use treatment queens"
+ },
+ {
+  "url": "/substance-use/alcohol-use-treatment/",
+  "section": "Substance Use",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "alcohol counseling queens"
+ },
+ {
+  "url": "/substance-use/drug-use-treatment/",
+  "section": "Substance Use",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "drug counseling queens"
+ },
+ {
+  "url": "/substance-use/dual-diagnosis/",
+  "section": "Substance Use",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "dual diagnosis treatment queens"
+ },
+ {
+  "url": "/evaluations/",
+  "section": "Evaluations",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": "substance abuse evaluation queens"
+ },
+ {
+  "url": "/evaluations/substance-abuse-evaluation/",
+  "section": "Evaluations",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "substance abuse evaluation queens"
+ },
+ {
+  "url": "/evaluations/dwi-evaluation/",
+  "section": "Evaluations",
+  "type": "Service",
+  "status": "Confirmed",
+  "kw": "dwi evaluation new york"
+ },
+ {
+  "url": "/programs/",
+  "section": "Programs",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/programs/core/",
+  "section": "Programs",
+  "type": "Program",
+  "status": "Confirmed",
+  "kw": "core services harp"
+ },
+ {
+  "url": "/programs/social-care-network/",
+  "section": "Programs",
+  "type": "Program",
+  "status": "Confirmed",
+  "kw": "social care network queens"
+ },
+ {
+  "url": "/programs/telehealth/",
+  "section": "Programs",
+  "type": "Program",
+  "status": "Confirmed",
+  "kw": "telehealth therapy new york"
+ },
+ {
+  "url": "/who-we-serve/",
+  "section": "Who We Serve",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/who-we-serve/older-adults/",
+  "section": "Who We Serve",
+  "type": "Audience",
+  "status": "Confirmed",
+  "kw": "senior counseling queens"
+ },
+ {
+  "url": "/who-we-serve/court-involved/",
+  "section": "Who We Serve",
+  "type": "Audience",
+  "status": "Confirmed",
+  "kw": "court ordered treatment queens"
+ },
+ {
+  "url": "/who-we-serve/lgbtq-affirming-care/",
+  "section": "Who We Serve",
+  "type": "Audience",
+  "status": "PENDING \u2014 confirm",
+  "kw": "lgbtq therapist queens"
+ },
+ {
+  "url": "/therapies/",
+  "section": "Therapies",
+  "type": "Hub",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/therapies/individual-therapy/",
+  "section": "Therapies",
+  "type": "Therapy",
+  "status": "Confirmed",
+  "kw": "individual therapy queens"
+ },
+ {
+  "url": "/therapies/group-therapy/",
+  "section": "Therapies",
+  "type": "Therapy",
+  "status": "Confirmed",
+  "kw": "group therapy queens"
+ },
+ {
+  "url": "/therapies/family-therapy/",
+  "section": "Therapies",
+  "type": "Therapy",
+  "status": "Confirmed",
+  "kw": "family therapy queens"
+ },
+ {
+  "url": "/therapies/couples-therapy/",
+  "section": "Therapies",
+  "type": "Therapy",
+  "status": "PENDING \u2014 Julian to confirm",
+  "kw": "couples counseling queens"
+ },
+ {
+  "url": "/insurance/",
+  "section": "Insurance",
+  "type": "Info",
+  "status": "Confirmed",
+  "kw": "therapist that accepts medicaid queens"
+ },
+ {
+  "url": "/about/",
+  "section": "About",
+  "type": "Info",
+  "status": "Confirmed",
+  "kw": "rego park counseling"
+ },
+ {
+  "url": "/about/our-team/",
+  "section": "About",
+  "type": "Info",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/contact/",
+  "section": "Contact",
+  "type": "Info",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/blog/",
+  "section": "Blog",
+  "type": "Blog hub",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/privacy-policy/",
+  "section": "Legal",
+  "type": "Legal",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/hipaa-notice/",
+  "section": "Legal",
+  "type": "Legal",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/telehealth-privacy/",
+  "section": "Legal",
+  "type": "Legal",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/accessibility/",
+  "section": "Legal",
+  "type": "Legal",
+  "status": "Confirmed",
+  "kw": null
+ },
+ {
+  "url": "/thank-you/",
+  "section": "Utility",
+  "type": "Utility",
+  "status": "Confirmed",
+  "kw": null
+ }
+]

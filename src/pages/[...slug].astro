@@ -1,0 +1,32 @@
+---
+// Temporary blank pages for every URL in the approved sitemap (RPC_Sitemap_Redirect_Map_v2.xlsx, "New Sitemap"),
+// so the header and footer links work while each page waits for its brief. noindex until built for real.
+// Pages marked PENDING (psychiatry, LGBTQ+, couples) are not generated: they stay out until confirmed.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import NearbyRing from '../components/NearbyRing.astro';
+import { SITE } from '../data/site.js';
+import pages from '../data/sitemap.json';
+
+export function getStaticPaths() {
+  return pages
+    .filter((p) => !String(p.status).startsWith('PENDING'))
+    .map((p) => ({ params: { slug: p.url.replace(/^\/|\/$/g, '') }, props: { page: p } }));
+}
+const { page } = Astro.props;
+const name = page.url.split('/').filter(Boolean).pop().replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+---
+<Base title={`${name} | Rego Park Counseling`} description="Page in progress." noindex>
+  <section class="relative overflow-hidden bg-sky-wash">
+    <NearbyRing class="pointer-events-none absolute -right-24 -top-24 size-[420px]" />
+    <div class="container-x relative py-20 lg:py-28">
+      <p class="eyebrow">{page.section}</p>
+      <h1 class="mt-3">{name}</h1>
+      <p class="lead measure mt-4">This page is being built. In the meantime, we’re one call away.</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact/" class="btn-call" data-open-callback data-location="placeholder">Request a Callback</a>
+        <a href={SITE.phoneHref} class="btn-secondary" data-cta="call" data-location="placeholder"><Icon name="phone" size={20} /> {SITE.phone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

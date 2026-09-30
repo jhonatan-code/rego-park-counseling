@@ -1,0 +1,49 @@
+---
+// Embedded map with both clinic pins (brief, section 6), lazy-loaded: Leaflet and its tiles load only
+// when the map scrolls near the viewport, so it never touches LCP. OSM tiles, desaturated to stay calm.
+// OSM's tile policy fits a small clinic site; switch to a keyed provider if traffic grows.
+import { CLINICS, fullAddress } from '../data/site.js';
+const pins = CLINICS.filter((c) => c.geo).map((c) => ({ name: c.name, address: fullAddress(c), lat: c.geo.lat, lng: c.geo.lng, href: c.href }));
+---
+<div class="rpc-map relative h-full min-h-[320px] w-full overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash" data-pins={JSON.stringify(pins)} role="region" aria-label="Map of our Rego Park and Fresh Meadows clinics">
+  <p class="absolute inset-0 flex items-center justify-center p-6 text-center text-base text-slate">Loading map…</p>
+</div>
+
+<script>
+  const el = document.querySelector<HTMLElement>('.rpc-map');
+  if (el) {
+    const load = async () => {
+      const [{ default: L }] = await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]);
+      const pins = JSON.parse(el.dataset.pins || '[]') as { name: string; address: string; lat: number; lng: number; href: string }[];
+      el.innerHTML = '';
+      const map = L.map(el, { scrollWheelZoom: false, attributionControl: true });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        className: 'rpc-tiles',
+      }).addTo(map);
+      const icon = L.divIcon({
+        className: '',
+        html: '<span style="display:block;width:22px;height:22px;border-radius:9999px;background:#0a5577;border:4px solid #fff;box-shadow:0 0 0 2px #00aeef,0 4px 10px rgba(0,0,0,.25)"></span>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11],
+      });
+      const bounds = L.latLngBounds([]);
+      pins.forEach((p) => {
+        L.marker([p.lat, p.lng], { icon, title: p.name, alt: p.name })
+          .addTo(map)
+          .bindPopup(`<strong style="font-family:var(--font-display);color:#0a5577;font-size:16px">${p.name}</strong><br><span style="font-size:15px">${p.address}</span><br><a href="${p.href}" style="font-weight:700">View clinic</a>`);
+        bounds.extend([p.lat, p.lng]);
+      });
+      map.fitBounds(bounds, { padding: [60, 60] });
+    };
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }
+    }, { rootMargin: '300px' });
+    io.observe(el);
+  }
+</script>
+
+<style is:global>
+  .rpc-tiles { filter: saturate(0.35) brightness(1.04) contrast(0.95); }
+</style>

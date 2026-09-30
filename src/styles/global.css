@@ -1,0 +1,130 @@
+@import "@fontsource-variable/nunito";
+@import "@fontsource/atkinson-hyperlegible/400.css";
+@import "@fontsource/atkinson-hyperlegible/700.css";
+@import "tailwindcss";
+
+/* RPC Brand Manual v1.0 (docs/brand), sections 03 Color, 04 Typography, 09 Space & shape.
+   Never hard-code a hex below this layer. */
+@theme {
+  --font-display: "Nunito Variable", "Nunito", "Segoe UI", sans-serif;
+  --font-sans: "Atkinson Hyperlegible", "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --color-harbor: #0a5577;       /* primary: headings, nav, links, icons, dark bands (8.1:1 on white) */
+  --color-harbor-deep: #07415b;  /* dark band depth, footer bottom bar */
+  --color-magenta: #c4007a;      /* RESERVED: call and callback actions only */
+  --color-magenta-hover: #9e0063;
+  --color-magenta-press: #7d0050;
+  --color-cyan: #00aeef;         /* logo cyan: graphics and rings only, never text */
+  --color-sky: #bfe7f8;          /* borders, ring lines, selected chips */
+  --color-sky-wash: #e8f6fc;     /* calm section backgrounds */
+  --color-sand: #f4ede4;         /* warm sections, notes, testimonials */
+  --color-ink: #1e2b34;          /* body text */
+  --color-slate: #4d5c68;        /* secondary text */
+  --color-line: #e4dfd8;         /* dividers */
+  --color-porch: #fcfaf7;        /* page background */
+  --color-attention: #a33a12;    /* form errors only, always with text */
+  --color-success: #1f7a52;
+
+  --radius-input: 8px;
+  --radius-card: 14px;
+  --radius-panel: 20px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+  /* Body 17 → 18 / 1.55. 16px floor for any copy. */
+  body {
+    @apply bg-porch font-sans text-ink antialiased;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+  @media (min-width: 1024px) { body { font-size: 18px; } }
+  h1, h2, h3, h4 {
+    @apply font-display text-harbor;
+    text-wrap: balance;
+  }
+  /* H1 32 → 44 / 1.1 · H2 26 → 34 / 1.15 · H3 20 → 24 / 1.25 */
+  h1 { font-weight: 800; font-size: 2rem; line-height: 1.1; letter-spacing: -0.01em; }
+  h2 { font-weight: 800; font-size: 1.625rem; line-height: 1.15; letter-spacing: -0.005em; }
+  h3 { font-weight: 700; font-size: 1.25rem; line-height: 1.25; }
+  @media (min-width: 1024px) {
+    h1 { font-size: 2.75rem; }
+    h2 { font-size: 2.125rem; }
+    h3 { font-size: 1.5rem; }
+  }
+  p { text-wrap: pretty; }
+  a { @apply transition-colors duration-200; }
+  /* Visible Harbor focus ring on every control (Checklist, Accessibility) */
+  :focus-visible {
+    outline: 3px solid var(--color-harbor);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection { background: var(--color-sky); }
+  [x-cloak], [hidden] { display: none !important; }
+}
+
+/* Grid: 1180px content max (brand manual 09). 20px mobile margins. */
+@utility container-x {
+  @apply mx-auto w-full max-w-[1180px] px-5 md:px-8 xl:px-0;
+}
+/* The header needs more room for logo + 7 items + phone + button; nothing else may be wider. */
+@utility container-header {
+  @apply mx-auto w-full max-w-[1480px] px-5 md:px-8;
+}
+@utility section-y {
+  @apply py-16 lg:py-24;
+}
+/* Label · Atkinson 700 · 14 · caps · +0.1em */
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 font-sans text-sm font-bold uppercase tracking-[0.1em] text-harbor;
+}
+@utility lead {
+  @apply text-lg leading-[1.5] text-slate lg:text-xl;
+}
+@utility measure {
+  max-width: 66ch; /* 60–70 characters per line */
+}
+
+/* Buttons are pills, 48px tall (tap targets). Nunito 700. Fades only, 200ms. */
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-[17px] font-bold leading-none whitespace-nowrap transition-colors duration-200;
+}
+/* Magenta = "talk to us". Call and callback actions only. */
+@utility btn-call {
+  @apply btn bg-magenta text-white hover:bg-magenta-hover active:bg-magenta-press;
+}
+@utility btn-secondary {
+  @apply btn border-2 border-harbor bg-white text-harbor hover:bg-sky-wash;
+}
+@utility btn-neutral {
+  @apply btn bg-harbor text-white hover:bg-harbor-deep;
+}
+@utility btn-on-dark {
+  @apply btn border-2 border-white/80 text-white hover:bg-white/10;
+}
+@utility text-link {
+  @apply font-bold text-harbor underline decoration-sky decoration-2 underline-offset-4 hover:decoration-harbor;
+}
+@utility card {
+  @apply rounded-[var(--radius-card)] border border-line bg-white p-5 lg:p-6;
+}
+/* Whole-card click target: the card is `relative`, this link's ::after covers it. */
+@utility stretched-link {
+  &::after { content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 1; }
+  &:focus-visible { outline: none; }
+}
+@utility card-focus {
+  &:has(.stretched-link:focus-visible) { outline: 3px solid var(--color-harbor); outline-offset: 3px; }
+}
+/* Lucide marker: 24px icon in a 48px Sky Wash circle */
+@utility icon-dot {
+  @apply inline-flex size-12 flex-none items-center justify-center rounded-full bg-sky-wash text-harbor;
+}

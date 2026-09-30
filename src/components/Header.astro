@@ -1,0 +1,271 @@
+---
+// Header (Header & Home Page Brief, "Header and navigation"; brand manual 10 "Header · desktop").
+// Utility bar (desktop only) → main bar: logo left · 7 items center · phone + the ONE magenta button right.
+// Every commercial page is one hover away: each item opens a mega panel (hover or keyboard focus on desktop).
+// Mobile: logo left, phone icon + hamburger right; full-screen menu with the 7 items as accordions.
+import Icon from './Icon.astro';
+import NearbyRing from './NearbyRing.astro';
+import { SITE, NAV, CLINICS, live } from '../data/site.js';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => href !== '/' && path.startsWith(href);
+---
+<div class="hidden bg-harbor text-white lg:block">
+  <div class="container-header flex h-10 items-center justify-between gap-6 text-base">
+    <p class="flex items-center gap-2 text-white/95">
+      <Icon name="licensed" size={18} class="text-sky" />
+      <span>{SITE.licensing}</span>
+      <span aria-hidden="true" class="text-white/40">·</span>
+      <span>Most Medicaid plans accepted</span>
+      <span aria-hidden="true" class="text-white/40">·</span>
+      <span>Telehealth available</span>
+    </p>
+    <nav aria-label="Our clinics" class="flex items-center gap-2">
+      <Icon name="pin" size={18} class="text-sky" />
+      {CLINICS.map((c, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true" class="text-white/40">·</span>}
+          <a href={c.href} class="text-white/95 underline-offset-4 hover:underline">
+            {c.name}{c.status === 'soon' && <span class="text-white/75"> (opening soon)</span>}
+          </a>
+        </>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<header id="site-header" class="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
+  <div class="container-header relative flex h-[72px] items-center justify-between gap-4 lg:h-20">
+    <a href="/" class="flex-none" aria-label="Rego Park Counseling, home">
+      <img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" class="h-auto w-[170px] sm:w-[200px] xl:w-[220px]" fetchpriority="high" />
+    </a>
+
+    {/* Desktop navigation */}
+    <nav aria-label="Main" class="hidden h-full xl:block">
+      <ul class="flex h-full items-stretch">
+        {NAV.map((item, i) => {
+          const hasPanel = Boolean(item.links || item.columns || item.locations);
+          const id = `mega-${i}`;
+          return (
+            <li class="rpc-nav-item group/nav flex items-stretch" data-has-panel={hasPanel ? '' : undefined}>
+              <a
+                href={item.href}
+                class:list={[
+                  'relative flex items-center gap-1 whitespace-nowrap px-2.5 font-display text-[16px] font-bold text-harbor transition-colors duration-200 min-[1480px]:px-3',
+                  'after:absolute after:inset-x-2 after:bottom-0 after:h-[3px] after:rounded-full after:bg-cyan after:opacity-0 after:transition-opacity after:duration-200',
+                  'hover:after:opacity-100 group-focus-within/nav:after:opacity-100',
+                  isActive(item.href) && 'after:opacity-100',
+                ]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-haspopup={hasPanel ? 'true' : undefined}
+                aria-expanded={hasPanel ? 'false' : undefined}
+                aria-controls={hasPanel ? id : undefined}
+              >
+                {item.label}
+                {hasPanel && <Icon name="chevron-down" size={14} class="mt-0.5 hidden transition-transform duration-200 group-hover/nav:rotate-180 min-[1440px]:block" />}
+              </a>
+
+              {hasPanel && (
+                <div id={id} class="rpc-mega invisible absolute inset-x-5 top-full pt-0 opacity-0 transition-opacity duration-200 md:inset-x-8 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
+                  <div class="overflow-hidden rounded-b-[var(--radius-panel)] border border-t-0 border-line bg-white shadow-[0_24px_48px_-12px_rgba(10,85,119,0.22)]">
+                    <div class="grid grid-cols-[280px_1fr]">
+                      {/* Intro column: what this section is, link to the hub */}
+                      <div class="relative overflow-hidden bg-sky-wash p-7">
+                        <NearbyRing class="pointer-events-none absolute -right-16 -top-16 size-40 opacity-70" />
+                        <p class="eyebrow relative">{item.label}</p>
+                        <p class="relative mt-3 font-display text-[22px] font-extrabold leading-tight text-harbor">{item.intro}</p>
+                        <a href={item.href} class="text-link relative mt-5 inline-flex items-center gap-1.5 text-base">
+                          {item.locations ? 'See all locations' : item.columns ? 'See all programs' : `Explore ${item.label.toLowerCase()}`}
+                          <Icon name="arrow-right" size={18} />
+                        </a>
+                        <p class="relative mt-6 border-t border-sky pt-4 text-base text-slate">
+                          Not sure where to start?<br />
+                          <a href={SITE.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location="header-menu">Call {SITE.phone}</a>
+                        </p>
+                      </div>
+
+                      {/* Link area */}
+                      <div class="p-7">
+                        {item.links && (
+                          <ul class:list={['grid gap-x-6 gap-y-1', live(item.links).length > 3 ? 'grid-cols-2' : 'grid-cols-1 max-w-md']}>
+                            {live(item.links).map((l) => (
+                              <li>
+                                <a href={l.href} class="group/link flex items-start gap-3 rounded-[var(--radius-card)] p-3 transition-colors duration-200 hover:bg-sky-wash">
+                                  <Icon name="chevron-right" size={18} class="mt-1 flex-none text-cyan" />
+                                  <span>
+                                    <span class="block font-display text-[17px] font-bold text-harbor">{l.label}</span>
+                                    {l.desc && <span class="mt-0.5 block text-base leading-snug text-slate">{l.desc}</span>}
+                                  </span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {item.columns && (
+                          <div class="grid grid-cols-3 gap-6">
+                            {item.columns.map((col) => (
+                              <div>
+                                <a href={col.href} class="eyebrow mb-2 border-b border-line pb-3 hover:underline">{col.title}</a>
+                                <ul class="space-y-1">
+                                  {live(col.links).map((l) => (
+                                    <li>
+                                      <a href={l.href} class="block rounded-[var(--radius-card)] p-3 transition-colors duration-200 hover:bg-sky-wash">
+                                        <span class="block font-display text-[17px] font-bold text-harbor">{l.label}</span>
+                                        {l.desc && <span class="mt-0.5 block text-base leading-snug text-slate">{l.desc}</span>}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {item.locations && (
+                          <ul class="grid grid-cols-3 gap-4">
+                            {CLINICS.map((c) => (
+                              <li class="card-focus relative rounded-[var(--radius-card)] border border-line p-5 transition-colors duration-200 hover:border-sky hover:bg-sky-wash/60">
+                                <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{c.label}</p>
+                                <a href={c.href} class="stretched-link mt-1 block font-display text-xl font-extrabold text-harbor">{c.name}</a>
+                                {c.street ? (
+                                  <p class="mt-2 text-base leading-snug text-ink">{c.street}<br />{c.city}, {c.region} {c.postal}</p>
+                                ) : (
+                                  <p class="mt-2 text-base leading-snug text-slate">Address and opening date coming soon.</p>
+                                )}
+                                <span class="mt-3 inline-flex items-center gap-1 text-base font-bold text-harbor">
+                                  {c.status === 'soon' ? 'Get notified' : 'View clinic'} <Icon name="arrow-right" size={16} />
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div class="flex flex-none items-center gap-2 lg:gap-4">
+      <a href={SITE.phoneHref} class="hidden items-center gap-2 font-display text-[17px] font-extrabold text-harbor hover:text-harbor-deep min-[1480px]:inline-flex" data-cta="call" data-location="header">
+        <Icon name="phone" size={20} />
+        <span>{SITE.phone}</span>
+      </a>
+      <a href={SITE.phoneHref} class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash xl:size-11 xl:border xl:border-line min-[1480px]:hidden" aria-label={`Call ${SITE.phone}`} data-cta="call" data-location="header">
+        <Icon name="phone" size={22} />
+      </a>
+      <a href="/contact/" class="btn-call hidden lg:inline-flex" data-open-callback data-location="header">Request a Callback</a>
+      <button type="button" class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash xl:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-open>
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+</header>
+
+{/* Mobile full-screen menu: the 7 items as accordions (details/summary keeps it working without JS) */}
+<div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-white xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="flex h-[72px] flex-none items-center justify-between border-b border-line px-5">
+    <a href="/" aria-label="Rego Park Counseling, home"><img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" class="h-auto w-[170px]" /></a>
+    <button type="button" class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash" aria-label="Close menu" data-menu-close>
+      <Icon name="x" size={26} />
+    </button>
+  </div>
+  <nav aria-label="Main" class="flex-1 overflow-y-auto overscroll-contain px-5 pb-40 pt-2">
+    <ul class="divide-y divide-line">
+      {NAV.map((item) => {
+        const groups = item.columns
+          ? item.columns.map((c) => ({ title: c.title, links: live(c.links) }))
+          : item.locations
+            ? [{ title: null, links: CLINICS.map((c) => ({ label: c.status === 'soon' ? `${c.name} (opening soon)` : c.name, href: c.href })) }]
+            : item.links
+              ? [{ title: null, links: live(item.links) }]
+              : null;
+        return (
+          <li>
+            {groups ? (
+              <details class="group/acc">
+                <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between py-3 font-display text-xl font-extrabold text-harbor [&::-webkit-details-marker]:hidden">
+                  {item.label}
+                  <Icon name="plus" size={22} class="transition-transform duration-200 group-open/acc:rotate-45" />
+                </summary>
+                <div class="pb-4">
+                  <a href={item.href} class="mb-2 flex min-h-12 items-center gap-1.5 rounded-[var(--radius-card)] bg-sky-wash px-4 font-bold text-harbor">
+                    {item.locations ? 'All locations' : `${item.label} overview`} <Icon name="arrow-right" size={18} />
+                  </a>
+                  {groups.map((g) => (
+                    <div class="mt-2">
+                      {g.title && <p class="eyebrow px-4 pt-2">{g.title}</p>}
+                      <ul>
+                        {g.links.filter((l) => l.href !== item.href).map((l) => (
+                          <li><a href={l.href} class="flex min-h-12 items-center px-4 text-lg text-ink hover:text-harbor">{l.label}</a></li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <a href={item.href} class="flex min-h-14 items-center py-3 font-display text-xl font-extrabold text-harbor">{item.label}</a>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+    <div class="mt-6 rounded-[var(--radius-panel)] bg-sky-wash p-5 text-base">
+      <p class="font-bold text-harbor">{SITE.licensing}</p>
+      <p class="mt-1 text-slate">Most Medicaid plans accepted · Telehealth available</p>
+    </div>
+  </nav>
+</div>
+
+<script>
+  // Desktop mega panels: keep aria-expanded in sync with hover/focus, close on Escape.
+  const items = document.querySelectorAll<HTMLElement>('.rpc-nav-item[data-has-panel]');
+  items.forEach((li) => {
+    const trigger = li.querySelector<HTMLAnchorElement>('a[aria-haspopup]');
+    if (!trigger) return;
+    const set = (open: boolean) => trigger.setAttribute('aria-expanded', String(open));
+    li.addEventListener('mouseenter', () => set(true));
+    li.addEventListener('mouseleave', () => set(false));
+    li.addEventListener('focusin', () => set(true));
+    li.addEventListener('focusout', (e) => { if (!li.contains(e.relatedTarget as Node)) set(false); });
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        set(false);
+        trigger.focus();
+        li.classList.add('rpc-closed');
+        li.addEventListener('mouseleave', () => li.classList.remove('rpc-closed'), { once: true });
+      }
+    });
+  });
+
+  // Mobile menu
+  const menu = document.getElementById('mobile-menu');
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  const closeBtn = menu?.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const toggle = (open: boolean) => {
+    if (!menu || !openBtn) return;
+    menu.classList.toggle('hidden', !open);
+    menu.classList.toggle('flex', open);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    openBtn.setAttribute('aria-expanded', String(open));
+    (open ? closeBtn : openBtn)?.focus();
+  };
+  openBtn?.addEventListener('click', () => toggle(true));
+  closeBtn?.addEventListener('click', () => toggle(false));
+  menu?.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggle(false)));
+</script>
+
+<style>
+  /* Escape closes a panel even while the pointer is still over it */
+  .rpc-closed :global(.rpc-mega) { visibility: hidden !important; opacity: 0 !important; }
+  /* Short delay before a panel hides, so a diagonal mouse path doesn't drop it */
+  .rpc-mega { transition: opacity 200ms, visibility 0s linear 120ms; }
+  .rpc-nav-item:hover .rpc-mega, .rpc-nav-item:focus-within .rpc-mega { transition-delay: 60ms, 0s; }
+</style>

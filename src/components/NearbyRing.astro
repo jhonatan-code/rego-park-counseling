@@ -1,0 +1,35 @@
+---
+// "The Nearby Ring" (brand manual 06): the logo's circle turned into a radius around home.
+// core    → 4 rings, 2px lines fading Cyan → Sky Wash, one Harbor dot at the center (home). Texture, lines only.
+// clinics → three clinic dots joined by a dashed line; a hollow dot means "opening soon". Not a literal map.
+// One ring per screen, max. No magenta rings, no targets, no pulses.
+interface Props { variant?: 'core' | 'clinics'; class?: string; labels?: boolean }
+const { variant = 'core', class: cls, labels = true } = Astro.props;
+const rings = [
+  { r: 46, color: 'var(--color-cyan)', o: 0.9 },
+  { r: 92, color: 'var(--color-cyan)', o: 0.55 },
+  { r: 138, color: 'var(--color-sky)', o: 1 },
+  { r: 184, color: 'var(--color-sky-wash)', o: 1 },
+];
+---
+{variant === 'core' ? (
+  <svg viewBox="0 0 400 400" class={cls} aria-hidden="true" fill="none">
+    {rings.map((c) => <circle cx="200" cy="200" r={c.r} stroke={c.color} stroke-opacity={c.o} stroke-width="2" />)}
+    <circle cx="200" cy="200" r="9" fill="var(--color-harbor)" />
+  </svg>
+) : (
+  <svg viewBox="0 0 420 320" class={cls} role="img" aria-label="Three clinics, one team: Rego Park, Fresh Meadows and Yonkers (opening soon)" fill="none">
+    {rings.map((c) => <circle cx="150" cy="200" r={c.r * 0.62} stroke={c.color} stroke-opacity={c.o} stroke-width="2" />)}
+    <path d="M150 200 L300 170 M150 200 L262 64" stroke="var(--color-harbor)" stroke-width="2" stroke-dasharray="6 7" stroke-linecap="round" />
+    <circle cx="150" cy="200" r="10" fill="var(--color-harbor)" />
+    <circle cx="300" cy="170" r="10" fill="var(--color-harbor)" />
+    <circle cx="262" cy="64" r="9" fill="white" stroke="var(--color-harbor)" stroke-width="3" />
+    {labels && (
+      <g font-family="var(--font-display)" font-weight="800" font-size="17" fill="var(--color-harbor)">
+        <text x="150" y="238" text-anchor="middle">Rego Park</text>
+        <text x="300" y="208" text-anchor="middle">Fresh Meadows</text>
+        <text x="262" y="34" text-anchor="middle">Yonkers · soon</text>
+      </g>
+    )}
+  </svg>
+)}

@@ -1,0 +1,442 @@
+---
+// Home (Header & Home Page Brief, "Home page, section by section"). 14 sections, one H1, one H2 per section.
+// Reads short: a heading, one or two sentences and cards per section; depth lives in accordions that stay in the HTML.
+// Section 12 (Reviews) is skipped at launch: 3.2 from 20 Google reviews today (brief: "Skip … if not strong enough").
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import NearbyRing from '../components/NearbyRing.astro';
+import CallbackForm from '../components/CallbackForm.astro';
+import ClinicsMap from '../components/ClinicsMap.astro';
+import { SITE, CLINICS, fullAddress } from '../data/site.js';
+import { HELP_CARDS, CONDITIONS, PROGRAMS, STEPS, WHY, FAQS, POSTS } from '../data/home.js';
+
+const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
+const groups = [...new Set(CONDITIONS.map((c) => c.group))];
+
+// Clinic nodes are referenced by @id; their full versions live on each location page.
+const schema = [
+  ...CLINICS.filter((c) => c.status === 'open').map((c) => ({
+    '@type': 'MedicalClinic',
+    '@id': `${SITE.url}${c.href}#clinic`,
+    name: `${SITE.name} – ${c.name}`,
+    url: `${SITE.url}${c.href}`,
+    telephone: '+1-718-459-2558',
+    address: { '@type': 'PostalAddress', streetAddress: c.street, addressLocality: c.city, addressRegion: c.region, postalCode: c.postal, addressCountry: 'US' },
+    geo: { '@type': 'GeoCoordinates', latitude: c.geo.lat, longitude: c.geo.lng },
+    medicalSpecialty: ['Psychiatric', 'Addiction'],
+    parentOrganization: { '@id': `${SITE.url}/#organization` },
+  })),
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}/#faq`,
+    mainEntity: FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<Base
+  title="Therapist in Queens, NY | Rego Park Counseling"
+  description="Licensed outpatient therapy and substance use counseling in Rego Park and Fresh Meadows, Queens. Most Medicaid plans accepted. Request a callback today."
+  schema={schema}
+  preloadImage={HERO}
+>
+  {/* 1 · HERO — who, where, what insurance, how to reach us, in 5 seconds */}
+  <section class="relative overflow-hidden bg-porch">
+    <div aria-hidden="true" class="absolute right-0 top-0 hidden h-full w-[46%] rounded-bl-[120px] bg-sky-wash lg:block"></div>
+    <div class="container-x relative grid items-center gap-10 pb-24 pt-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pb-32 lg:pt-16">
+      <div>
+        <p class="eyebrow"><Icon name="pin" size={18} /> Queens, NY · Rego Park and Fresh Meadows</p>
+        <h1 class="mt-4 text-[2.25rem] leading-[1.06] sm:text-5xl lg:text-[3.5rem]">
+          Therapists and Counselors in Queens, <span class="whitespace-nowrap underline decoration-cyan decoration-[5px] underline-offset-[10px]">Close to Home</span>
+        </h1>
+        <p class="lead measure mt-5">
+          Licensed outpatient care for mental health and substance use in Rego Park and Fresh Meadows. Most Medicaid plans accepted.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact/" class="btn-call" data-open-callback data-location="hero"><Icon name="callback" size={20} /> Request a Callback</a>
+          <a href={SITE.phoneHref} class="btn-secondary" data-cta="call" data-location="hero"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+        </div>
+      </div>
+
+      <div class="relative">
+        <NearbyRing class="pointer-events-none absolute -right-20 -top-20 hidden size-[340px] lg:block" />
+        <img
+          src={HERO}
+          alt="Entrance of the 63-36 99th Street building, home of Rego Park Counseling's main clinic"
+          width="960" height="720"
+          fetchpriority="high"
+          class="relative aspect-[4/3] w-full rounded-[var(--radius-panel)] object-cover shadow-[0_30px_60px_-30px_rgba(10,85,119,0.45)]"
+        />
+        {/* RPC's own address next to the visual: separates us from the similarly named center (brand manual 02) */}
+        <div class="absolute -bottom-6 left-4 right-4 flex items-center gap-3 rounded-[var(--radius-card)] border border-line bg-white p-4 shadow-lg sm:left-6 sm:right-auto sm:max-w-sm">
+          <span class="icon-dot"><Icon name="pin" /></span>
+          <p class="text-base leading-snug">
+            <strong class="block font-display text-harbor">Main clinic, Rego Park</strong>
+            63-36 99th Street · {SITE.phone}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 2 · TRUST BAR — sits over the hero edge */}
+  <section aria-label="Why people trust us" class="relative z-10 -mt-12 lg:-mt-14">
+    <div class="container-x">
+      <ul class="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-panel)] border border-line bg-line shadow-[0_20px_40px_-24px_rgba(10,85,119,0.35)] lg:grid-cols-4">
+        {[
+          { icon: 'licensed', title: 'Licensed by NYS', text: 'OASAS and OMH' },
+          { icon: 'medicaid', title: 'Most Medicaid plans', text: 'We’ll check yours' },
+          { icon: 'telehealth', title: 'In person and telehealth', text: 'Whatever works for you' },
+          { icon: 'pin', title: 'Two Queens clinics', text: 'Yonkers opening soon' },
+        ].map((t) => (
+          <li class="flex items-center gap-3 bg-white p-4 lg:gap-4 lg:p-6">
+            <span class="icon-dot hidden sm:inline-flex"><Icon name={t.icon as any} /></span>
+            <p class="leading-snug">
+              <strong class="block font-display text-[17px] text-harbor lg:text-lg">{t.title}</strong>
+              <span class="text-base text-slate">{t.text}</span>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* 3 · QUICK CALLBACK FORM */}
+  <section id="callback" class="section-y scroll-mt-24" aria-labelledby="callback-title">
+    <div class="container-x grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
+      <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-sand p-7 lg:p-10">
+        <p class="eyebrow">Talk to someone</p>
+        <h2 id="callback-title" class="mt-3">Talk to someone this week</h2>
+        <p class="lead mt-3">Tell us how to reach you. A real person from our clinic calls you back.</p>
+        <ul class="mt-6 space-y-3">
+          {[
+            'We check your Medicaid plan on the call',
+            'No email or insurance ID needed',
+            'You can call for someone you love',
+          ].map((t) => (
+            <li class="flex items-start gap-3"><Icon name="clipboard" size={22} class="mt-0.5 flex-none text-harbor" /><span>{t}</span></li>
+          ))}
+        </ul>
+        <img src="/images/home/front-desk-callback.webp" alt="Clinic team member answering a phone call" width="800" height="560" loading="lazy" class="mt-8 hidden aspect-[16/9] w-full rounded-[var(--radius-card)] object-cover lg:block" />
+      </div>
+      <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 shadow-[0_20px_40px_-28px_rgba(10,85,119,0.35)] lg:p-10">
+        <CallbackForm formId="cb-home" location="home-inline" heading="We’ll call you back" />
+      </div>
+    </div>
+  </section>
+
+  {/* 4 · HOW WE CAN HELP */}
+  <section class="section-y bg-white" aria-labelledby="help-title">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="eyebrow">How we can help</p>
+        <h2 id="help-title" class="mt-3">Mental Health and Substance Use Counseling in Queens</h2>
+        <p class="lead mt-4">One clinic for your mind and your recovery. Our licensed counselors treat both, including when they happen together.</p>
+      </div>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {HELP_CARDS.map((c) => (
+          <li class="card-focus group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white transition-shadow duration-200 hover:shadow-[0_24px_48px_-28px_rgba(10,85,119,0.45)]">
+            <img src={c.image} alt={c.alt} width="800" height="560" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            <div class="relative flex flex-1 flex-col p-6">
+              <span class="icon-dot absolute -top-6 left-6 border-4 border-white"><Icon name={c.icon as any} /></span>
+              <h3 class="mt-4"><a href={c.href} class="stretched-link">{c.title}</a></h3>
+              <p class="mt-2 flex-1 text-slate">{c.text}</p>
+              <span class="mt-5 inline-flex items-center gap-1.5 font-bold text-harbor">Learn more <Icon name="arrow-right" size={18} class="transition-transform duration-200 group-hover:translate-x-1" /></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* 5 · CONDITIONS WE TREAT — main internal-linking block */}
+  <section class="section-y bg-sky-wash" aria-labelledby="conditions-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Conditions we treat</p>
+          <h2 id="conditions-title" class="mt-3">What We Help With</h2>
+          <p class="lead mt-3">Pick what sounds closest. If you’re not sure, that’s fine: we’ll figure it out together.</p>
+        </div>
+      </div>
+      <div class="mt-10 grid gap-10 lg:grid-cols-[3fr_2fr]">
+        {groups.map((g, gi) => (
+          <div>
+            <h3 class="flex items-center gap-2 text-lg lg:text-xl">
+              <Icon name={gi === 0 ? 'brain' : 'sprout'} size={22} class="text-cyan" /> {g[0].toUpperCase() + g.slice(1)}
+            </h3>
+            <ul class:list={['mt-4 grid gap-3', gi === 0 ? 'sm:grid-cols-2' : '']}>
+              {CONDITIONS.filter((c) => c.group === g).map((c) => (
+                <li class="card-focus group relative rounded-[var(--radius-card)] border border-transparent bg-white p-4 pr-12 transition-colors duration-200 hover:border-sky">
+                  <a href={c.href} class="stretched-link font-display text-lg font-bold text-harbor">{c.label[0].toUpperCase() + c.label.slice(1)}</a>
+                  <p class="mt-1 text-base leading-snug text-slate">{c.text}</p>
+                  <Icon name="arrow-right" size={20} class="absolute right-4 top-1/2 -translate-y-1/2 text-cyan transition-transform duration-200 group-hover:translate-x-1" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 6 · OUR CLINICS — local SEO section */}
+  <section class="section-y" aria-labelledby="clinics-title">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Our clinics</p>
+        <h2 id="clinics-title" class="mt-3">Counseling Near You in Rego Park, Fresh Meadows and Yonkers</h2>
+        <p class="lead mt-3">Three clinics, one team, one number. Pick the one closest to home.</p>
+      </div>
+
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {CLINICS.map((c) => (
+          <li class="flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white">
+            {c.image ? (
+              <img src={c.image} alt={c.imageAlt} width="640" height="420" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            ) : (
+              <div class="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden bg-sky-wash">
+                <NearbyRing class="absolute size-[360px]" />
+                <span class="relative rounded-full bg-white px-4 py-2 font-display font-extrabold text-harbor shadow">{c.name}</span>
+              </div>
+            )}
+            <div class="flex flex-1 flex-col p-6">
+              <p class:list={['text-sm font-bold uppercase tracking-[0.1em]', c.status === 'soon' ? 'text-attention' : 'text-slate']}>{c.label}</p>
+              <h3 class="mt-1">{c.name}</h3>
+              {c.street ? (
+                <address class="mt-3 space-y-2 not-italic">
+                  <span class="flex items-start gap-2"><Icon name="pin" size={20} class="mt-0.5 flex-none text-harbor" />{fullAddress(c)}</span>
+                  <a href={c.phoneHref} class="flex items-center gap-2 font-bold text-harbor hover:underline" data-cta="call" data-location={c.id}><Icon name="phone" size={20} class="flex-none" />{c.phone}</a>
+                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Hours coming soon. Call us to book.'}</span>
+                </address>
+              ) : (
+                <p class="mt-3 text-slate">Address and opening date coming soon. Join the list and we’ll let you know when we open.</p>
+              )}
+              <div class="mt-auto flex flex-wrap gap-3 pt-6">
+                {c.status === 'soon' ? (
+                  <a href="/contact/" class="btn-call" data-open-callback data-location="yonkers-card">Join the list</a>
+                ) : (
+                  <>
+                    <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary !min-h-11 !px-4 !text-base" data-cta="directions" data-location={c.id}><Icon name="navigation" size={18} /> Get directions</a>
+                    <a href={c.href} class="inline-flex min-h-11 items-center gap-1.5 px-2 font-bold text-harbor hover:underline">View clinic <Icon name="arrow-right" size={18} /></a>
+                  </>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-8 grid overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white lg:grid-cols-[1fr_1.4fr]">
+        <div class="p-6 lg:p-10">
+          <h3>Getting here</h3>
+          <ul class="mt-5 space-y-5">
+            {CLINICS.filter((c) => c.nearby).map((c) => (
+              <li class="flex gap-3">
+                <span class="icon-dot"><Icon name={c.id === 'rego-park' ? 'subway' : 'pin'} /></span>
+                <p><strong class="font-display text-harbor">{c.name}.</strong> {c.nearby}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="min-h-[340px] p-2 lg:p-3"><ClinicsMap /></div>
+      </div>
+    </div>
+  </section>
+
+  {/* 7 · INSURANCE AND MEDICAID — dark Harbor band. Never list plan names. */}
+  <section class="relative overflow-hidden bg-harbor text-white" aria-labelledby="insurance-title">
+    <div class="container-x section-y relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="eyebrow !text-sky">Insurance</p>
+        <h2 id="insurance-title" class="mt-3 !text-white">We Accept Most Medicaid Plans</h2>
+        <p class="measure mt-4 text-lg leading-relaxed text-white/90 lg:text-xl">
+          Most of our patients use Medicaid. Call us and we’ll check your plan before your first visit. We also offer <a href="/programs/core/" class="font-bold text-white underline decoration-sky decoration-2 underline-offset-4">CORE services for HARP members</a>.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="insurance"><Icon name="phone" size={20} /> Check my plan</a>
+          <a href="/insurance/" class="btn-on-dark">Insurance and Medicaid</a>
+        </div>
+      </div>
+      <ul class="grid gap-3">
+        {[
+          { icon: 'medicaid', t: 'We check your plan for you', d: 'It takes a few minutes on the phone.' },
+          { icon: 'core', t: 'Support beyond therapy', d: 'CORE and the Social Care Network help with daily life.' },
+          { icon: 'calendar', t: 'Know before your first visit', d: 'No surprises about what’s covered.' },
+        ].map((i) => (
+          <li class="flex items-start gap-4 rounded-[var(--radius-card)] border border-white/15 bg-white/[0.07] p-5">
+            <span class="inline-flex size-12 flex-none items-center justify-center rounded-full bg-white/10 text-sky"><Icon name={i.icon as any} /></span>
+            <p><strong class="block font-display text-lg">{i.t}</strong><span class="text-white/85">{i.d}</span></p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* 8 · PROGRAMS AND WHO WE SERVE */}
+  <section class="section-y bg-white" aria-labelledby="programs-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Programs</p>
+        <h2 id="programs-title" class="mt-3">Programs for Every Stage of Life</h2>
+        <p class="lead mt-3">Counseling is the start. These programs add support where you need it.</p>
+      </div>
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {PROGRAMS.map((p) => (
+          <li class="card-focus group relative flex gap-4 rounded-[var(--radius-card)] border border-line bg-porch p-5 transition-colors duration-200 hover:border-sky hover:bg-sky-wash lg:p-6">
+            <span class="icon-dot bg-white"><Icon name={p.icon as any} /></span>
+            <div>
+              <h3 class="text-lg lg:text-xl"><a href={p.href} class="stretched-link">{p.title}</a></h3>
+              <p class="mt-1 text-base text-slate">{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* 9 · HOW IT WORKS */}
+  <section class="section-y bg-sand" aria-labelledby="steps-title">
+    <div class="container-x">
+      <div class="text-center">
+        <p class="eyebrow">How it works</p>
+        <h2 id="steps-title" class="mt-3">Getting Started Is Simple</h2>
+      </div>
+      <ol class="relative mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+        <li aria-hidden="true" class="absolute left-[16.6%] right-[16.6%] top-7 hidden border-t-2 border-dashed border-harbor/40 md:block"></li>
+        {STEPS.map((s, i) => (
+          <li class="relative flex gap-4 md:flex-col md:items-center md:text-center">
+            <span class="relative inline-flex size-14 flex-none items-center justify-center rounded-full bg-harbor font-display text-2xl font-extrabold text-white ring-8 ring-sand">{i + 1}</span>
+            <div>
+              <h3 class="md:mt-4">{s.title}</h3>
+              <p class="mt-2 text-slate md:mx-auto md:max-w-[30ch]">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact/" class="btn-call" data-open-callback data-location="steps"><Icon name="callback" size={20} /> Request a Callback</a>
+        <a href={SITE.phoneHref} class="btn-secondary" data-cta="call" data-location="steps"><Icon name="phone" size={20} /> {SITE.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* 10 · WHY REGO PARK COUNSELING */}
+  <section class="section-y" aria-labelledby="why-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
+      <div class="relative">
+        <NearbyRing class="pointer-events-none absolute -left-24 -top-24 hidden size-[300px] lg:block" />
+        <img src="/images/home/group-therapy-circle.webp" alt="Adults sitting in a circle during a group counseling session" width="800" height="560" loading="lazy" class="relative aspect-[4/3] w-full rounded-[var(--radius-panel)] object-cover lg:aspect-square" />
+      </div>
+      <div>
+        <p class="eyebrow">Why Rego Park Counseling</p>
+        <h2 id="why-title" class="mt-3">Why Queens Families Choose Rego Park Counseling</h2>
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2">
+          {WHY.map((w) => (
+            <li>
+              <span class="icon-dot"><Icon name={w.icon as any} /></span>
+              <h3 class="mt-3 text-lg lg:text-xl">{w.title}</h3>
+              <p class="mt-1 text-base text-slate">{w.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* 11 · MEET THE TEAM — placeholders until the team photo session (brief: 3–6 real staff photos) */}
+  <section class="section-y bg-white" aria-labelledby="team-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Our team</p>
+          <h2 id="team-title" class="mt-3">Meet Our Counselors</h2>
+          <p class="lead mt-3">Licensed counselors from the neighborhood, here for you in person or by video.</p>
+        </div>
+        <a href="/about/our-team/" class="text-link inline-flex items-center gap-1.5">Meet the whole team <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <ul class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+        {[1, 2, 3, 4].map(() => (
+          <li class="overflow-hidden rounded-[var(--radius-panel)] border border-line bg-porch">
+            <div class="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-sky-wash">
+              <NearbyRing class="absolute size-[300px] opacity-70" />
+              <Icon name="user" size={56} strokeWidth={1.5} class="relative text-harbor/40" />
+            </div>
+            <div class="p-4 lg:p-5">
+              <p class="font-display text-lg font-extrabold text-harbor">Counselor name</p>
+              <p class="text-base text-slate">Credential · Languages</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-base text-slate">[Pending] Real staff photos, names, credentials and languages from Emmanuel.</p>
+    </div>
+  </section>
+
+  {/* 13 · FAQ — all answers in the HTML (feeds FAQPage schema) */}
+  <section class="section-y" aria-labelledby="faq-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.7fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-title" class="mt-3">Questions About Counseling in Queens</h2>
+        <p class="lead mt-3">Still wondering about something? Ask us. There’s no wrong question.</p>
+        <a href={SITE.phoneHref} class="mt-6 inline-flex items-center gap-2 font-display text-xl font-extrabold text-harbor hover:underline" data-cta="call" data-location="faq"><Icon name="phone" size={22} /> {SITE.phone}</a>
+      </div>
+      <div class="divide-y divide-line rounded-[var(--radius-panel)] border border-line bg-white px-5 lg:px-8">
+        {FAQS.map((f, i) => (
+          <details class="group/faq py-1" open={i === 0}>
+            <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-lg font-bold text-harbor lg:text-xl [&::-webkit-details-marker]:hidden">
+              <h3 class="text-inherit text-lg font-bold lg:text-xl">{f.q}</h3>
+              <span class="inline-flex size-10 flex-none items-center justify-center rounded-full bg-sky-wash transition-transform duration-200 group-open/faq:rotate-45"><Icon name="plus" size={20} /></span>
+            </summary>
+            <p class="measure pb-5 pr-2 text-ink/90 lg:pr-14">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* 14a · FROM THE BLOG — hand-picked */}
+  <section class="section-y bg-white" aria-labelledby="blog-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="eyebrow">From the blog</p>
+          <h2 id="blog-title" class="mt-3">Helpful Reading</h2>
+        </div>
+        <a href="/blog/" class="text-link inline-flex items-center gap-1.5">All articles <Icon name="arrow-right" size={18} /></a>
+      </div>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {POSTS.map((p) => (
+          <li class="card-focus group relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-porch">
+            <img src={p.image} alt={p.alt} width="720" height="450" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            <div class="flex flex-1 flex-col p-6">
+              <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate"><Icon name="book" size={16} class="mr-1 inline -translate-y-px text-harbor" />{p.tag}</p>
+              <h3 class="mt-2 text-xl"><a href={p.href} class="stretched-link group-hover:underline">{p.title}</a></h3>
+              <p class="mt-2 text-base text-slate">{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* 14b · FINAL CALL TO ACTION — full form + phone, repeated */}
+  <section class="relative overflow-hidden bg-harbor text-white" aria-labelledby="final-title">
+    <NearbyRing class="pointer-events-none absolute -bottom-52 -right-40 size-[620px] opacity-30" />
+    <div class="container-x section-y relative grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow !text-sky">Talk to someone today</p>
+        <h2 id="final-title" class="mt-3 !text-white lg:!text-5xl">Ready to Talk? We’re Here to Help.</h2>
+        <p class="measure mt-4 text-lg text-white/90 lg:text-xl">We work with most Medicaid plans. Ask us, we’ll check yours.</p>
+        <a href={SITE.phoneHref} class="mt-8 inline-flex items-center gap-3 font-display text-3xl font-extrabold text-white hover:text-sky lg:text-4xl" data-cta="call" data-location="final-band">
+          <span class="inline-flex size-14 items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="phone" size={26} /></span>
+          {SITE.phone}
+        </a>
+        <p class="mt-6 text-base text-white/80">{SITE.independentLine} Our addresses: 63-36 99th Street, Rego Park · 71-82 Parsons Blvd, Fresh Meadows.</p>
+      </div>
+      <div class="rounded-[var(--radius-panel)] bg-white p-6 text-ink shadow-2xl lg:p-10">
+        <CallbackForm formId="cb-final" location="final-band" heading="Request a callback" />
+      </div>
+    </div>
+  </section>
+</Base>
