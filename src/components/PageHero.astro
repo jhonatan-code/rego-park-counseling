@@ -1,0 +1,66 @@
+---
+// Inner-page banner (user, 2026-09-30): H1 + paragraph on the left, the callback form on the right.
+// The form here is the page's only form (id="callback"), so every "Request a Callback" link on the page
+// scrolls to it. Harbor band, one Nearby Ring cropped off the right edge behind the card (never behind text).
+import Icon from './Icon.astro';
+import NearbyRing from './NearbyRing.astro';
+import CallbackForm from './CallbackForm.astro';
+import { SITE } from '../data/site.js';
+
+interface Crumb { name: string; href: string }
+interface Props {
+  title: string;          // H1
+  sub: string;            // one-paragraph subhead
+  eyebrow?: string;
+  crumbs?: Crumb[];       // visible breadcrumb (Home is added)
+  formId: string;
+  formHeading?: string;
+  points?: string[];      // optional short reassurance lines under the subhead
+  bigPhone?: boolean;     // Contact: phone as a large button
+}
+const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callback', points = [], bigPhone = false } = Astro.props;
+---
+<section id="callback" class="relative scroll-mt-24 overflow-hidden bg-harbor text-white" aria-labelledby="page-title">
+  <NearbyRing class="pointer-events-none absolute -bottom-40 -right-40 hidden size-[640px] opacity-25 lg:block" />
+  <div class="container-x relative grid items-center gap-10 py-12 lg:grid-cols-[1fr_500px] lg:gap-16 lg:py-20">
+    <div>
+      {crumbs.length > 0 && (
+        <nav aria-label="Breadcrumb" class="mb-6 text-base text-white/80">
+          <ol class="flex flex-wrap items-center gap-1.5">
+            <li><a href="/" class="hover:text-white hover:underline">Home</a></li>
+            {crumbs.map((c, i) => (
+              <li class="flex items-center gap-1.5">
+                <Icon name="chevron-right" size={16} class="text-sky" />
+                {i === crumbs.length - 1 ? <span aria-current="page" class="text-white">{c.name}</span> : <a href={c.href} class="hover:text-white hover:underline">{c.name}</a>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      {eyebrow && <p class="eyebrow !text-sky">{eyebrow}</p>}
+      <h1 id="page-title" class="mt-3 !text-white lg:!text-[3.25rem] lg:leading-[1.08]">{title}</h1>
+      <p class="measure mt-5 text-lg leading-relaxed text-white/90 lg:text-xl">{sub}</p>
+      {points.length > 0 && (
+        <ul class="mt-7 space-y-3">
+          {points.map((p) => (
+            <li class="flex items-center gap-3 text-lg">
+              <span class="inline-flex size-9 flex-none items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="licensed" size={18} /></span>
+              {p}
+            </li>
+          ))}
+        </ul>
+      )}
+      {bigPhone ? (
+        <a href={SITE.phoneHref} class="btn-call mt-8 !min-h-14 !px-7 !text-xl" data-cta="call" data-location="page-hero"><Icon name="phone" size={22} /> Call {SITE.phone}</a>
+      ) : (
+        <a href={SITE.phoneHref} class="group mt-8 inline-flex items-center gap-3 font-display text-2xl font-extrabold text-white" data-cta="call" data-location="page-hero">
+          <span class="inline-flex size-12 items-center justify-center rounded-full bg-white/10 text-sky transition-colors duration-200 group-hover:bg-white/20"><Icon name="phone" size={22} /></span>
+          <span><span class="block text-base font-normal font-sans text-white/80">Prefer to talk now?</span>{SITE.phone}</span>
+        </a>
+      )}
+    </div>
+    <div class="flex justify-center lg:justify-end">
+      <CallbackForm formId={formId} location="page-hero" heading={formHeading} />
+    </div>
+  </div>
+</section>

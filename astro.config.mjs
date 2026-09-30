@@ -3,6 +3,11 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
+import { BUILT } from './src/data/built.js';
+import { HAS_PLACEHOLDERS } from './src/data/team.js';
+
+// XML sitemap = home + built pages that are indexable. Placeholders and noindex pages stay out.
+const INDEXABLE = ['/', ...BUILT.filter((u) => !(u === '/about/our-team/' && HAS_PLACEHOLDERS))];
 
 // Production domain (brief: canonical is the www host; the server rule forces https + www).
 export default defineConfig({
@@ -16,8 +21,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      // thank-you is noindex and out of the XML sitemap (New Sitemap tab, Utility row)
-      filter: (page) => !page.includes('/api/') && !['/thank-you/'].includes(new URL(page).pathname),
+      filter: (page) => INDEXABLE.includes(new URL(page).pathname),
     }),
   ],
 });

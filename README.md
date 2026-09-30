@@ -12,7 +12,8 @@ npm run build
 - Header: utility bar, logo, 7 items with mega panels (hover + keyboard, Escape closes), phone, one magenta "Request a Callback" (opens a dialog on every page). Mobile: full-screen accordion menu + sticky Call | Request a Callback bar.
 - Footer: NAP per clinic, 5 link columns, licensing, independent-clinic line, legal links.
 - Home: all brief sections except 12 (Reviews, skipped at launch: 3.2 from 20). Organization + MedicalClinic ×2 + WebSite + FAQPage schema.
-- Every other sitemap URL is a blank noindex placeholder.
+- About Us, Our Team, Contact (About Section Content brief): banner with H1/paragraph left and the form right (user rule for inner pages). Our Team stays noindex + out of the sitemap while staff entries are placeholders (`src/data/team.js`).
+- Every other sitemap URL is a blank noindex placeholder (`src/data/built.js` lists the real ones).
 
 ## Pending (from Emmanuel via Julian unless noted)
 - Clinic hours (cards show "Hours coming soon"), Yonkers address + date.
@@ -25,3 +26,6 @@ npm run build
 - Google Business Profile URLs for schema `sameAs`.
 - Pavel: refine home copy and FAQ answers in `src/data/home.js`.
 - The brief's speed notes mention Elementor/NitroPack; this build is Astro, so those don't apply.
+- About/Team/Contact brackets: license numbers, neighborhoods list, licenses mix + languages, leadership names/bios, staff list with consent, reviewers, careers contact, Fresh Meadows own phone, hours, transit/bus lines, referral email/fax, callback promise ("usually the same business day" used everywhere; brief says "within one business day — confirm").
+- Contact brief asked for extra fields (clinic, need, best time) and a /thank-you/ redirect: not applied (user's one-form decision). Recommend the /thank-you/ redirect for the conversion once CTM is live.
+- /contact-us/ and /contact-us-2/ 301 in vercel.json; the full Redirect Map goes in at launch.

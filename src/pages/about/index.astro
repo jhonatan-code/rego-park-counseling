@@ -1,0 +1,188 @@
+---
+// About Us (About Section Content brief, §1). Copy as written; [brackets] wait on Emmanuel.
+// Layout: banner with form → split story with clinic photo → philosophy cards (Sand) → service list rows →
+// who we serve (neighborhood chips) → licensing trio + independent-clinic note → closing band.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE, CLINICS } from '../../data/site.js';
+
+const PHILOSOPHY = [
+  { icon: 'heart', title: 'Addiction is a health condition.', text: 'We treat it as a chronic illness, not a moral failing. You will not be judged here.' },
+  { icon: 'user', title: 'Every plan is personal.', text: 'Your counselor builds your plan around your life, looking at your health, your family, your work and your community.' },
+  { icon: 'sprout', title: 'Recovery is a path, not a single step.', text: 'We stay with you from the first visit through ongoing support, in person or by telehealth.' },
+];
+const OFFER = [
+  { icon: 'brain', href: '/mental-health/', label: 'Mental health counseling', rest: 'for anxiety, depression, trauma, bipolar disorder and more.' },
+  { icon: 'sprout', href: '/substance-use/', label: 'Outpatient substance use treatment', rest: 'for alcohol and drug use, including dual diagnosis.' },
+  { icon: 'clipboard', href: '/evaluations/', label: 'Substance abuse and DWI evaluations', rest: 'for court, DMV or employer requirements.' },
+  { icon: 'core', href: '/programs/core/', label: 'CORE services', rest: 'for HARP-eligible Medicaid members, and the', extra: { href: '/programs/social-care-network/', label: 'Social Care Network' } },
+  { icon: 'telehealth', href: '/programs/telehealth/', label: 'Telehealth', rest: 'for people who cannot come in.' },
+];
+// [confirm list] with Emmanuel
+const NEIGHBORHOODS = ['Rego Park', 'Forest Hills', 'Elmhurst', 'Fresh Meadows', 'Flushing'];
+const fm = CLINICS.find((c) => c.id === 'fresh-meadows')!;
+
+const schema = [
+  {
+    '@type': 'AboutPage',
+    '@id': `${SITE.url}/about/#webpage`,
+    url: `${SITE.url}/about/`,
+    name: 'About Rego Park Counseling',
+    about: { '@id': `${SITE.url}/#organization` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+  },
+];
+---
+<Base
+  title="About Rego Park Counseling | Outpatient Counseling in Queens"
+  description="Rego Park Counseling is an independent, NYS-licensed outpatient clinic for mental health and substance use care in Rego Park and Fresh Meadows, Queens."
+  breadcrumbs={[{ name: 'About Us', href: '/about/' }]}
+  schema={schema}
+>
+  <PageHero
+    title="About Rego Park Counseling"
+    sub="A neighborhood clinic for mental health and substance use care in Queens, licensed by New York State."
+    eyebrow="About us"
+    crumbs={[{ name: 'About Us', href: '/about/' }]}
+    formId="cb-about"
+  />
+
+  {/* Who we are */}
+  <section class="section-y" aria-labelledby="who-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+      <div>
+        <p class="eyebrow">Who we are</p>
+        <h2 id="who-title" class="mt-3">Care Close to Home in Queens</h2>
+        <div class="measure mt-5 space-y-4 text-lg">
+          <p>Rego Park Counseling is an outpatient clinic that helps adults in Queens with mental health and substance use. We are licensed by the New York State Office of Addiction Services and Supports (OASAS) and the New York State Office of Mental Health (OMH), so one team can care for both.</p>
+          <p>Our clinics are in Rego Park and Fresh Meadows, close to the trains and buses our patients already use. A third clinic in Yonkers is opening soon.</p>
+        </div>
+        <dl class="mt-8 grid grid-cols-3 gap-3">
+          {[
+            { k: '2', v: 'Licenses: OASAS and OMH' },
+            { k: '2', v: 'Clinics in Queens' },
+            { k: '1', v: 'Team and one number' },
+          ].map((s) => (
+            <div class="rounded-[var(--radius-card)] border border-line bg-white p-4">
+              <dt class="font-display text-4xl font-extrabold text-harbor">{s.k}</dt>
+              <dd class="mt-1 text-base leading-snug text-slate">{s.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="relative">
+        <NearbyRing class="pointer-events-none absolute -right-16 -top-16 hidden size-[280px] lg:block" />
+        <img src="/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp" alt="Entrance of the 63-36 99th Street building in Rego Park, home of our main clinic" width="960" height="720" loading="lazy" class="relative aspect-[4/3] w-full rounded-[var(--radius-panel)] object-cover" />
+      </div>
+    </div>
+  </section>
+
+  {/* What we believe */}
+  <section class="section-y bg-sand" aria-labelledby="philosophy-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">What we believe</p>
+        <h2 id="philosophy-title" class="mt-3">Our Treatment Philosophy</h2>
+      </div>
+      <ol class="mt-10 grid gap-6 md:grid-cols-3">
+        {PHILOSOPHY.map((p, i) => (
+          <li class="relative rounded-[var(--radius-panel)] bg-white p-6 lg:p-8">
+            <span aria-hidden="true" class="absolute right-6 top-5 font-display text-5xl font-extrabold text-sky">0{i + 1}</span>
+            <span class="icon-dot"><Icon name={p.icon as any} /></span>
+            <h3 class="mt-5 pr-10">{p.title}</h3>
+            <p class="mt-3 text-slate">{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* What we offer */}
+  <section class="section-y bg-white" aria-labelledby="offer-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+      <div class="lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">What we offer</p>
+        <h2 id="offer-title" class="mt-3">Mental Health and Substance Use Care in One Place</h2>
+        <p class="lead mt-4">One clinic, one team, and one number for all of it.</p>
+      </div>
+      <ul class="divide-y divide-line border-y border-line">
+        {OFFER.map((o) => (
+          <li class="card-focus group relative flex items-center gap-5 py-5 transition-colors duration-200 hover:bg-sky-wash/60 lg:px-4">
+            <span class="icon-dot"><Icon name={o.icon as any} /></span>
+            <p class="flex-1 text-lg">
+              <a href={o.href} class="stretched-link font-display font-bold text-harbor">{o.label}</a> {o.rest}
+              {o.extra && <> <a href={o.extra.href} class="relative z-[2] font-bold text-harbor underline decoration-sky decoration-2 underline-offset-4">{o.extra.label}</a>.</>}
+            </p>
+            <Icon name="arrow-right" size={22} class="flex-none text-cyan transition-transform duration-200 group-hover:translate-x-1" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Who we serve */}
+  <section class="section-y bg-sky-wash" aria-labelledby="serve-title">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <p class="eyebrow">Queens neighbors</p>
+        <h2 id="serve-title" class="mt-3">Who We Serve</h2>
+        <p class="measure mt-5 text-lg">Adults and older adults from Rego Park, Forest Hills, Elmhurst, Fresh Meadows, Flushing and nearby neighborhoods. Most of our patients use Medicaid, and we work with most Medicaid plans. Call us and we will check yours.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="about-serve"><Icon name="phone" size={20} /> Check my plan</a>
+          <a href="/insurance/" class="btn-secondary">Insurance and Medicaid</a>
+        </div>
+      </div>
+      <div class="relative flex min-h-[300px] items-center justify-center overflow-hidden rounded-[var(--radius-panel)] bg-white p-8">
+        <NearbyRing class="pointer-events-none absolute -bottom-52 -right-52 size-[520px]" />
+        <ul class="relative flex max-w-md flex-wrap justify-center gap-3" aria-label="Neighborhoods we serve">
+          {NEIGHBORHOODS.map((n) => (
+            <li class="rounded-full border border-sky bg-white px-5 py-2.5 font-display text-lg font-bold text-harbor shadow-sm">{n}</li>
+          ))}
+          <li class="rounded-full bg-harbor px-5 py-2.5 font-display text-lg font-bold text-white">and nearby</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* Licensing and trust */}
+  <section class="section-y" aria-labelledby="trust-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Licensing and trust</p>
+        <h2 id="trust-title" class="mt-3">Licensed and Accountable</h2>
+      </div>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        <li class="card">
+          <span class="icon-dot"><Icon name="licensed" /></span>
+          <p class="mt-4 text-lg">Licensed by <strong class="text-harbor">NYS OASAS</strong> (substance use) and <strong class="text-harbor">NYS OMH</strong> (mental health).</p>
+          {/* [add license or certificate numbers if Emmanuel wants them shown] */}
+        </li>
+        <li class="card card-focus relative">
+          <span class="icon-dot"><Icon name="users" /></span>
+          <p class="mt-4 text-lg">Care from licensed clinicians and credentialed counselors.</p>
+          <a href="/about/our-team/" class="stretched-link mt-3 inline-flex items-center gap-1.5 font-bold text-harbor">Meet Our Team <Icon name="arrow-right" size={18} /></a>
+        </li>
+        <li class="card card-focus relative">
+          <span class="icon-dot"><Icon name="lock" /></span>
+          <p class="mt-4 text-lg">Your privacy is protected under HIPAA and federal confidentiality rules for substance use records.</p>
+          <a href="/hipaa-notice/" class="stretched-link mt-3 inline-flex items-center gap-1.5 font-bold text-harbor">HIPAA Notice <Icon name="arrow-right" size={18} /></a>
+        </li>
+      </ul>
+
+      {/* Brand separation block (small, but required) */}
+      <div class="mt-8 flex flex-col gap-4 rounded-[var(--radius-panel)] border-2 border-sky bg-white p-6 sm:flex-row sm:items-start lg:p-8">
+        <span class="icon-dot"><Icon name="pin" /></span>
+        <div>
+          <h3 class="text-xl">An Independent Clinic</h3>
+          <p class="measure mt-2">Rego Park Counseling is an independent clinic. We are not affiliated with other counseling centers that use a similar name in Queens. Our clinics are at 63-36 99th Street, Rego Park, and {fm.street}, Fresh Meadows.</p>
+          <a href="/locations/" class="text-link mt-3 inline-flex items-center gap-1.5">See our locations <Icon name="arrow-right" size={18} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta title="Ready to Talk?" text="Taking the first step is the hardest part. We’ll make the rest simple." />
+</Base>

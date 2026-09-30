@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/contact-us/", "destination": "/contact/", "permanent": true },
+    { "source": "/contact-us-2/", "destination": "/contact/", "permanent": true }
+  ]
+}

@@ -1,0 +1,156 @@
+---
+// Our Team (About Section Content brief, §2). Banner with form → intro → Leadership (large horizontal
+// profiles) → team grid (profile cards) → article reviewers + careers (two small side-by-side bands) → closing.
+// Filters are skipped: the brief only wants them above 8 people.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE } from '../../data/site.js';
+import { LEADERSHIP, TEAM, HAS_PLACEHOLDERS } from '../../data/team.js';
+
+const initials = (n: string) => (n.startsWith('[') ? '' : n.split(' ').map((w) => w[0]).slice(0, 2).join(''));
+const real = [...LEADERSHIP, ...TEAM].filter((p) => !p.placeholder);
+// Person schema only for real, consented staff (brief: hasCredential, worksFor, knowsLanguage)
+const schema = real.length
+  ? [{
+      '@type': 'ProfilePage',
+      '@id': `${SITE.url}/about/our-team/#webpage`,
+      url: `${SITE.url}/about/our-team/`,
+      mainEntity: real.map((p) => ({
+        '@type': 'Person',
+        name: p.name,
+        jobTitle: p.role,
+        ...(p.credential ? { hasCredential: { '@type': 'EducationalOccupationalCredential', name: p.credential } } : {}),
+        worksFor: { '@id': `${SITE.url}/#organization` },
+        ...(p.languages?.length ? { knowsLanguage: p.languages } : {}),
+      })),
+    }]
+  : [];
+---
+<Base
+  title="Our Counselors and Clinicians | Rego Park Counseling, Queens"
+  description="Meet the licensed counselors and clinicians at Rego Park Counseling in Rego Park and Fresh Meadows, Queens. Real people, close to home."
+  breadcrumbs={[{ name: 'About Us', href: '/about/' }, { name: 'Our Team', href: '/about/our-team/' }]}
+  schema={schema}
+  noindex={HAS_PLACEHOLDERS}
+>
+  <PageHero
+    title="Meet Our Team"
+    sub="Licensed counselors and clinicians from Queens, for Queens. Real people who listen, without judgment."
+    eyebrow="Our team"
+    crumbs={[{ name: 'About Us', href: '/about/' }, { name: 'Our Team', href: '/about/our-team/' }]}
+    formId="cb-team"
+    formHeading="Talk to Our Team"
+  />
+
+  {/* Intro */}
+  <section class="section-y pb-0 lg:pb-0" aria-labelledby="intro-title">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Who you’ll meet</p>
+        <h2 id="intro-title" class="mt-3">The People Behind Your Care</h2>
+        <p class="lead mt-5">
+          Our team includes licensed mental health counselors, social workers and credentialed substance use counselors [confirm the mix of licenses: LMHC, LCSW, LMSW, CASAC]. Many of us speak [languages], and every one of us works in person in Queens or by telehealth.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Leadership */}
+  <section class="section-y" aria-labelledby="leadership-title">
+    <div class="container-x">
+      <h2 id="leadership-title">Leadership</h2>
+      <ul class="mt-8 grid gap-6 lg:grid-cols-2">
+        {LEADERSHIP.map((p) => (
+          <li class="grid overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white sm:grid-cols-[200px_1fr]">
+            <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-sky-wash sm:aspect-auto">
+              {p.photo ? (
+                <img src={p.photo} alt={`Portrait of ${p.name}`} width="400" height="500" loading="lazy" class="h-full w-full object-cover" />
+              ) : (
+                <>
+                  <NearbyRing class="absolute size-[300px] opacity-70" />
+                  <Icon name="user" size={56} strokeWidth={1.5} class="relative text-harbor/40" />
+                </>
+              )}
+            </div>
+            <div class="p-6 lg:p-7">
+              <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{p.role}</p>
+              <h3 class="mt-1 text-2xl">{p.name}{p.credential && <span class="font-bold text-slate">, {p.credential}</span>}</h3>
+              <p class="mt-3 text-slate">{p.bio}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Team grid */}
+  <section class="section-y bg-sky-wash" aria-labelledby="team-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="eyebrow">Counselors and clinicians</p>
+          <h2 id="team-title" class="mt-3">Our Counselors</h2>
+        </div>
+        <p class="text-base text-slate">In person in Rego Park and Fresh Meadows, or by telehealth.</p>
+      </div>
+      <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {TEAM.map((p) => (
+          <li class="flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-white">
+            <div class="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-porch">
+              {p.photo ? (
+                <img src={p.photo} alt={`Portrait of ${p.name}, ${p.credential}`} width="400" height="500" loading="lazy" class="h-full w-full object-cover" />
+              ) : (
+                <>
+                  <NearbyRing class="absolute size-[320px] opacity-70" />
+                  {initials(p.name) ? <span class="relative font-display text-5xl font-extrabold text-harbor/50">{initials(p.name)}</span> : <Icon name="user" size={56} strokeWidth={1.5} class="relative text-harbor/40" />}
+                </>
+              )}
+            </div>
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="text-xl">{p.name}, <span class="text-slate">{p.credential}</span></h3>
+              <p class="text-base font-bold text-slate">{p.role}</p>
+              <dl class="mt-3 space-y-1.5 text-base">
+                <div class="flex gap-2"><dt class="sr-only">Clinics</dt><Icon name="pin" size={18} class="mt-1 flex-none text-harbor" /><dd>{p.clinics.join(' · ')}</dd></div>
+                <div class="flex gap-2"><dt class="sr-only">Languages</dt><Icon name="languages" size={18} class="mt-1 flex-none text-harbor" /><dd>{p.languages.join(', ')}</dd></div>
+              </dl>
+              <p class="mt-3 text-base text-slate">{p.bio}</p>
+              <ul class="mt-auto flex flex-wrap gap-2 pt-4" aria-label="Focus areas">
+                {p.focus.map((f) => (
+                  <li><a href={f.href} class="inline-flex min-h-9 items-center rounded-full border border-sky bg-sky-wash px-3 text-base font-bold text-harbor hover:border-harbor">{f.label}</a></li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
+      {HAS_PLACEHOLDERS && <p class="mt-6 text-base text-slate">[Pending] Staff list with names, credentials, roles, clinics, languages, short bios, headshots and written consent, from Emmanuel. This page stays noindex until then.</p>}
+    </div>
+  </section>
+
+  {/* Reviewers + careers */}
+  <section class="section-y" aria-label="Our articles and careers">
+    <div class="container-x grid gap-6 lg:grid-cols-2">
+      <div class="card flex gap-4 lg:p-8">
+        <span class="icon-dot"><Icon name="book" /></span>
+        <div>
+          <h3>Who Reviews Our Health Articles</h3>
+          <p class="mt-2 text-slate">Our articles are reviewed by licensed clinicians on our team. [Linked reviewer names → /author/[name]/, once confirmed.]</p>
+          <a href="/blog/" class="text-link mt-3 inline-flex items-center gap-1.5">Read our blog <Icon name="arrow-right" size={18} /></a>
+        </div>
+      </div>
+      <div class="flex gap-4 rounded-[var(--radius-card)] bg-harbor p-5 text-white lg:p-8">
+        <span class="inline-flex size-12 flex-none items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="heart" /></span>
+        <div>
+          <h3 class="!text-white">Join Our Team</h3>
+          <p class="mt-2 text-white/90">We are always glad to meet counselors who care about Queens.</p>
+          <p class="mt-3 text-base text-white/75">[Careers email or link: confirm with Emmanuel]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta title="Talk to Someone on Our Team" text="A real person from our clinic will call you back." tone="sky" />
+</Base>

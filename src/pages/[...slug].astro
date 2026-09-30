@@ -7,10 +7,11 @@ import Icon from '../components/Icon.astro';
 import NearbyRing from '../components/NearbyRing.astro';
 import { SITE } from '../data/site.js';
 import pages from '../data/sitemap.json';
+import { BUILT } from '../data/built.js';
 
 export function getStaticPaths() {
   return pages
-    .filter((p) => !String(p.status).startsWith('PENDING'))
+    .filter((p) => !String(p.status).startsWith('PENDING') && !BUILT.includes(p.url))
     .map((p) => ({ params: { slug: p.url.replace(/^\/|\/$/g, '') }, props: { page: p } }));
 }
 const { page } = Astro.props;

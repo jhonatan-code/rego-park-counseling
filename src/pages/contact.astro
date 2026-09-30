@@ -1,0 +1,147 @@
+---
+// Contact (About Section Content brief, §3). Banner: H1 + subhead + big phone button, form on the right
+// (same four-field form as every page, per the user's form decision). Clinics as two detailed cards side by
+// side + a slim Yonkers row + map, other ways to reach us, crisis panel (required), brand-separation line.
+// Every address and phone must match the Google Business Profiles and the footer character for character.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import ClinicsMap from '../components/ClinicsMap.astro';
+import { SITE, CLINICS, fullAddress } from '../data/site.js';
+
+const open = CLINICS.filter((c) => c.status === 'open');
+const yonkers = CLINICS.find((c) => c.id === 'yonkers')!;
+// [confirm] transit and parking per clinic
+const NEAR: Record<string, string> = {
+  'rego-park': '63rd Drive–Rego Park station, M and R trains [confirm] · [bus lines]',
+  'fresh-meadows': '[bus lines, parking]',
+};
+
+const schema = [
+  {
+    '@type': 'ContactPage',
+    '@id': `${SITE.url}/contact/#webpage`,
+    url: `${SITE.url}/contact/`,
+    name: 'Contact Rego Park Counseling',
+    about: { '@id': `${SITE.url}/#organization` },
+    mentions: open.map((c) => ({ '@id': `${SITE.url}${c.href}#clinic` })),
+  },
+];
+---
+<Base
+  title="Contact Rego Park Counseling | Rego Park & Fresh Meadows, NY"
+  description="Call (718) 459-2558 or request a callback. Visit our clinics at 63-36 99th Street, Rego Park, and in Fresh Meadows, Queens. Most Medicaid plans accepted."
+  breadcrumbs={[{ name: 'Contact', href: '/contact/' }]}
+  schema={schema}
+>
+  <PageHero
+    title="Contact Rego Park Counseling"
+    sub="Call us or leave your number, and a member of our team will call you back, usually the same business day."
+    eyebrow="Contact us"
+    crumbs={[{ name: 'Contact', href: '/contact/' }]}
+    formId="cb-contact"
+    bigPhone
+  />
+
+  {/* Visit our clinics */}
+  <section class="section-y" aria-labelledby="visit-title">
+    <div class="container-x">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Our clinics</p>
+        <h2 id="visit-title" class="mt-3">Visit Our Clinics</h2>
+      </div>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_1fr_1.15fr]">
+        {open.map((c) => (
+          <article class="flex flex-col rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-7" aria-labelledby={`clinic-${c.id}`}>
+            <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{c.id === 'rego-park' ? 'Main clinic' : c.label}</p>
+            <h3 id={`clinic-${c.id}`} class="mt-1 text-2xl">{c.name} Clinic</h3>
+            <dl class="mt-5 space-y-4">
+              <div class="flex gap-3">
+                <dt><span class="sr-only">Address</span><Icon name="pin" size={22} class="mt-0.5 text-harbor" /></dt>
+                <dd><address class="not-italic">{c.street}<br />{c.city}, {c.region} {c.postal}</address></dd>
+              </div>
+              <div class="flex gap-3">
+                <dt><span class="sr-only">Phone</span><Icon name="phone" size={22} class="mt-0.5 text-harbor" /></dt>
+                <dd><a href={c.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location={`contact-${c.id}`}>{c.phone}</a>{c.id === 'fresh-meadows' && <span class="block text-base text-slate">[Own phone number? confirm]</span>}</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt><span class="sr-only">Hours</span><Icon name="clock" size={22} class="mt-0.5 text-harbor" /></dt>
+                <dd class="text-slate">{c.hours ?? '[Hours: confirm]'}</dd>
+              </div>
+              <div class="flex gap-3">
+                <dt><span class="sr-only">Getting here</span><Icon name="subway" size={22} class="mt-0.5 text-harbor" /></dt>
+                <dd class="text-slate">{NEAR[c.id]}</dd>
+              </div>
+            </dl>
+            <div class="mt-auto flex flex-wrap gap-3 pt-6">
+              <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary !min-h-11 !px-4 !text-base" data-cta="directions" data-location={c.id}><Icon name="navigation" size={18} /> Get Directions</a>
+              <a href={c.href} class="inline-flex min-h-11 items-center gap-1.5 px-2 font-bold text-harbor hover:underline">View Clinic <Icon name="arrow-right" size={18} /></a>
+            </div>
+          </article>
+        ))}
+        <div class="min-h-[360px] overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white p-2 lg:min-h-0"><ClinicsMap /></div>
+      </div>
+
+      {/* Yonkers: opening soon */}
+      <div class="mt-6 flex flex-col gap-4 rounded-[var(--radius-panel)] border-2 border-dashed border-sky bg-sky-wash/60 p-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+        <div class="flex items-center gap-4">
+          <span class="inline-flex size-12 flex-none items-center justify-center rounded-full border-[3px] border-harbor bg-white" aria-hidden="true"></span>
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.1em] text-attention">Opening soon</p>
+            <h3 class="text-xl">{yonkers.name} Clinic</h3>
+            <p class="text-slate">A new clinic in Yonkers is on the way. Leave your number and we’ll let you know when we open.</p>
+          </div>
+        </div>
+        <a href="#callback" class="btn-secondary flex-none" data-open-callback data-location="contact-yonkers">Get notified when we open</a>
+      </div>
+    </div>
+  </section>
+
+  {/* Other ways to reach us + crisis */}
+  <section class="section-y bg-white" aria-labelledby="other-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
+      <div>
+        <h2 id="other-title">Other Ways to Reach Us</h2>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-3">
+          <li class="rounded-[var(--radius-card)] bg-porch p-5">
+            <span class="icon-dot bg-white"><Icon name="clipboard" /></span>
+            <h3 class="mt-4 text-lg">Fax</h3>
+            <p class="mt-1 font-bold text-ink">{SITE.fax}</p>
+            <p class="text-base text-slate">For referrals and records.</p>
+          </li>
+          <li class="rounded-[var(--radius-card)] bg-porch p-5">
+            <span class="icon-dot bg-white"><Icon name="scale" /></span>
+            <h3 class="mt-4 text-lg">Referrals</h3>
+            <p class="mt-1 text-base text-slate">From courts, case managers and providers: [referral email or fax, confirm].</p>
+          </li>
+          <li class="rounded-[var(--radius-card)] bg-porch p-5">
+            <span class="icon-dot bg-white"><Icon name="telehealth" /></span>
+            <h3 class="mt-4 text-lg">Telehealth</h3>
+            <p class="mt-1 text-base text-slate">Ask about telehealth when you call.</p>
+            <a href="/programs/telehealth/" class="mt-2 inline-flex items-center gap-1 text-base font-bold text-harbor hover:underline">How it works <Icon name="arrow-right" size={16} /></a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Crisis line: required on a mental health contact page. Calm, not alarm red (brand manual). */}
+      <aside class="rounded-[var(--radius-panel)] border-l-[6px] border-harbor bg-sky-wash p-6 lg:p-8" aria-labelledby="crisis-title">
+        <h3 id="crisis-title" class="flex items-center gap-2 text-2xl"><Icon name="faq" size={26} /> In Crisis?</h3>
+        <p class="mt-3">If you or someone you know is in danger, call <a href="tel:911" class="font-bold text-harbor underline">911</a>. For mental health or substance use crises, call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>, the Suicide &amp; Crisis Lifeline, available 24/7.</p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a href="tel:988" class="btn-neutral">Call 988</a>
+          <a href="sms:988" class="btn-secondary">Text 988</a>
+        </div>
+        <p class="mt-5 text-base text-slate">Rego Park Counseling is not an emergency service.</p>
+      </aside>
+    </div>
+  </section>
+
+  {/* Brand separation line */}
+  <section class="border-t border-line bg-porch" aria-label="About our name">
+    <div class="container-x flex items-start gap-3 py-8">
+      <Icon name="pin" size={22} class="mt-0.5 flex-none text-harbor" />
+      <p class="text-slate">Rego Park Counseling is an independent clinic. If you are looking for another counseling center on Queens Boulevard, please contact them directly.</p>
+    </div>
+  </section>
+</Base>
