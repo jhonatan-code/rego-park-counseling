@@ -3,9 +3,11 @@
 // when the map scrolls near the viewport, so it never touches LCP. OSM tiles, desaturated to stay calm.
 // OSM's tile policy fits a small clinic site; switch to a keyed provider if traffic grows.
 import { CLINICS, fullAddress } from '../data/site.js';
-const pins = CLINICS.filter((c) => c.geo).map((c) => ({ name: c.name, address: fullAddress(c), lat: c.geo.lat, lng: c.geo.lng, href: c.href }));
+interface Props { only?: string } // clinic id → single-pin map for a clinic page
+const { only } = Astro.props;
+const pins = CLINICS.filter((c) => c.geo && (!only || c.id === only)).map((c) => ({ name: c.name, address: fullAddress(c), lat: c.geo.lat, lng: c.geo.lng, href: c.href }));
 ---
-<div class="rpc-map relative isolate z-0 h-full min-h-[320px] w-full overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash" data-pins={JSON.stringify(pins)} role="region" aria-label="Map of our Rego Park and Fresh Meadows clinics">
+<div class="rpc-map relative isolate z-0 h-full min-h-[320px] w-full overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash" data-pins={JSON.stringify(pins)} role="region" aria-label={only ? `Map of our ${pins[0]?.name} clinic` : 'Map of our Rego Park and Fresh Meadows clinics'}>
   <p class="absolute inset-0 flex items-center justify-center p-6 text-center text-base text-slate">Loading map…</p>
 </div>
 
@@ -35,7 +37,8 @@ const pins = CLINICS.filter((c) => c.geo).map((c) => ({ name: c.name, address: f
           .bindPopup(`<strong style="font-family:var(--font-display);color:#0a5577;font-size:16px">${p.name}</strong><br><span style="font-size:15px">${p.address}</span><br><a href="${p.href}" style="font-weight:700">View clinic</a>`);
         bounds.extend([p.lat, p.lng]);
       });
-      map.fitBounds(bounds, { padding: [60, 60] });
+      if (pins.length === 1) map.setView([pins[0].lat, pins[0].lng], 16);
+      else map.fitBounds(bounds, { padding: [60, 60] });
     };
     const io = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) { io.disconnect(); load(); }

@@ -1,0 +1,24 @@
+---
+// One-line Medicaid strip used on service and clinic pages. Never names plans.
+import Icon from './Icon.astro';
+import { SITE } from '../data/site.js';
+interface Props { text?: string; extra?: { text: string; href: string; label: string }; bg?: string }
+const { text = 'Call us and we’ll check yours.', extra, bg = 'bg-white' } = Astro.props;
+---
+<section class:list={[bg, 'pb-16 lg:pb-24']} aria-label="Insurance">
+  <div class="container-x">
+    <div class="relative flex flex-col gap-4 overflow-hidden rounded-[var(--radius-panel)] border border-sky bg-sky-wash p-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+      <div class="flex items-start gap-4">
+        <span class="icon-dot bg-white"><Icon name="medicaid" /></span>
+        <div>
+          <p class="font-display text-xl font-extrabold text-harbor">We accept most Medicaid plans.</p>
+          <p class="text-slate">{text}{extra && <> {extra.text} <a href={extra.href} class="text-link">{extra.label}</a></>}</p>
+        </div>
+      </div>
+      <div class="flex flex-none flex-wrap gap-3">
+        <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="insurance-line"><Icon name="phone" size={20} /> Check my plan</a>
+        <a href="/insurance/" class="btn-secondary">Insurance</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Mental Health section).
+Last update: 2026-09-30 (after Locations section).
 
 ---
 
@@ -13,15 +13,21 @@ Last update: 2026-09-30 (after Mental Health section).
 | # | Question | What we have now | Where it shows | Owner | Status |
 |---|---|---|---|---|---|
 | 1.1 | Hours for each clinic | "Hours coming soon. Call us to book." / "[Hours: confirm]" | Home, Contact, every service page, footer, schema `openingHours` | E | ☐ |
-| 1.2 | Exact Fresh Meadows address format | "71-82 Parsons Blvd" (brand manual + briefs). Current site says "7182 Parsons blvd". Must match the Google profile character for character | Everywhere (NAP) | E / C | ☐ Tip: C can read it off the GBP once created |
+| 1.2 | Exact Fresh Meadows address format ("Blvd" or "Boulevard"? "71-82" or "7182"?) | Site uses "71-82 Parsons Blvd" everywhere (brand manual). Locations/Contact briefs write "71-82 Parsons Boulevard"; current site says "7182 Parsons blvd". Must match the Google profile character for character | Everywhere (NAP) | E / C | ☐ Tip: C can read it off the GBP once created |
 | 1.3 | Does Fresh Meadows have its own phone? | Uses (718) 459-2558 | Contact, cards, footer | E | ☐ |
 | 1.4 | Fresh Meadows map pin | Approximate (Parsons Blvd at 71st Ave) | Maps on Home, Contact | C | ☐ Take coordinates from the GBP |
-| 1.5 | Yonkers address + opening date | "Opening soon" everywhere, no schema address | Home, Contact, menus, footer | E | ☐ |
+| 1.5 | Yonkers address, opening month, planned services | "Opening soon"; sub says "[in early 2027 / month — confirm]"; 4 planned services "[confirm]"; no clinic schema | Home, Contact, /locations/yonkers/ | E | ☐ |
 | 1.6 | Neighborhoods + trains/buses to name | Proposed: Rego Park near Forest Hills, Elmhurst, Middle Village, Kew Gardens, M/R at 63rd Drive; Fresh Meadows near Flushing, Hillcrest, Bayside, Jamaica Estates. Bus lines and parking unknown | Home "Getting here", About "Who we serve", Contact | E | ☐ |
 | 1.7 | "Now welcoming new (mental health) patients" label for Fresh Meadows | Shown as "Now welcoming new patients"; hub shows "…new mental health patients [confirm]" | Cards, footer, MH hub | E | ☐ |
 | 1.8 | Callback promise | "usually the same business day" used everywhere (brand manual). About brief says "within one business day — confirm" | Forms, hero copy | E | ☐ |
 | 1.9 | Referral contact for courts / case managers (email or fax) | "[referral email or fax, confirm]" | Contact | E | ☐ |
 | 1.10 | Show license / certificate numbers on About? | Not shown | About "Licensed and Accountable" | E | ☐ |
+| 1.11 | Services offered at each clinic | Comparison table on /locations/ shows "✓ [confirm]" / "[ ]"; Rego Park 8 service cards "[confirm the list]"; Fresh Meadows "Other services [confirm which apply]" | /locations/, clinic pages, schema `availableService` | E | ☐ |
+| 1.12 | Transit, parking and accessibility per clinic | Brackets: subway walk time, bus lines (Q38/Q72?), parking, elevator/step-free | Clinic pages "Getting here" | E | ☐ |
+| 1.13 | Nearest cross street for Rego Park | "[near the corner of 63rd Drive — confirm]" | Rego Park FAQ | E | ☐ |
+| 1.14 | Languages spoken at each clinic | Fresh Meadows "Counseling in Your Language" block is **hidden** until confirmed (Mandarin/Cantonese/Korean/Spanish would be a big local differentiator) | Fresh Meadows | E | ☐ |
+| 1.15 | Is telehealth available statewide or only for Queens residents? | "[confirm]" on /locations/ | /locations/, Telehealth page | E | ☐ |
+| 1.16 | Can evaluations be done at Rego Park? (and Fresh Meadows?) | Rego Park FAQ "[Confirm.] Yes…" | Rego Park FAQ, table | E | ☐ |
 
 ## 2. Services and clinical claims (compliance gates)
 
@@ -55,10 +61,13 @@ Last update: 2026-09-30 (after Mental Health section).
 |---|---|---|---|---|
 | 4.1 | Logo vector file (SVG/AI/EPS) | Using the 347×75 PNG | E | ☐ |
 | 4.2 | Emblem-only crop for favicon (needs approval) | Empty favicon placeholder | E | ☐ |
-| 4.3 | Team and clinic photo session | Only real photo: 99th Street entrance. Everything else is stock from the current site | E / J | ☐ |
+| 4.3 | Team and clinic photo session. Per clinic: outside, entrance/signage, waiting area, counseling room | Only real photo: 99th Street entrance. Clinic pages show "[photo needed]" tiles; everything else is stock from the current site | E / J | ☐ |
 | 4.4 | Approve "Care close to home" and the brand manual | Brand manual v1.0 is a draft for Emmanuel | E | ☐ |
 | 4.5 | Brand manual says "no insurance ID" in forms; the user added Membership Policy ID + Insurance Carrier (Sunview field set) | Form has the 4 Sunview fields | J → E | ☐ Tell Julian |
 | 4.6 | Google profile URLs for schema `sameAs` | Not set | C | ☐ |
+| 4.7 | Current Google profile name, primary category (Rego Park: Addiction treatment center?) and NAP, so the page matches exactly | Page uses site.js NAP | C | ☐ |
+| 4.8 | Create the Fresh Meadows Google profile (primary category Mental health clinic?) with the same NAP as the page | Page ready at /locations/fresh-meadows/ | C | ☐ |
+| 4.9 | After launch: each profile's website link → its clinic page (not home); products → the service pages listed on each clinic page | — | C | ☐ |
 
 ## 5. Tracking and tech
 
@@ -70,6 +79,7 @@ Last update: 2026-09-30 (after Mental Health section).
 | 5.4 | CTM Marketing Pro purchase; DNI number pools per clinic | Phones are live text ready for DNI | J | ☐ |
 | 5.5 | Owner of services.regoparkcounseling.com | Unknown | J | ☐ |
 | 5.6 | What is /rego/ (1.1k impressions) before it redirects to /programs/core/ | Not redirected yet | Jh | ☐ |
+| 5.8 | One CTM tracking number per clinic, and which number goes in the MedicalClinic schema | Schema uses the main number | O | ☐ |
 | 5.7 | Map tiles: OpenStreetMap (free, fine for this traffic) | Switch to a keyed provider only if traffic grows | Jh | ☐ FYI |
 
 ## 6. Decisions made during the build (tell Julian / keep for the record)
@@ -82,6 +92,8 @@ Last update: 2026-09-30 (after Mental Health section).
 | 6.4 | Our Team at `/our-team/`, person pages `/our-team/{slug}/` (sitemap v2 said `/about/our-team/`); 301s added. | 2026-09-30 |
 | 6.5 | Contact form uses the same 4 fields as every page (brief asked for clinic, need, best time). | 2026-09-30 |
 | 6.6 | Reviews section skipped on Home (3.2 from 20). | 2026-09-30 |
+| 6.8 | Location final bands can't "preselect the clinic" (the form has no clinic field). Each page sends its own `form_location`; Yonkers waitlist sends `yonkers-waitlist` with a "Notify Me When You Open" button (brief wanted email optional + "what can we help with": not added, one form everywhere). | 2026-09-30 |
+| 6.9 | Location pages: no `openingHoursSpecification` in schema until hours are confirmed (brief: nothing in brackets ships as a guess). | 2026-09-30 |
 | 6.7 | Anger Management signs list got a lead-in line the brief didn't have ("It may be time to get help if you notice:") — P to review. | 2026-09-30 |
 
 ## 7. Content to review (P)

@@ -1,0 +1,70 @@
+---
+// Yonkers (Locations Pages Content brief, §4): live from launch as a short "opening soon" page so Google indexes
+// it early. No clinic schema until the address and opening date are confirmed. The banner form is the waitlist
+// (form_location "yonkers-waitlist" tells CTM the source). Grows into a full clinic page at opening:
+// address, phone, hours, photos, team, transit (Metro-North/bus), neighborhoods, MedicalClinic schema, local FAQ,
+// map, Google profile linked; title and H1 lose "Opening Soon".
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import { SITE, CLINICS } from '../../data/site.js';
+import { YONKERS } from '../../data/locations.js';
+
+const crumbs = [{ name: 'Locations', href: '/locations/' }, { name: 'Yonkers', href: '/locations/yonkers/' }];
+const queens = CLINICS.filter((c) => c.status === 'open');
+---
+<Base title={YONKERS.title} description={YONKERS.description} breadcrumbs={crumbs}>
+  <PageHero title={YONKERS.h1} sub={YONKERS.sub} eyebrow="Opening soon" crumbs={crumbs} formId="yonkers-waitlist" formHeading="Get Notified When We Open" formLocation="yonkers-waitlist" formButton="Notify Me When You Open">
+    <div slot="extra" class="mt-8 flex items-center gap-4">
+      <span class="inline-flex size-14 flex-none items-center justify-center rounded-full border-[3px] border-sky bg-transparent" aria-hidden="true"></span>
+      <p class="text-lg text-white/90">Leave your number in the form and we’ll call you as soon as the Yonkers clinic opens.</p>
+    </div>
+  </PageHero>
+
+  {/* What we will offer */}
+  <section class="section-y" aria-labelledby="offer-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <h2 id="offer-title">{YONKERS.offerH2}</h2>
+        <p class="text-base text-slate">{YONKERS.offerNote}</p>
+      </div>
+      <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {YONKERS.offer.map((s) => (
+          <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] border border-dashed border-sky bg-white p-6">
+            <span class="icon-dot"><Icon name={s.icon as any} /></span>
+            <h3 class="mt-4 text-xl"><a href={s.href} class="stretched-link">{s.label}</a></h3>
+            <p class="mt-1 text-slate">{s.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Until we open */}
+  <section class="section-y relative overflow-hidden bg-sand" aria-labelledby="before-title">
+    <NearbyRing class="pointer-events-none absolute -bottom-52 -right-40 size-[560px]" />
+    <div class="container-x relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+      <div>
+        <h2 id="before-title">{YONKERS.beforeH2}</h2>
+        <p class="lead measure mt-4">{YONKERS.beforeText}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="yonkers-before"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+          <a href="/programs/telehealth/" class="btn-secondary"><Icon name="telehealth" size={20} /> Explore Telehealth</a>
+        </div>
+      </div>
+      <ul class="grid gap-3">
+        {queens.map((c) => (
+          <li class="card-focus relative flex items-center justify-between gap-4 rounded-[var(--radius-card)] bg-white p-5">
+            <div>
+              <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">Open now</p>
+              <a href={c.href} class="stretched-link font-display text-xl font-extrabold text-harbor">{c.name}</a>
+              <p class="text-base text-slate">{c.street}, {c.city}</p>
+            </div>
+            <Icon name="arrow-right" size={22} class="flex-none text-cyan" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

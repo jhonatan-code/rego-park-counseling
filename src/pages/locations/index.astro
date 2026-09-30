@@ -1,0 +1,149 @@
+---
+// Locations hub (Locations Pages Content brief, §1): banner with form → clinic cards + one map with all pins →
+// services comparison table (every cell pending confirmation) → communities → telehealth band → final band.
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import NearbyRing from '../../components/NearbyRing.astro';
+import PageHero from '../../components/PageHero.astro';
+import ClinicsMap from '../../components/ClinicsMap.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { SITE, CLINICS, fullAddress } from '../../data/site.js';
+import { SERVICE_TABLE, HUB_COMMUNITIES } from '../../data/locations.js';
+
+const crumbs = [{ name: 'Locations', href: '/locations/' }];
+const schema = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${SITE.url}/locations/#webpage`,
+    url: `${SITE.url}/locations/`,
+    name: 'Our Clinics',
+    about: { '@id': `${SITE.url}/#organization` },
+    hasPart: CLINICS.filter((c) => c.status === 'open').map((c) => ({ '@id': `${SITE.url}${c.href}#clinic` })),
+  },
+];
+const cols = [
+  { key: 'rp', label: 'Rego Park' },
+  { key: 'fm', label: 'Fresh Meadows' },
+  { key: 'th', label: 'Telehealth' },
+];
+---
+<Base
+  title="Our Clinics in Queens & Yonkers | Rego Park Counseling"
+  description="Find Rego Park Counseling clinics in Rego Park and Fresh Meadows, Queens, with Yonkers opening soon. Addresses, hours, directions and phone numbers."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    title="Our Clinics"
+    sub="Licensed outpatient counseling in two Queens neighborhoods, with a Yonkers clinic opening soon. Choose the one closest to home."
+    crumbs={crumbs}
+    formId="cb-locations"
+  />
+
+  {/* Clinic cards — the core of the page */}
+  <section class="section-y" aria-labelledby="find-title">
+    <div class="container-x">
+      <h2 id="find-title">Find a Clinic Near You</h2>
+      <ul class="mt-10 grid gap-6 md:grid-cols-3">
+        {CLINICS.map((c) => (
+          <li class="flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white">
+            {c.image ? (
+              <img src={c.image} alt={c.imageAlt} width="640" height="420" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            ) : (
+              <div class="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden bg-sky-wash">
+                <NearbyRing class="absolute size-[360px]" />
+                <span class="relative rounded-full bg-white px-4 py-2 font-display font-extrabold text-harbor shadow">{c.name}</span>
+              </div>
+            )}
+            <div class="flex flex-1 flex-col p-6">
+              <p class:list={['text-sm font-bold uppercase tracking-[0.1em]', c.status === 'soon' ? 'text-attention' : 'text-slate']}>{c.label}</p>
+              <h3 class="mt-1 text-2xl">{c.name}</h3>
+              {c.street ? (
+                <address class="mt-3 space-y-2 not-italic">
+                  <span class="flex items-start gap-2"><Icon name="pin" size={20} class="mt-0.5 flex-none text-harbor" />{fullAddress(c)}</span>
+                  <a href={c.phoneHref} class="flex items-center gap-2 font-bold text-harbor hover:underline" data-cta="call" data-location={c.id}><Icon name="phone" size={20} class="flex-none" />{c.phone}</a>
+                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Hours: [confirm]'}</span>
+                </address>
+              ) : (
+                <p class="mt-3 text-slate">Address and opening date coming soon.</p>
+              )}
+              <div class="mt-auto flex flex-wrap gap-3 pt-6">
+                {c.status === 'soon' ? (
+                  <a href={c.href} class="btn-secondary !min-h-11 !px-4 !text-base">Get notified <Icon name="arrow-right" size={18} /></a>
+                ) : (
+                  <>
+                    <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary !min-h-11 !px-4 !text-base" data-cta="directions" data-location={c.id}><Icon name="navigation" size={18} /> Get Directions</a>
+                    <a href={c.href} class="inline-flex min-h-11 items-center gap-1.5 px-2 font-bold text-harbor hover:underline">View Clinic <Icon name="arrow-right" size={18} /></a>
+                  </>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-6 h-[420px] overflow-hidden rounded-[var(--radius-panel)] border border-line p-2"><ClinicsMap /></div>
+    </div>
+  </section>
+
+  {/* Services at a glance */}
+  <section class="section-y bg-white" aria-labelledby="table-title">
+    <div class="container-x">
+      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <h2 id="table-title">Services at Each Clinic</h2>
+        <p class="text-base text-slate">[Pending: Emmanuel to confirm what each clinic offers]</p>
+      </div>
+      <div class="mt-8 overflow-x-auto rounded-[var(--radius-panel)] border border-line">
+        <table class="w-full min-w-[640px] border-collapse text-left">
+          <caption class="sr-only">Services offered at each clinic and by telehealth</caption>
+          <thead class="bg-sky-wash">
+            <tr>
+              <th scope="col" class="p-4 font-display text-lg font-extrabold text-harbor lg:px-6">Service</th>
+              {cols.map((col) => <th scope="col" class="p-4 text-center font-display text-lg font-extrabold text-harbor">{col.label}</th>)}
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            {SERVICE_TABLE.map((row: any) => (
+              <tr>
+                <th scope="row" class="p-4 font-normal lg:px-6"><a href={row.href} class="font-bold text-harbor hover:underline">{row.service}</a></th>
+                {cols.map((col) => (
+                  <td class="p-4 text-center">
+                    {row[col.key] ? (
+                      <span class="inline-flex items-center gap-1.5 text-success"><Icon name="check" size={20} strokeWidth={3} /><span class="text-base text-slate">[confirm]</span></span>
+                    ) : (
+                      <span class="text-base text-slate">[ ]</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  {/* Communities we serve */}
+  <section class="section-y relative overflow-hidden bg-sky-wash" aria-labelledby="communities-title">
+    <NearbyRing class="pointer-events-none absolute -right-40 -top-40 size-[480px]" />
+    <div class="container-x relative">
+      <h2 id="communities-title">Communities We Serve in Queens</h2>
+      <p class="lead measure mt-4">Our patients come from Rego Park, Forest Hills, Elmhurst, Middle Village, Kew Gardens, Fresh Meadows, Flushing, Hillcrest, Jamaica Estates and nearby neighborhoods [confirm list]. Telehealth is available for people anywhere in New York State [confirm].</p>
+      <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Neighborhoods">
+        {HUB_COMMUNITIES.map((h) => <li class="rounded-full border border-sky bg-white px-4 py-2 font-display font-bold text-harbor">{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  {/* Telehealth band */}
+  <section class="bg-harbor text-white" aria-label="Telehealth">
+    <div class="container-x flex flex-col gap-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:py-12">
+      <p class="flex items-center gap-4 font-display text-xl font-extrabold lg:text-2xl">
+        <span class="inline-flex size-12 flex-none items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="telehealth" /></span>
+        Can’t come in? Many services are available by telehealth.
+      </p>
+      <a href="/programs/telehealth/" class="btn-on-dark flex-none">Telehealth <Icon name="arrow-right" size={18} /></a>
+    </div>
+  </section>
+
+  <FinalCta title="Not Sure Which Clinic Is Right?" text="Call us and we’ll help you choose." />
+</Base>

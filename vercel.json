@@ -79,6 +79,21 @@
       "source": "/counseling/anger-management-for-substance-use/",
       "destination": "/mental-health/anger-management/",
       "permanent": true
+    },
+    {
+      "source": "/drug-and-alcohol-treatment-centers-queens-ny/",
+      "destination": "/locations/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/mental-health-counseling-rego-park-ny/",
+      "destination": "/locations/rego-park/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/mental-health-counseling-fresh-meadows-ny/",
+      "destination": "/locations/fresh-meadows/",
+      "permanent": true
     }
   ]
 }

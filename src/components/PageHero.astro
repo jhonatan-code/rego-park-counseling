@@ -1,7 +1,7 @@
 ---
 // Inner-page banner (user, 2026-09-30): H1 + paragraph on the left, the callback form on the right.
 // The form here is the page's only form (id="callback"), so every "Request a Callback" link on the page
-// scrolls to it. Harbor band, one Nearby Ring cropped off the right edge behind the card (never behind text).
+// scrolls to it. Optional `extra` slot replaces the phone link (location pages: address block). Harbor band, one Nearby Ring cropped off the right edge behind the card (never behind text).
 import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
 import CallbackForm from './CallbackForm.astro';
@@ -18,8 +18,10 @@ interface Props {
   points?: string[];      // optional short reassurance lines under the subhead
   bigPhone?: boolean;     // Contact: phone as a large button
   trust?: string[];       // short trust line under the subhead (service pages)
+  formLocation?: string;  // CTM source label for the lead
+  formButton?: string;
 }
-const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callback', points = [], bigPhone = false, trust = [] } = Astro.props;
+const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callback', points = [], bigPhone = false, trust = [], formLocation = 'page-hero', formButton } = Astro.props;
 ---
 <section id="callback" class="relative scroll-mt-24 overflow-hidden bg-harbor text-white" aria-labelledby="page-title">
   <NearbyRing class="pointer-events-none absolute -bottom-40 -right-40 hidden size-[640px] opacity-25 lg:block" />
@@ -60,7 +62,9 @@ const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callb
           ))}
         </ul>
       )}
-      {bigPhone ? (
+      {Astro.slots.has('extra') ? (
+        <slot name="extra" />
+      ) : bigPhone ? (
         <a href={SITE.phoneHref} class="btn-call mt-8 !min-h-14 !px-7 !text-xl" data-cta="call" data-location="page-hero"><Icon name="phone" size={22} /> Call {SITE.phone}</a>
       ) : (
         <a href={SITE.phoneHref} class="group mt-8 inline-flex items-center gap-3 font-display text-2xl font-extrabold text-white" data-cta="call" data-location="page-hero">
@@ -70,7 +74,7 @@ const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callb
       )}
     </div>
     <div class="flex justify-center lg:justify-end">
-      <CallbackForm formId={formId} location="page-hero" heading={formHeading} />
+      <CallbackForm formId={formId} location={formLocation} heading={formHeading} button={formButton} />
     </div>
   </div>
 </section>

@@ -13,8 +13,9 @@ interface Props {
   formId: string;
   location: string; // analytics label
   heading?: string;
+  button?: string; // submit label (Yonkers waitlist: "Notify Me")
 }
-const { formId, location, heading = 'Request a Callback' } = Astro.props;
+const { formId, location, heading = 'Request a Callback', button = 'Request a Callback' } = Astro.props;
 const lbl = 'mb-1.5 block text-base leading-snug text-slate';
 const field =
   'h-12 w-full min-w-0 rounded-[var(--radius-input)] border border-slate/40 bg-white px-3.5 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25 aria-[invalid=true]:border-attention';
@@ -24,6 +25,7 @@ const field =
   novalidate
   data-form-id={formId}
   data-location={location}
+  data-button={button}
   action="/api/lead/"
   method="post"
 >
@@ -65,7 +67,7 @@ const field =
     </div>
 
     <button type="submit" class="btn-call w-full sm:col-span-2">
-      <span class="rpc-label">Request a Callback</span>
+      <span class="rpc-label">{button}</span>
     </button>
     <p class="rpc-msg -mt-1 text-center text-base font-bold text-attention sm:col-span-2" role="alert" hidden></p>
   </div>
@@ -132,7 +134,7 @@ const field =
         show(`${(err as Error).message} Please call us at (718) 459-2558.`);
       } finally {
         btn.disabled = false;
-        label.textContent = 'Request a Callback';
+        label.textContent = form.dataset.button || 'Request a Callback';
       }
     });
   });
