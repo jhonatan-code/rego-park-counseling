@@ -1,0 +1,192 @@
+---
+// Insurance & Medicaid (Insurance Page Content brief). The front door for 70–80% of callers.
+// Wording rule: "we accept most Medicaid plans" and "we'll check your plan for you". Never list plan names,
+// never "all insurance", never mention the one plan not accepted.
+// Banner form = "Check My Coverage" (the form already asks Membership Policy ID + Insurance Carrier;
+// form_location "insurance" tells CTM the topic).
+// Posts planned in the content calendar join "Helpful reading" once published: How to Get Free Medicaid
+// Transportation to Therapy (Oct 5), What Is HARP? (Nov 16), How to Apply for Medicaid in New York (Jan 4).
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import NearbyRing from '../components/NearbyRing.astro';
+import PageHero from '../components/PageHero.astro';
+import FaqList from '../components/FaqList.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { SITE } from '../data/site.js';
+import { clean } from '../data/mental-health.js';
+
+const COVERS = [
+  { label: 'Mental health counseling', href: '/mental-health/', icon: 'brain' },
+  { label: 'Outpatient substance use treatment', href: '/substance-use/', icon: 'sprout' },
+  { label: 'Individual, group and family therapy', href: '/therapies/', icon: 'users' },
+  { label: 'Telehealth sessions', href: '/programs/telehealth/', icon: 'telehealth' },
+];
+const EXTRA = [
+  {
+    id: 'harp',
+    icon: 'core',
+    h2: 'Have a HARP Plan? Ask About CORE Services',
+    text: 'Health and Recovery Plans (HARP) are Medicaid plans for adults with serious mental health or substance use needs. Eligible HARP members may also get CORE services, which offer extra support in the community.',
+    link: { href: '/programs/core/', label: 'CORE' },
+  },
+  {
+    id: 'scn',
+    icon: 'home',
+    h2: 'Help Beyond Counseling',
+    text: 'Medicaid members may be able to get help with needs like food, housing or transportation through New York’s Social Care Network.',
+    link: { href: '/programs/social-care-network/', label: 'Social Care Network' },
+  },
+  {
+    id: 'rides',
+    icon: 'car',
+    h2: 'Free Rides to Your Appointments',
+    text: 'Many New York Medicaid members can get free transportation to medical appointments, including counseling [confirm wording].',
+  },
+];
+const STEPS = [
+  { title: 'Call us or request a callback.', icon: 'phone' },
+  { title: 'Have your insurance card ready (plan name and member ID).', icon: 'clipboard' },
+  { title: 'We confirm your coverage and book your first visit.', icon: 'calendar' },
+];
+const POSTS = [
+  { href: '/does-medicaid-cover-substance-abuse-treatment-vital-guide/', title: 'Does Medicaid Cover Substance Abuse Treatment?' },
+  { href: '/does-medicare-cover-mental-health-complete-2025-guide/', title: 'Does Medicare Cover Mental Health? Complete 2025 Guide' },
+];
+const FAQS = [
+  { q: 'Do you take my Medicaid plan?', a: 'We accept most Medicaid plans. Call us with your plan name and we’ll confirm in minutes [confirm].' },
+  { q: 'Will I have a copay?', a: '[Confirm typical Medicaid copay for outpatient counseling.]' },
+  { q: 'Do you accept Medicare?', a: '[Confirm.]' },
+  { q: 'What if my plan doesn’t cover you?', a: 'Call us anyway. We’ll talk about options, including self-pay [confirm].' },
+  { q: 'Are evaluations covered by insurance?', a: '[Confirm.]', link: { href: '/evaluations/', label: 'Evaluations' } },
+  { q: 'Is telehealth covered?', a: 'Many plans cover telehealth counseling. We’ll check yours.' },
+];
+
+const url = `${SITE.url}/insurance/`;
+const crumbs = [{ name: 'Insurance', href: '/insurance/' }];
+const schema = [
+  { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: 'Insurance and Medicaid', about: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
+  { '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: FAQS.filter((f) => clean(f.a)).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) },
+];
+---
+<Base
+  title="Medicaid & Insurance for Counseling in Queens | Rego Park Counseling"
+  description="Rego Park Counseling accepts most Medicaid plans for mental health and substance use care in Queens. Call and we'll check your coverage before your first visit."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <PageHero
+    title="Insurance and Medicaid"
+    sub="Most of our patients use Medicaid, and we accept most Medicaid plans. Call us and we’ll check your coverage before your first visit."
+    crumbs={crumbs}
+    trust={['Most Medicaid plans', 'We check your plan for you']}
+    formId="cb-insurance"
+    formHeading="Check My Coverage"
+    formButton="Check My Coverage"
+    formLocation="insurance"
+  />
+
+  {/* Medicaid */}
+  <section class="section-y" aria-labelledby="medicaid-title">
+    <div class="container-x grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+      <div>
+        <span class="icon-dot size-14"><Icon name="medicaid" size={28} /></span>
+        <h2 id="medicaid-title" class="mt-5">We Accept Most Medicaid Plans</h2>
+        <p class="lead measure mt-5">If you have New York Medicaid or a Medicaid managed care plan, there is a good chance your counseling is covered. Give us your plan name and member ID when you call, and we will confirm your coverage for you.</p>
+        <p class="mt-6 inline-flex items-center gap-3 rounded-full bg-sky-wash px-5 py-3 font-display text-lg font-extrabold text-harbor"><Icon name="heart" size={22} /> You do not have to figure it out alone.</p>
+      </div>
+      <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
+        <div class="flex items-baseline justify-between gap-3">
+          <h3 class="text-xl">What Medicaid can help cover with us</h3>
+          <span class="text-base text-slate">[confirm each]</span>
+        </div>
+        <ul class="mt-5 divide-y divide-line">
+          {COVERS.map((c) => (
+            <li>
+              <a href={c.href} class="group flex items-center gap-4 py-3.5">
+                <span class="icon-dot size-10"><Icon name={c.icon as any} size={20} /></span>
+                <span class="flex-1 text-lg font-bold text-harbor group-hover:underline">{c.label}</span>
+                <Icon name="arrow-right" size={18} class="text-cyan transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* HARP/CORE · Social Care Network · Transportation */}
+  <section class="section-y bg-sky-wash" aria-label="Medicaid extras">
+    <div class="container-x">
+      <p class="eyebrow">More than counseling</p>
+      <ul class="mt-6 grid gap-6 lg:grid-cols-3">
+        {EXTRA.map((e) => (
+          <li class="flex flex-col rounded-[var(--radius-panel)] bg-white p-6 lg:p-7">
+            <span class="icon-dot"><Icon name={e.icon as any} /></span>
+            <h2 id={`${e.id}-title`} class="mt-5 text-2xl lg:text-[26px]">{e.h2}</h2>
+            <p class="mt-3 flex-1 text-slate">{e.text}</p>
+            {e.link && <a href={e.link.href} class="text-link mt-5 inline-flex items-center gap-1.5">{e.link.label} <Icon name="arrow-right" size={18} /></a>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Other coverage + No Medicaid yet */}
+  <section class="section-y" aria-label="Other ways to pay">
+    <div class="container-x grid gap-6 lg:grid-cols-2">
+      <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
+        <h2 class="text-2xl lg:text-[30px]">Other Insurance and Self-Pay</h2>
+        <ul class="mt-5 space-y-3">
+          {['Medicare', 'Commercial insurance', 'Self-pay rates'].map((t) => (
+            <li class="flex items-center justify-between gap-3 rounded-[var(--radius-card)] bg-porch px-4 py-3">
+              <span class="font-bold text-ink">{t}</span><span class="text-base text-slate">[fill once confirmed]</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-slate">Evaluations (substance abuse and DWI) are usually self-pay [confirm]. <a href="/evaluations/" class="text-link">Evaluations</a></p>
+      </div>
+      <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-sand p-6 lg:p-8">
+        <NearbyRing class="pointer-events-none absolute -bottom-36 -right-36 size-[320px]" />
+        <h2 class="relative text-2xl lg:text-[30px]">Don’t Have Medicaid Yet?</h2>
+        <p class="lead relative mt-4 max-w-md">If you live in New York and have a low income, you may qualify. We can point you to where to apply [confirm if staff help with applications].</p>
+        <a href={SITE.phoneHref} class="btn-call relative mt-6" data-cta="call" data-location="insurance-no-medicaid"><Icon name="phone" size={20} /> Ask us where to start</a>
+      </div>
+    </div>
+  </section>
+
+  {/* How to check coverage */}
+  <section class="section-y bg-harbor text-white" aria-labelledby="check-title">
+    <div class="container-x">
+      <h2 id="check-title" class="text-center !text-white">How to Check Your Coverage</h2>
+      <ol class="mt-10 grid gap-5 md:grid-cols-3">
+        {STEPS.map((s, i) => (
+          <li class="relative rounded-[var(--radius-panel)] border border-white/15 bg-white/[0.07] p-6">
+            <span aria-hidden="true" class="absolute right-6 top-4 font-display text-5xl font-extrabold text-white/15">{i + 1}</span>
+            <span class="inline-flex size-12 items-center justify-center rounded-full bg-white/10 text-sky"><Icon name={s.icon as any} /></span>
+            <p class="mt-4 pr-8 font-display text-xl font-extrabold">{s.title}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="mt-10 flex justify-center">
+        <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="insurance-steps"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  {/* Helpful reading */}
+  <section class="pt-16 lg:pt-24" aria-labelledby="reading-title">
+    <div class="container-x">
+      <div class="rounded-[var(--radius-panel)] bg-sky-wash p-6 lg:p-8">
+        <h2 id="reading-title" class="text-2xl lg:text-[28px]">Helpful Reading</h2>
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {POSTS.map((p) => (
+            <li><a href={p.href} class="group flex h-full items-start gap-3 rounded-[var(--radius-card)] bg-white p-4 font-bold text-harbor"><Icon name="book" size={20} class="mt-0.5 flex-none text-cyan" /><span class="group-hover:underline">{p.title}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <FaqList title="Insurance FAQs" faqs={FAQS} lead="Have your plan name ready and call us. We’ll check it for you." />
+  <FinalCta title="Let Us Check Your Coverage" text="Coverage depends on your plan. We confirm before your first visit." secondary="Check My Coverage" />
+</Base>

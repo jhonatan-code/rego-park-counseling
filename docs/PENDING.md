@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Substance Use section).
+Last update: 2026-09-30 (after Insurance page).
 
 ---
 
@@ -57,6 +57,19 @@ Last update: 2026-09-30 (after Substance Use section).
 | 2a.6 | Clinical stance on goals: abstinence only, or reduction also supported? | "[Confirm clinical stance.]" | Alcohol FAQ | E | ☐ |
 | 2a.7 | Naloxone: does the clinic give it out or train on it? Current NY program wording? | "[confirm current program wording]" | Drug Use Treatment | E | ☐ |
 | 2a.8 | Is adolescent care truly not offered? (confirms the /adolescent-substance-use-treatment/ → /substance-use/ redirect) | Redirect in place | vercel.json | E | ☐ |
+
+## 2c. Insurance
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 2c.1 | Internal list of Medicaid plans each clinic is contracted with (**never published**; keeps copy accurate + feeds Cristofer's health plan directory listings in November) | — | internal / C | E | ☐ |
+| 2c.2 | Medicare accepted? Commercial plans? Self-pay rates? | "[fill once confirmed]" rows | /insurance/ "Other insurance", FAQ | E | ☐ |
+| 2c.3 | Typical Medicaid copay for outpatient counseling | "[Confirm…]" | /insurance/ FAQ | E | ☐ |
+| 2c.4 | Are evaluations covered by Medicaid, or self-pay only? | "usually self-pay [confirm]" | /insurance/, Evaluations (see 2b.2) | E | ☐ |
+| 2c.5 | How fast staff can confirm coverage on a call ("in minutes"?) | "we'll confirm in minutes [confirm]" | /insurance/ FAQ | E | ☐ |
+| 2c.6 | Do staff help people apply for Medicaid, or connect them to someone who does? | "[confirm if staff help with applications]" | /insurance/ "Don't have Medicaid yet?" | E | ☐ |
+| 2c.7 | Medicaid transportation wording accurate for RPC patients? | "[confirm wording]" | /insurance/ "Free rides" | E | ☐ |
+| 2c.8 | Which services are covered at which clinic (so the bullet list is exact) | "[confirm each]" | /insurance/ | E | ☐ |
 
 ## 2b. Evaluations (price, speed and approvals decide the booking — highest priority here)
 
@@ -134,6 +147,8 @@ Last update: 2026-09-30 (after Substance Use section).
 | 6.7 | Anger Management signs list got a lead-in line the brief didn't have ("It may be time to get help if you notice:") — P to review. | 2026-09-30 |
 
 ## 7. Content to review (P)
+
+- /insurance/ "Helpful reading" gets: How to Get Free Medicaid Transportation to Therapy (Oct 5, also the "Free rides" card), What Is HARP? (Nov 16, also the HARP card), How to Apply for Medicaid in New York (Jan 4, also "Don't have Medicaid yet?") once published.
 
 - New posts to add to "Helpful Reading" once published: How to Help Someone With a Drinking Problem (Nov 2, also linked from the Alcohol "Worried about someone" block), Why Do I Feel Depressed After Drinking? (Dec 7, Alcohol + Dual Diagnosis), Signs Someone Is Using Drugs (Feb 1, Drug Use).
 

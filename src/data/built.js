@@ -8,4 +8,5 @@ export const BUILT = [
   '/locations/', '/locations/rego-park/', '/locations/fresh-meadows/', '/locations/yonkers/',
   '/evaluations/', '/evaluations/substance-abuse-evaluation/', '/evaluations/dwi-evaluation/',
   '/substance-use/', '/substance-use/alcohol-use-treatment/', '/substance-use/drug-use-treatment/', '/substance-use/dual-diagnosis/',
+  '/insurance/',
 ];
