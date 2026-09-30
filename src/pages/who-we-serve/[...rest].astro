@@ -1,0 +1,14 @@
+---
+// /who-we-serve/ hub + child pages: data in src/data/programs.js, layout in components/BlockPage.astro.
+import BlockPage from '../../components/BlockPage.astro';
+import { PAGES } from '../../data/programs.js';
+
+export function getStaticPaths() {
+  return PAGES.filter((p) => p.path.startsWith('/who-we-serve/')).map((p) => {
+    const rest = p.path.replace('/who-we-serve/', '').replace(/\/$/, '');
+    return { params: { rest: rest || undefined }, props: { page: p } };
+  });
+}
+const { page } = Astro.props;
+---
+<BlockPage page={page} />

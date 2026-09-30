@@ -43,7 +43,7 @@ const queens = CLINICS.filter((c) => c.status === 'open');
 
   {/* Until we open */}
   <section class="section-y relative overflow-hidden bg-sand" aria-labelledby="before-title">
-    <NearbyRing class="pointer-events-none absolute -bottom-52 -right-40 size-[560px]" />
+    <NearbyRing class="pointer-events-none absolute hidden -bottom-52 -right-40 size-[560px] lg:block" />
     <div class="container-x relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
       <div>
         <h2 id="before-title">{YONKERS.beforeH2}</h2>

@@ -19,7 +19,7 @@ const name = page.url.split('/').filter(Boolean).pop().replace(/-/g, ' ').replac
 ---
 <Base title={`${name} | Rego Park Counseling`} description="Page in progress." noindex>
   <section class="relative overflow-hidden bg-sky-wash">
-    <NearbyRing class="pointer-events-none absolute -right-24 -top-24 size-[420px]" />
+    <NearbyRing class="pointer-events-none absolute hidden -right-24 -top-24 size-[420px] lg:block" />
     <div class="container-x relative py-20 lg:py-28">
       <p class="eyebrow">{page.section}</p>
       <h1 class="mt-3">{name}</h1>

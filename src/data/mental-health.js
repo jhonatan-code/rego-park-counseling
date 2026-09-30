@@ -32,6 +32,17 @@ export const POSTS = {
   'addiction-and-mental-health-how-they-are-connected': 'Addiction and Mental Health: How They Are Connected',
   'how-does-substance-abuse-affect-mental-health': 'How Does Substance Abuse Affect Mental Health?',
   'bipolar-and-alcohol-addiction': 'Understanding the Link Between Bipolar and Alcohol Addiction',
+  // Programs, Who We Serve, Therapies
+  'telehealth-therapy-activities-for-adults': 'How Do Telehealth Therapy Activities for Adults Work?',
+  'substance-abuse-in-the-elderly': 'How Substance Abuse in the Elderly Affects Their Health',
+  'what-is-individual-therapy-session': 'What to Expect in an Individual Therapy Session',
+  'types-of-individual-therapy': 'What Are the Different Types of Individual Therapy?',
+  'how-to-prepare-for-your-first-therapy-session': 'How to Prepare for Your First Therapy Session',
+  'group-therapy-for-substance-abuse': 'Group Therapy for Substance Abuse',
+  'different-types-of-group-therapy': 'Understanding the Different Types of Group Therapy',
+  'addiction-group-therapy-topics': 'What Are the Addiction Group Therapy Topics in a Session?',
+  'group-therapy-for-depression': 'Group Therapy for Depression: A Powerful Path to Healing',
+  'family-systems-therapy': 'What Is Family Systems Therapy and How Does It Work?',
 };
 
 // Anchor text + one line for "Related services" cards (anchor = the target page's phrase).
@@ -53,6 +64,11 @@ export const SERVICES = {
   '/substance-use/': { label: 'Outpatient Substance Use Treatment', icon: 'sprout', text: 'OASAS-licensed counseling. You go home every night.' },
   '/substance-use/drug-use-treatment/': { label: 'Drug Use Treatment', icon: 'sprout', text: 'Outpatient counseling for any drug, without judgment.' },
   '/mental-health/': { label: 'Mental Health Clinic', icon: 'brain', text: 'OMH-licensed counseling for anxiety, depression, trauma and more.' },
+  '/programs/telehealth/': { label: 'Telehealth', icon: 'telehealth', text: 'Counseling by secure video from home.' },
+  '/who-we-serve/older-adults/': { label: 'Older Adults', icon: 'user', text: 'Counseling for later life, at any age.' },
+  '/therapies/individual-therapy/': { label: 'Individual Therapy', icon: 'user', text: 'Private, one-on-one time with your counselor.' },
+  '/evaluations/': { label: 'Evaluations', icon: 'clipboard', text: 'Substance abuse and DWI evaluations.' },
+  '/insurance/': { label: 'Insurance and Medicaid', icon: 'medicaid', text: 'Most Medicaid plans. We check yours for you.' },
 };
 
 const STD_EXPECT = (what) => [

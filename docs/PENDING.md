@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Insurance page).
+Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 
 ---
 
@@ -41,7 +41,7 @@ Last update: 2026-09-30 (after Insurance page).
 | 2.6 | Group therapy for depression/anxiety, or only substance use? | Depression FAQ about group therapy is **hidden** until confirmed | Depression FAQ | E | ☐ |
 | 2.7 | Court-referred anger management? Format (class, group, individual)? | Court section **hidden**; meta description without "court-referred"; FAQ answers carry "[Confirm]" | Anger Management | E | ☐ |
 | 2.8 | Is IOP offered? | Never mentioned (outpatient only). If yes, a new page could target "intensive outpatient programs in nyc" (1,000/mo) | Substance Use | E | ☐ |
-| 2.9 | Couples counseling real? | Page not built, not in menu | Therapies | E | ☐ |
+| 2.9 | Couples counseling real? | Page not built, not in menu. /addiction-treatments-for-couples/ 301s to Family Therapy (the map's fallback) until confirmed | Therapies | E | ☐ |
 | 2.10 | LGBTQ+ affirming care can be featured? | Page not built, not in menu | Who We Serve | E | ☐ |
 | 2.11 | Is ATI (Alternatives to Incarceration) an actual program? | Not named | Court-Involved (next) | E | ☐ |
 
@@ -70,6 +70,21 @@ Last update: 2026-09-30 (after Insurance page).
 | 2c.6 | Do staff help people apply for Medicaid, or connect them to someone who does? | "[confirm if staff help with applications]" | /insurance/ "Don't have Medicaid yet?" | E | ☐ |
 | 2c.7 | Medicaid transportation wording accurate for RPC patients? | "[confirm wording]" | /insurance/ "Free rides" | E | ☐ |
 | 2c.8 | Which services are covered at which clinic (so the bullet list is exact) | "[confirm each]" | /insurance/ | E | ☐ |
+
+## 2d. Programs, Who We Serve, Therapies (CORE and SCN rules are specific: a wrong claim can mislead Medicaid members)
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 2d.1 | Which CORE services is RPC designated for (PSR, CPST, FST, Peer Support), and at which clinic? | 4 cards "[Confirm which ones RPC is designated for]"; location block "[Confirm which clinics deliver CORE]" | /programs/core/ | E | ☐ |
+| 2d.2 | Current CORE eligibility wording and intake steps | "[confirm current eligibility wording]", steps "[confirm process]" | /programs/, /programs/core/ | E | ☐ |
+| 2d.3 | Can someone get CORE and counseling at the same time? | "[Confirm.]" | CORE FAQ | E | ☐ |
+| 2d.4 | RPC's exact role in the Social Care Network (screening, referral, services) and what help is available | "[Confirm RPC's role…]", help list "[Confirm list]", FAQ who qualifies / cost / need to be a patient "[Confirm]" | /programs/social-care-network/ | E | ☐ |
+| 2d.5 | Telehealth: which services, which platform, statewide or Queens only, phone sessions? | "[confirm]" in hero, list, steps, FAQ | /programs/telehealth/, Older Adults FAQ | E | ☐ (see 1.15, 2b.5) |
+| 2d.6 | Progress/completion letters and missed-session policy for court clients | "[confirm]" | /who-we-serve/court-involved/ | E | ☐ (ATI section **hidden**, see 2.11; meta description drops "ATI programs" and "progress letters" until confirmed) |
+| 2d.7 | Group list, size, length; in person, online or both? | Chips "[Confirm list]"; "What a group session is like: [confirm]" | /therapies/group-therapy/ | E | ☐ |
+| 2d.8 | Individual therapy session length and frequency; can clients choose a counselor? | "[Confirm]" | /therapies/individual-therapy/ | E | ☐ |
+| 2d.9 | Can minors attend family sessions? Are family-only sessions offered (loved one not a patient)? Family sessions by telehealth? | "[Confirm…]" | /therapies/family-therapy/ | E | ☐ |
+| 2d.10 | Age range served (adults only? from what age?) | Draft FAQ "We provide outpatient care for adults [confirm age range]" | /who-we-serve/ | E | ☐ |
 
 ## 2b. Evaluations (price, speed and approvals decide the booking — highest priority here)
 
@@ -121,7 +136,7 @@ Last update: 2026-09-30 (after Insurance page).
 | 5.3 | Redirect to /thank-you/ after submit to fire the conversion (Contact brief) | Inline confirmation today. Recommended | Jh (decision: user) | ☐ |
 | 5.4 | CTM Marketing Pro purchase; DNI number pools per clinic | Phones are live text ready for DNI | J | ☐ |
 | 5.5 | Owner of services.regoparkcounseling.com | Unknown | J | ☐ |
-| 5.6 | What is /rego/ (1.1k impressions) before it redirects to /programs/core/ | Not redirected yet | Jh | ☐ |
+| 5.6 | What is /rego/ (1.1k impressions) before it redirects to /programs/core/ | ◐ Checked 2026-09-30: it's a general landing ("A Safe Space for Healing…", mission, values) that presents BOTH CORE and the Social Care Network, not a CORE page. **Recommendation: 301 to /programs/ (hub) instead of /programs/core/.** Not added to vercel.json until the user decides | Jh (user decides) | ◐ |
 | 5.8 | One CTM tracking number per clinic, and which number goes in the MedicalClinic schema | Schema uses the main number | O | ☐ |
 | 5.7 | Map tiles: OpenStreetMap (free, fine for this traffic) | Switch to a keyed provider only if traffic grows | Jh | ☐ FYI |
 
@@ -144,9 +159,15 @@ Last update: 2026-09-30 (after Insurance page).
 | 6.14 | "Outpatient rehab" used only where the brief puts it (SU hub H2 + FAQ, alcohol FAQ); never "rehab" alone. | 2026-09-30 |
 | 6.15 | Alcohol and Drug signs lists got a lead-in line the brief didn't have ("It may be time to talk to someone if you notice:", "Reach out if you notice:") — P to review. | 2026-09-30 |
 | 6.16 | SU crisis note adds the SAMHSA helpline 1-800-662-4357; Drug page adds the overdose/naloxone line. | 2026-09-30 |
+| 6.17 | Programs, Who We Serve and Therapies use a block-based page (`components/BlockPage.astro`, data in `src/data/programs.js`): each page composes its own blocks so they don't look alike. Hubs stay indexable (brief). | 2026-09-30 |
+| 6.18 | Older Adults page uses larger body text (brief design note: larger type, high contrast, older adults in photos). | 2026-09-30 |
+| 6.19 | Decorative rings are hidden on phones wherever they could sit behind text (brand manual: never behind body text). | 2026-09-30 |
 | 6.7 | Anger Management signs list got a lead-in line the brief didn't have ("It may be time to get help if you notice:") — P to review. | 2026-09-30 |
 
 ## 7. Content to review (P)
+
+- **Draft FAQ answers written during the build** (the brief listed the question only): marked `draft: true` in `src/data/programs.js` — Programs hub (telehealth/Medicaid), CORE (What is a HARP?), SCN (Who qualifies?), Telehealth (all 4), Who We Serve hub (2 new questions), Older Adults (3), Court-Involved (2), Therapies hub (2 new questions), Individual (2), Group (3), Family (3). Hub card descriptions (2 sentences each) were also written from the brief's one-liners.
+- "What Is HARP?" (Nov 16) joins CORE's related links once published.
 
 - /insurance/ "Helpful reading" gets: How to Get Free Medicaid Transportation to Therapy (Oct 5, also the "Free rides" card), What Is HARP? (Nov 16, also the HARP card), How to Apply for Medicaid in New York (Jan 4, also "Don't have Medicaid yet?") once published.
 

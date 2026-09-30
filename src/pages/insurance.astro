@@ -146,7 +146,7 @@ const schema = [
         <p class="mt-5 text-slate">Evaluations (substance abuse and DWI) are usually self-pay [confirm]. <a href="/evaluations/" class="text-link">Evaluations</a></p>
       </div>
       <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-sand p-6 lg:p-8">
-        <NearbyRing class="pointer-events-none absolute -bottom-36 -right-36 size-[320px]" />
+        <NearbyRing class="pointer-events-none absolute hidden -bottom-36 -right-36 size-[320px] lg:block" />
         <h2 class="relative text-2xl lg:text-[30px]">Don’t Have Medicaid Yet?</h2>
         <p class="lead relative mt-4 max-w-md">If you live in New York and have a low income, you may qualify. We can point you to where to apply [confirm if staff help with applications].</p>
         <a href={SITE.phoneHref} class="btn-call relative mt-6" data-cta="call" data-location="insurance-no-medicaid"><Icon name="phone" size={20} /> Ask us where to start</a>

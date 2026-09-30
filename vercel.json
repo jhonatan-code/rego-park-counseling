@@ -199,6 +199,76 @@
       "source": "/addiction-treatment",
       "destination": "/substance-use/",
       "permanent": true
+    },
+    {
+      "source": "/rpc-core-program/",
+      "destination": "/programs/core/",
+      "permanent": true
+    },
+    {
+      "source": "/social-care-network/",
+      "destination": "/programs/social-care-network/",
+      "permanent": true
+    },
+    {
+      "source": "/telehealth-substance-use-treatment-program/",
+      "destination": "/programs/telehealth/",
+      "permanent": true
+    },
+    {
+      "source": "/alternatives-to-incarceration/",
+      "destination": "/who-we-serve/court-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/online-substance-abuse-counseling/",
+      "destination": "/programs/telehealth/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/group-therapy-for-substance-use/",
+      "destination": "/therapies/group-therapy/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/individual-substance-use-treatment/",
+      "destination": "/therapies/individual-therapy/",
+      "permanent": true
+    },
+    {
+      "source": "/core-3/",
+      "destination": "/programs/core/",
+      "permanent": true
+    },
+    {
+      "source": "/elderly-substance-use-treatment/",
+      "destination": "/who-we-serve/older-adults/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/court-ordered-treatment/",
+      "destination": "/who-we-serve/court-involved/",
+      "permanent": true
+    },
+    {
+      "source": "/online-addiction-treatment/",
+      "destination": "/programs/telehealth/",
+      "permanent": true
+    },
+    {
+      "source": "/online-substance-abuse-therapy/",
+      "destination": "/programs/telehealth/",
+      "permanent": true
+    },
+    {
+      "source": "/counseling/family-therapy-for-substance-use/",
+      "destination": "/therapies/family-therapy/",
+      "permanent": true
+    },
+    {
+      "source": "/addiction-treatments-for-couples/",
+      "destination": "/therapies/family-therapy/",
+      "permanent": true
     }
   ]
 }

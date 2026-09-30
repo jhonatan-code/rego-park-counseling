@@ -42,7 +42,7 @@ const open = CLINICS.filter((c) => c.status === 'open');
         </article>
       ))}
       <div class="card-focus relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-panel)] bg-harbor p-7 text-white">
-        <NearbyRing class="pointer-events-none absolute -bottom-28 -right-28 size-[300px] opacity-30" />
+        <NearbyRing class="pointer-events-none absolute hidden -bottom-28 -right-28 size-[300px] lg:block opacity-30" />
         <div class="relative">
           <span class="inline-flex size-12 items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="telehealth" /></span>
           <h3 class="mt-5 !text-white">Telehealth</h3>

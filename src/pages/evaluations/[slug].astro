@@ -137,7 +137,7 @@ const legal = page.legal ? NOT_LEGAL_ADVICE : undefined;
 
   {/* If treatment is recommended */}
   <section class="relative overflow-hidden bg-harbor text-white" aria-labelledby="after-title">
-    <NearbyRing class="pointer-events-none absolute -right-40 -top-48 size-[520px] opacity-25" />
+    <NearbyRing class="pointer-events-none absolute hidden -right-40 -top-48 size-[520px] lg:block opacity-25" />
     <div class="container-x relative flex flex-col gap-6 py-14 lg:flex-row lg:items-center lg:justify-between lg:py-16">
       <div class="max-w-2xl">
         <h2 id="after-title" class="!text-white">{page.after.h2}</h2>

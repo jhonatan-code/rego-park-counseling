@@ -9,4 +9,7 @@ export const BUILT = [
   '/evaluations/', '/evaluations/substance-abuse-evaluation/', '/evaluations/dwi-evaluation/',
   '/substance-use/', '/substance-use/alcohol-use-treatment/', '/substance-use/drug-use-treatment/', '/substance-use/dual-diagnosis/',
   '/insurance/',
+  '/programs/', '/programs/core/', '/programs/social-care-network/', '/programs/telehealth/',
+  '/who-we-serve/', '/who-we-serve/older-adults/', '/who-we-serve/court-involved/',
+  '/therapies/', '/therapies/individual-therapy/', '/therapies/group-therapy/', '/therapies/family-therapy/',
 ];
