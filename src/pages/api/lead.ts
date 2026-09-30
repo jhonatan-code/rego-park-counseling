@@ -44,6 +44,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   const params = new URLSearchParams();
   params.set('phone_number', `+1${digits}`);
   params.set('caller_name', name);
+  // Optional on the form; backfilled because CTM rejects a lead when a required custom field is blank (Sunview lesson).
+  params.set('custom_fields[membership_policy_id]', str(fd.get('policy_id'), 40) || 'Not provided');
+  params.set('custom_fields[insurance_carrier]', str(fd.get('insurance_carrier'), 60) || 'Not provided');
   params.set('custom_fields[preferred_clinic]', clinic);
   params.set('custom_fields[help_with]', help);
   params.set('custom_fields[source_page]', str(fd.get('page'), 200) || '/');
