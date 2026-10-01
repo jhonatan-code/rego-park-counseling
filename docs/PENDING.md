@@ -4,7 +4,9 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
+Last update: 2026-09-30 (after Blog, Post and Person templates).
+
+**Audit against the elev8 Website System (2026-09-30): see `docs/AUDIT-2026-09-30.md`** — blockers, client asks and content items found there are not all copied below yet.
 
 ---
 
@@ -19,7 +21,7 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 | 1.5 | Yonkers address, opening month, planned services | "Opening soon"; sub says "[in early 2027 / month — confirm]"; 4 planned services "[confirm]"; no clinic schema | Home, Contact, /locations/yonkers/ | E | ☐ |
 | 1.6 | Neighborhoods + trains/buses to name | Proposed: Rego Park near Forest Hills, Elmhurst, Middle Village, Kew Gardens, M/R at 63rd Drive; Fresh Meadows near Flushing, Hillcrest, Bayside, Jamaica Estates. Bus lines and parking unknown | Home "Getting here", About "Who we serve", Contact | E | ☐ |
 | 1.7 | "Now welcoming new (mental health) patients" label for Fresh Meadows | Shown as "Now welcoming new patients"; hub shows "…new mental health patients [confirm]" | Cards, footer, MH hub | E | ☐ |
-| 1.8 | Callback promise | "usually the same business day" used everywhere (brand manual). About brief says "within one business day — confirm" | Forms, hero copy | E | ☐ |
+| 1.8 | Callback promise | "usually the same business day" used everywhere (brand manual). About brief says "within one business day — confirm" | Forms, hero copy | E | ☐ · Home final copy now says "[within one business day]" (bracketed until confirmed) |
 | 1.9 | Referral contact for courts / case managers (email or fax) | "[referral email or fax, confirm]" | Contact | E | ☐ |
 | 1.10 | Show license / certificate numbers on About? | Not shown | About "Licensed and Accountable" | E | ☐ |
 | 1.11 | Services offered at each clinic | Comparison table on /locations/ shows "✓ [confirm]" / "[ ]"; Rego Park 8 service cards "[confirm the list]"; Fresh Meadows "Other services [confirm which apply]" | /locations/, clinic pages, schema `availableService` | E | ☐ |
@@ -63,7 +65,7 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 | # | Question | Now | Where | Owner | Status |
 |---|---|---|---|---|---|
 | 2c.1 | Internal list of Medicaid plans each clinic is contracted with (**never published**; keeps copy accurate + feeds Cristofer's health plan directory listings in November) | — | internal / C | E | ☐ |
-| 2c.2 | Medicare accepted? Commercial plans? Self-pay rates? | "[fill once confirmed]" rows | /insurance/ "Other insurance", FAQ | E | ☐ |
+| 2c.2 | Medicare accepted? Commercial plans? Self-pay rates? | "[fill once confirmed]" rows | /insurance/ "Other insurance", FAQ | E | ☐ · Standard what-not-to-publish §4: **no prices or self-pay rates on the site**; the answer stays "call for pricing" (applied 2026-09-30) |
 | 2c.3 | Typical Medicaid copay for outpatient counseling | "[Confirm…]" | /insurance/ FAQ | E | ☐ |
 | 2c.4 | Are evaluations covered by Medicaid, or self-pay only? | "usually self-pay [confirm]" | /insurance/, Evaluations (see 2b.2) | E | ☐ |
 | 2c.5 | How fast staff can confirm coverage on a call ("in minutes"?) | "we'll confirm in minutes [confirm]" | /insurance/ FAQ | E | ☐ |
@@ -90,7 +92,7 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 
 | # | Question | Now | Where | Owner | Status |
 |---|---|---|---|---|---|
-| 2b.1 | Price of each evaluation (show it, or "call for pricing")? Payment methods? | FAQ: "Call us for current pricing… [Or show the price — confirm]"; cost block in brackets | Evaluations hub, SA, DWI | E | ☐ |
+| 2b.1 | Price of each evaluation (show it, or "call for pricing")? Payment methods? | FAQ: "Call us for current pricing… [Or show the price — confirm]"; cost block in brackets | Evaluations hub, SA, DWI | E | ☐ · Standard what-not-to-publish §4: **no prices or self-pay rates on the site**; the answer stays "call for pricing" (applied 2026-09-30) |
 | 2b.2 | Does Medicaid cover evaluations? | "[Confirm.]" | Hub FAQ, cost blocks | E | ☐ |
 | 2b.3 | How fast can a new person be seen? How fast is the report ready? | Trust chips "[Seen within X days]", "[Report in X days]" in the banner | All 3 pages | E | ☐ |
 | 2b.4 | Appointment length; evenings or Saturdays? | "[confirm length, e.g. 60 to 90 minutes]" | All 3 pages | E | ☐ |
@@ -110,18 +112,30 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 | 3.1 | Staff list: name, credential (as on license), role, clinic, languages, 2–3 sentence bio, headshot, **written consent** | 4 placeholder cards; /our-team/ is noindex + out of sitemap until real | Home "Meet Our Counselors", /our-team/ | E | ☐ |
 | 3.2 | Emmanuel's last name + title; Clinical Director name + credential | Placeholders | /our-team/ Leadership | E | ☐ |
 | 3.3 | Languages spoken by the team | "[add languages]" | Home "Why", MH hub "Why", /our-team/ | E | ☐ |
-| 3.4 | Who authors and reviews clinical articles? | Reviewer line with brackets; no `reviewedBy` schema yet | /our-team/, all MH pages (schema), blog | E | ☐ |
+| 3.4 | Who authors and reviews clinical articles? | Posts are signed **by the clinic** (Organization byline, links to /about/) while the author is a placeholder. A real person is named only with their agreement and a real review, post by post (medical-clinical-review): add `reviewer` + `reviewed` per post and the byline shows "Clinically reviewed by…" + MedicalWebPage reviewedBy. 25 medication posts need an MD/APRN/PMHNP reviewer or softening | every post, /our-team/ | E | ☐ **Launch blocker for named authorship** |
+| 3.6 | Slugs for real people (first-last) so each gets /our-team/{slug}/ | Only the Clinical Director placeholder has a slug | team.js | Jh (when names arrive) | ☐ |
 | 3.5 | Careers: show hiring band? where do applications go? | Band with "[confirm]" | /our-team/ | E | ☐ |
+
+## 3a. Blog (179 posts migrated from WordPress, 2026-09-30)
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 3a.1 | 3 KEEP URLs are WordPress *pages* whose text the API doesn't return: /12-step-program/, /national-mental-health-and-substance-use-statistics/, /withdrawal-symptoms/ | Not migrated; they 404 on the new site; links to them inside posts became plain text. Map says 12-step/withdrawal are "parked for the blog phase" | Launch QA | Jh (decide: migrate by hand or 301) | ☐ |
+| 3a.2 | Post copy vs. outpatient-only rule: posts mention detox (24), IOP/intensive outpatient (26+12), inpatient (29), residential (27), Suboxone (2) | Migrated verbatim; most are educational, but any line that *offers* these services breaks the hard rule | Posts | P | ☐ Audit in the blog phase |
+| 3a.3 | Six categories per the Blog Hub brief (Mental Health 52 · Substance Use & Recovery 65 · Therapy Basics 44 · Families & Relationships 7 · Medicaid & Insurance 6 · Evaluations & DWI 5), assigned from slug/title keywords in `src/data/posts.js` (`CATEGORY_RULES`) | Spot-check | P | ☐ Review |
+| 3a.4 | Old WordPress links to pages not in the Redirect Map were pointed at: /substance-use-evaluation/ → SA evaluation, /alcohol-counseling/ → Alcohol use, /dui-dwi-treatment/ → DWI evaluation, /court-ordered-treatment/ → Court-involved | `LEGACY` in the importer | Post bodies | Jh | ☐ Confirm |
+| 3a.6 | Insurance claims inside migrated posts (checked 2026-09-30: no plan is named anywhere). Three sentences go beyond "most Medicaid plans": *cost-of-addiction-treatment* "We accept insurance, provide flexible payment options"; *does-insurance-cover-anger-management-therapy* "We accept major insurance plans … sliding scale payment options"; *does-medicare-cover-mental-health-complete-2025-guide* "Rego Park Counseling provide[s] Medicare-covered services" | Migrated verbatim; Medicare, commercial plans and sliding scale are unconfirmed (2c.2) | Those 3 posts | E (confirm) / P (rewrite) | ☐ |
+| 3a.5 | Prune/merge of posts (Redirect Map "signal" column) | All KEEP posts are live on the new template | — | Jh / P | ☐ Blog phase |
 
 ## 4. Brand and assets
 
 | # | Question | Now | Owner | Status |
 |---|---|---|---|---|
-| 4.1 | Logo vector file (SVG/AI/EPS) | Using the 347×75 PNG | E | ☐ |
-| 4.2 | Emblem-only crop for favicon (needs approval) | Empty favicon placeholder | E | ☐ |
+| 4.1 | Logo vector file (SVG/AI/EPS) | ◐ 2026-09-30: user sent a high-res emblem PNG (807×805, `assets/brand/rego-park-counseling-emblem.png`). Header still uses the 347×75 PNG; vector still wanted | E | ◐ |
+| 4.2 | Emblem-only crop for favicon (needs approval) | ☑ 2026-09-30: user chose the emblem from the high-res PNG. Favicons ≤48px hide the ribbon text (unreadable) and the stem tail; 180/192/512 use the full emblem on white (`scripts/favicons.mjs`). Brand manual asks Emmanuel to approve | E (FYI) | ☑ |
 | 4.3 | Team and clinic photo session. Per clinic: outside, entrance/signage, waiting area, counseling room | Only real photo: 99th Street entrance. Clinic pages show "[photo needed]" tiles; everything else is stock from the current site | E / J | ☐ |
 | 4.4 | Approve "Care close to home" and the brand manual | Brand manual v1.0 is a draft for Emmanuel | E | ☐ |
-| 4.5 | Brand manual says "no insurance ID" in forms; the user added Membership Policy ID + Insurance Carrier (Sunview field set) | Form has the 4 Sunview fields | J → E | ☐ Tell Julian |
+| 4.5 | Brand manual says "no insurance ID" in forms | ☑ 2026-09-30: form follows the client docs now (user: Elizabeth's standards and the client wiki win over preferences): name*, phone*, preferred clinic, "I need help with". Policy ID and carrier removed | Jh | ☑ |
 | 4.6 | Google profile URLs for schema `sameAs` | Not set | C | ☐ |
 | 4.7 | Current Google profile name, primary category (Rego Park: Addiction treatment center?) and NAP, so the page matches exactly | Page uses site.js NAP | C | ☐ |
 | 4.8 | Create the Fresh Meadows Google profile (primary category Mental health clinic?) with the same NAP as the page | Page ready at /locations/fresh-meadows/ | C | ☐ |
@@ -131,7 +145,7 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 
 | # | Question | Now | Owner | Status |
 |---|---|---|---|---|
-| 5.1 | Create the RPC FormReactor; map custom fields (`membership_policy_id`, `insurance_carrier`, `source_page`, `form_location`) | Form shows "not connected yet" (honest error) | O | ☐ |
+| 5.1 | Create the RPC FormReactor; map custom fields | ◐ 2026-09-30: reactor received (custom fields `membership_policy_id`, `insurance_carrier`); credentials in local `.env` (gitignored), to add as Vercel env vars. GTM-T3S8L3WL and target number (718) 459-2558 confirmed = what the site uses. Pending: one live test lead | Jh / O | ◐ · 2026-09-30: Oriana to add select fields `preferred_clinic` (Rego Park / Fresh Meadows / Telehealth / Yonkers / Not sure) and `help_with` (Mental health / Substance use / An evaluation / Not sure), values exactly as listed; make `membership_policy_id` / `insurance_carrier` optional or remove them |
 | 5.2 | Clinic no longer sent with the lead (field removed by the user) | Route by CTM tracking number per clinic instead | O | ☐ |
 | 5.3 | Redirect to /thank-you/ after submit to fire the conversion (Contact brief) | Inline confirmation today. Recommended | Jh (decision: user) | ☐ |
 | 5.4 | CTM Marketing Pro purchase; DNI number pools per clinic | Phones are live text ready for DNI | J | ☐ |
@@ -139,15 +153,29 @@ Last update: 2026-09-30 (after Programs, Who We Serve & Therapies).
 | 5.6 | What is /rego/ (1.1k impressions) before it redirects to /programs/core/ | ◐ Checked 2026-09-30: it's a general landing ("A Safe Space for Healing…", mission, values) that presents BOTH CORE and the Social Care Network, not a CORE page. **Recommendation: 301 to /programs/ (hub) instead of /programs/core/.** Not added to vercel.json until the user decides | Jh (user decides) | ◐ |
 | 5.8 | One CTM tracking number per clinic, and which number goes in the MedicalClinic schema | Schema uses the main number | O | ☐ |
 | 5.7 | Map tiles: OpenStreetMap (free, fine for this traffic) | Switch to a keyed provider only if traffic grows | Jh | ☐ FYI |
+| 5.9 | SMS consent: counsel approves the wording (draft `sms-v1-2026-09-30` in CallbackForm.astro: sender, message types, frequency, rates, STOP/HELP, links); Oriana adds custom fields `sms_opt_in` and `sms_consent_version` to the reactor so the consent is recorded | Box built (unticked, appears once the form is started, Sunview pattern) | counsel / O | ☐ |
+| 5.10 | Signed BAA between Rego Park Counseling and CTM (phi-data-handling §3) | No record | E / O | ☐ |
+| 5.11 | Review the GTM container: which tags fire, any ad pixel or automatic data collection; consent banner / privacy regime (privacy-consent §6) | Not reviewed | Jh + E decides | ☐ |
+| 5.12 | Call recording: are CTM calls recorded, and where is it disclosed? (privacy-consent §8) | Unknown | E / O | ☐ |
+| 5.13 | Legal pages text from counsel: Privacy Policy + Terms (map folds Terms into /privacy-policy/), HIPAA Notice of Privacy Practices, 42 CFR Part 2 notice, Section 1557 non-discrimination + language taglines, Telehealth Privacy, Accessibility. All are blank placeholders today | ☐ **Launch blocker** | E / counsel | ☐ |
+| 5.14 | Social media accounts (navigation §6 asks for them in the footer) | None known | E / J | ☐ |
+| 5.15 | Data inventory for the privacy policy: `docs/DATA-INVENTORY.md` | Written 2026-09-30 | Jh → E | ◐ |
 
 ## 6. Decisions made during the build (tell Julian / keep for the record)
 
 | # | Decision | Date |
 |---|---|---|
-| 6.1 | One form per page: home section 2; inner pages in the banner (H1 left, form right). No second form in closing bands. | 2026-09-30 |
+| 6.1 | Forms: one per page in the banner/section 2, EXCEPT the closing band of Home and About, which repeat the full form as a reminder (Home brief + About content; user 2026-09-30: client docs win). Our Team keeps one form (user: it would feel form-heavy). | 2026-09-30 |
 | 6.2 | Header has only the magenta call button; menu order About → … → Contact Us last. | 2026-09-30 |
 | 6.3 | 1300px usable width (brand manual said 1180). | 2026-09-30 |
 | 6.4 | Our Team at `/our-team/`, person pages `/our-team/{slug}/` (sitemap v2 said `/about/our-team/`); 301s added. | 2026-09-30 |
+| 6.5 | Blog built on the Elev8 SOP (hub, one post template for every post, one person template for team + authors). Posts keep root URLs `/post-slug/` (Server Rules #7), not `/blog/post-slug/`. Authors are team.js people: no /author/ pages (`/author/*` and `/category/*` 301 to /blog/, plus the old /blog/{category}/page/N/ archives). | 2026-09-30 |
+| 6.8 | End of every post: "Live in or near Queens?" box linking the post's topic to its service page + call (rules in src/data/postServices.js; only built, confirmed pages). Pavel can review the matches. | 2026-09-30 |
+| 6.9b | Home rewritten to "Home Page Final Copy" (Sep 30). Two points of the final copy NOT applied, per earlier user decisions: (1) ☑ applied 2026-09-30: form now has Clinic + "I need help with" (brand manual 4-field rule); (2) ☑ applied 2026-09-30: closing band has the full form (`FormCta.astro`), also on About; not on Our Team. Tell Pavel/Julian or change if the final copy should win. "Helpful Reading" shows the existing Medicaid post until "How to Get Free Medicaid Transportation to Therapy in New York" is published (Oct 5): swap its slug in `src/data/home.js` | 2026-09-30 |
+| 6.10b | Forms: SMS consent box hides again (and unticks) when every field is emptied; phone field accepts digits only (typing, paste, autofill) | 2026-09-30 |
+| 6.11 | Blog Hub & Blog Templates brief applied where it doesn't conflict with the Elev8 blog SOP: hub copy (H1 "Mental Health and Recovery Resources", title, meta), Start Here (3 GSC posts, re-pick quarterly), Latest Articles, care band in the grid; 6 categories; post: read time + Updated, top service box, mid-article CTA before the 4th H2, FAQPage from each post's FAQs section (177/179), medical disclaimer on all posts + legal disclaimer on Evaluations & DWI; build-time lint (`scripts/lint-posts.mjs`, npm prebuild); byline "Rego Park Counseling editorial team"; person page: long bio, "Verify license" link, "Articles reviewed", "Work With {First}". **Pending user decision (brief vs SOP):** category pages `/blog/category/[slug]/`, pagination `/blog/page/2/`, `/author/[slug]/` pages, dates on cards | 2026-09-30 |
+| 6.7 | /blog/ search box (user approved): filters the cards in the page by title, excerpt and category as you type; combines with author and category filters; never changes the URL. | 2026-09-30 |
+| 6.6 | Client rules over the SOP post sidebar: no insurance logo carousel (never name plans) → "We accept most Medicaid plans" block; no Google review (reviews skipped at launch, like Home section 12). No Sources block: the migrated posts cite inline. | 2026-09-30 |
 | 6.5 | Contact form uses the same 4 fields as every page (brief asked for clinic, need, best time). | 2026-09-30 |
 | 6.6 | Reviews section skipped on Home (3.2 from 20). | 2026-09-30 |
 | 6.8 | Location final bands can't "preselect the clinic" (the form has no clinic field). Each page sends its own `form_location`; Yonkers waitlist sends `yonkers-waitlist` with a "Notify Me When You Open" button (brief wanted email optional + "what can we help with": not added, one form everywhere). | 2026-09-30 |

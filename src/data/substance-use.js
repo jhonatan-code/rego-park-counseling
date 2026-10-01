@@ -7,7 +7,7 @@
 const SU_EXPECT = [
   { title: 'Call or request a callback.', text: 'We check your insurance and find a time.' },
   { title: 'Assessment.', text: 'A credentialed clinician learns about your use, health and goals.' },
-  { title: 'Your plan.', text: 'Individual or group sessions, in person or by telehealth, reviewed as you progress.' },
+  { title: 'Your plan.', text: 'Sessions with your counselor on a plan reviewed as you progress. On the call we’ll tell you whether group sessions or telehealth are available for you [confirm, PENDING 2a.4].' },
 ];
 
 export const PAGES = [

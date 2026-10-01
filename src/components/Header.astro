@@ -10,11 +10,17 @@ import { SITE, NAV, CLINICS, live } from '../data/site.js';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => href !== '/' && path.startsWith(href);
-// A menu item is active on its hub and on any page listed in its panel (Our Team → About).
-const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some((l: any) => isActive(l.href));
+// A menu item is active on its hub and on any page listed in its panel (Our Team → About),
+// including column hubs and their links (Programs → /therapies/…).
+const itemActive = (item: any) =>
+  isActive(item.href) ||
+  (item.links ?? []).some((l: any) => isActive(l.href)) ||
+  (item.columns ?? []).some((c: any) => isActive(c.href) || (c.links ?? []).some((l: any) => isActive(l.href)));
+// Screen readers: `page` on the exact URL, `true` (current section) anywhere inside it.
+const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(item) ? 'true' : undefined);
 ---
 <div class="hidden bg-harbor text-white lg:block">
-  <div class="container-header flex h-10 items-center justify-between gap-6 text-base">
+  <div class="container-header flex h-12 items-center justify-between gap-6 text-base">
     <p class="flex items-center gap-2 text-white/95">
       <Icon name="licensed" size={18} class="text-sky" />
       <span>{SITE.licensing}</span>
@@ -23,13 +29,13 @@ const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some
       <span aria-hidden="true" class="text-white/40">·</span>
       <span>Telehealth available</span>
     </p>
-    <nav aria-label="Our clinics" class="flex items-center gap-2">
+    <nav aria-label="Our clinics" class="flex items-center gap-x-2">
       <Icon name="pin" size={18} class="text-sky" />
       {CLINICS.map((c, i) => (
         <>
           {i > 0 && <span aria-hidden="true" class="text-white/40">·</span>}
-          <a href={c.href} class="text-white/95 underline-offset-4 hover:underline">
-            {c.name}{c.status === 'soon' && <span class="text-white/75"> (opening soon)</span>}
+          <a href={c.href} class="tap-target text-white/95 underline-offset-4 hover:underline">
+            <span>{c.name}{c.status === 'soon' && <span class="text-white/75"> (opening soon)</span>}</span>
           </a>
         </>
       ))}
@@ -59,7 +65,7 @@ const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some
                   'hover:after:opacity-100 group-focus-within/nav:after:opacity-100',
                   itemActive(item) && 'after:opacity-100',
                 ]}
-                aria-current={path === item.href ? 'page' : undefined}
+                aria-current={currentAttr(item)}
                 aria-haspopup={hasPanel ? 'true' : undefined}
                 aria-expanded={hasPanel ? 'false' : undefined}
                 aria-controls={hasPanel ? id : undefined}
@@ -209,7 +215,7 @@ const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some
                 </div>
               </details>
             ) : (
-              <a href={item.href} class="flex min-h-14 items-center py-3 font-display text-xl font-extrabold text-harbor">{item.label}</a>
+              <a href={item.href} class="flex min-h-14 items-center py-3 font-display text-xl font-extrabold text-harbor" aria-current={currentAttr(item)}>{item.label}</a>
             )}
           </li>
         );
@@ -247,18 +253,41 @@ const itemActive = (item: any) => isActive(item.href) || (item.links ?? []).some
   const menu = document.getElementById('mobile-menu');
   const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
   const closeBtn = menu?.querySelector<HTMLButtonElement>('[data-menu-close]');
-  const toggle = (open: boolean) => {
+  const isOpen = () => Boolean(menu && !menu.classList.contains('hidden'));
+  const toggle = (open: boolean, restoreFocus = true) => {
     if (!menu || !openBtn) return;
     menu.classList.toggle('hidden', !open);
     menu.classList.toggle('flex', open);
     document.documentElement.style.overflow = open ? 'hidden' : '';
     openBtn.setAttribute('aria-expanded', String(open));
-    (open ? closeBtn : openBtn)?.focus();
+    if (open) closeBtn?.focus();
+    else if (restoreFocus) openBtn.focus();
   };
+  // Modal dialog: Tab / Shift+Tab stay inside while open (summary + links + buttons that are visible).
+  const focusables = () =>
+    Array.from(menu?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])') ?? [])
+      .filter((el) => el.getClientRects().length > 0);
   openBtn?.addEventListener('click', () => toggle(true));
   closeBtn?.addEventListener('click', () => toggle(false));
-  menu?.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
-  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggle(false)));
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); toggle(false); return; }
+    if (e.key !== 'Tab') return;
+    const els = focusables();
+    if (!els.length) return;
+    const first = els[0];
+    const last = els[els.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+    if (e.shiftKey && (active === first || !menu.contains(active))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (active === last || !menu.contains(active))) { e.preventDefault(); first.focus(); }
+  });
+  // Focus that escapes some other way (e.g. a screen-reader virtual cursor) is pulled back in.
+  document.addEventListener('focusin', (e) => {
+    if (isOpen() && menu && !menu.contains(e.target as Node)) closeBtn?.focus();
+  });
+  // Following a link navigates away: close without yanking focus back to the toggle.
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => toggle(false, false)));
+  // Menu is xl:hidden; if the viewport grows past xl while open, release the scroll lock.
+  matchMedia('(min-width: 1280px)').addEventListener('change', (e) => { if (e.matches && isOpen()) toggle(false, false); });
 </script>
 
 <style>

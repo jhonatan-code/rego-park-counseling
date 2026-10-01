@@ -1,0 +1,40 @@
+---
+// Shared post card (SOP Blog/Post/Author §0 "Cards", §1 "Card anatomy"): one component for the blog grid, the post's
+// Latest articles and the person page's "Articles by". Feature graphic · category + read time · title · ≈3-line
+// excerpt · author · Read more →. No publication date. The graphic and the title link to the post; the author links
+// to the person page. Title element: `as` (default 'p'); 'h3' only where an H2 precedes the card list.
+import Avatar from './Avatar.astro';
+import Icon from './Icon.astro';
+import { postAuthor, postImage, postUrl, readTime, categoryColor } from '../data/posts.js';
+
+interface Props { post: any; as?: 'p' | 'h3'; eager?: boolean; class?: string }
+const { post, as: Title = 'p', eager = false, class: cls = '' } = Astro.props;
+const author = postAuthor(post);
+const href = postUrl(post);
+---
+<article class:list={['pc group flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white transition-shadow duration-200 hover:shadow-[0_24px_48px_-28px_rgba(10,85,119,0.45)]', cls]}>
+  <a href={href} class="block overflow-hidden bg-sky-wash" tabindex="-1" aria-hidden="true">
+    <img src={postImage(post)} alt="" width="1200" height="630" loading={eager ? 'eager' : 'lazy'} decoding="async" class="aspect-[1200/630] w-full object-cover" />
+  </a>
+  <div class="pc-body flex flex-1 flex-col p-6">
+    <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+      <span class="inline-flex items-center gap-2 font-bold uppercase tracking-[0.1em] text-ink">
+        <span class="size-2.5 rounded-full" style={`background:${categoryColor(post.category).dot}`} aria-hidden="true"></span>{post.category}
+      </span>
+      <span class="inline-flex items-center gap-1 text-slate"><Icon name="clock" size={15} />{readTime(post)}</span>
+    </p>
+    <Title class="pc-title mt-3 font-display text-xl font-extrabold leading-snug text-harbor">
+      <a href={href} class="hover:underline hover:decoration-sky hover:decoration-2 hover:underline-offset-4">{post.title}</a>
+    </Title>
+    <p class="pc-excerpt mt-3 line-clamp-3 text-base text-slate">{post.description}</p>
+    <div class="mt-auto pt-5">
+      <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-t border-line pt-4">
+        <a href={author.href} class="inline-flex min-w-0 items-center gap-2.5 text-base font-bold text-ink hover:text-harbor">
+          <Avatar person={author} class="size-9" text="text-xs" />
+          <span class="truncate">{author.name}</span>
+        </a>
+        <a href={href} class="inline-flex flex-none items-center gap-1 font-display text-base font-bold text-harbor hover:underline" aria-label={`Read more: ${post.title}`}>Read more <Icon name="arrow-right" size={16} /></a>
+      </div>
+    </div>
+  </div>
+</article>

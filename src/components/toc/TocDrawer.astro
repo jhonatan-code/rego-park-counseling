@@ -1,0 +1,42 @@
+---
+// <1024px table of contents: a button under the banner opens a drawer (<dialog>) with the same list. Closed by
+// default, never opens on its own. The page hides the wrapper at lg.
+import Icon from '../Icon.astro';
+import TocList from './TocList.astro';
+interface Props { items: { id: string; text: string }[]; class?: string }
+const { items, class: cls } = Astro.props;
+---
+<div class={cls}>
+  <button type="button" class="btn-secondary !min-h-11 !px-5 !text-base" aria-haspopup="dialog" aria-controls="toc-drawer" data-toc-open>
+    <Icon name="list" size={20} />Table of contents
+  </button>
+  <dialog id="toc-drawer" class="rpc-drawer" aria-labelledby="toc-drawer-title">
+    <div class="flex items-center justify-between gap-4 border-b border-line px-5 py-3">
+      <p id="toc-drawer-title" class="font-display text-xl font-extrabold text-harbor">Table of contents</p>
+      <button type="button" class="inline-flex size-12 items-center justify-center rounded-full text-harbor hover:bg-sky-wash" aria-label="Close table of contents" data-toc-close><Icon name="x" /></button>
+    </div>
+    <TocList items={items} class="px-3 py-3" />
+  </dialog>
+</div>
+
+<style>
+  .rpc-drawer {
+    margin: auto auto 0; width: 100%; max-width: 100%; max-height: 80vh; padding: 0; border: 0;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0; background: #fff; color: var(--color-ink);
+  }
+  @media (min-width: 640px) { .rpc-drawer { margin: auto; max-width: 520px; border-radius: var(--radius-panel); } }
+  .rpc-drawer::backdrop { background: rgb(7 65 91 / .55); }
+  .rpc-drawer[open] { animation: rpc-fade .2s ease-out; }
+  @keyframes rpc-fade { from { opacity: 0; } to { opacity: 1; } }
+</style>
+
+<script>
+  const drawer = document.getElementById('toc-drawer') as HTMLDialogElement | null;
+  const opener = document.querySelector<HTMLButtonElement>('[data-toc-open]');
+  if (drawer && opener) {
+    opener.addEventListener('click', () => drawer.showModal());
+    drawer.querySelector('[data-toc-close]')?.addEventListener('click', () => drawer.close());
+    drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.close(); });
+    drawer.addEventListener('close', () => { if (drawer.dataset.tocNav) delete drawer.dataset.tocNav; else opener.focus(); });
+  }
+</script>

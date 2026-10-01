@@ -36,7 +36,8 @@ const org = {
   // sameAs: Google profiles + social, to add once confirmed
 };
 const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: `${SITE.url}/`, name: SITE.name, publisher: { '@id': `${SITE.url}/#organization` } };
-const crumbs = breadcrumbs.length
+// Home gets a one-item BreadcrumbList too (schema.md: every page)
+const crumbs = breadcrumbs.length || Astro.url.pathname === '/'
   ? {
       '@type': 'BreadcrumbList',
       itemListElement: [{ name: 'Home', href: '/' }, ...breadcrumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: new URL(c.href, SITE.url).href })),
@@ -61,7 +62,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <meta name="theme-color" content="#0a5577" />
-    <link rel="icon" href="data:," /> {/* placeholder until the emblem crop is approved */}
+    {/* Favicons from the high-res emblem (scripts/favicons.mjs): ≤48px without the ribbon text, 180px+ full emblem */}
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
@@ -84,6 +89,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </main>
     <Footer />
     <MobileCallBar />
+    <script is:inline>
+      // Ad click ids (standards/forms-ctm.md §3): read from the landing URL and kept for the visit (sessionStorage),
+      // because the visitor may fill the form on a later page. Only these keys; no personal data.
+      (function () {
+        var KEYS = ['gclid', 'gbraid', 'wbraid', 'msclkid', 'fbclid', 'campaignid', 'campaign_id', 'adgroupid', 'adgroup_id', 'creative', 'creative_id'];
+        try {
+          var q = new URLSearchParams(location.search), saved = JSON.parse(sessionStorage.getItem('rpc_attr') || '{}'), hit = false;
+          KEYS.forEach(function (k) { var v = q.get(k); if (v && /^[\w.\-~]{1,200}$/.test(v)) { saved[k] = v; hit = true; } });
+          if (hit) sessionStorage.setItem('rpc_attr', JSON.stringify(saved));
+        } catch (e) {}
+      })();
+    </script>
     <script>
       // "Request a Callback" buttons: go to this page's form if it has one, else /contact/.
       document.querySelectorAll<HTMLAnchorElement>('[data-open-callback]').forEach((a) => {

@@ -2,11 +2,15 @@
 // Callback card. Layout mirrors the approved Sunview hero card (compact white card: title row, two-column
 // fields, one full-width button, small reassurance lines under it); colors, type and radii follow the RPC
 // brand manual (magenta = callback action, Harbor focus ring, 16px floor, 8px inputs).
-// Fields (user, 2026-09-30, same set as Sunview): name*, number*, Membership Policy ID (optional), Insurance
-// Carrier (optional). Preferred clinic and "what can we help with" were removed by the user. This overrides the brand manual's
-// "no insurance ID" rule. No email, no health details. Posts FormData to /api/lead/ (server-side CTM proxy) with source page,
+// Fields per the brand manual ("Four fields max. No email, no insurance ID, no health details. Posts to CTM with
+// source.") and the Home brief / About content: name*, phone*, preferred clinic, "I need help with". Client docs win
+// over the earlier Sunview field set (user, 2026-09-30). Yonkers presets the clinic (About content, Locations). Posts FormData to /api/lead/ (server-side CTM proxy) with source page,
 // form location, then pushes dataLayer {event:'callback_submit', form_location}.
 // A failed CTM call is never shown as success.
+// SMS consent (privacy-consent §4, Sunview pattern): its own unticked box, hidden until the visitor starts filling the
+// form; names the sender, message type, frequency, rates, STOP/HELP and links privacy + terms. Declining never blocks
+// the form. Sent to CTM as custom_fields[sms_opt_in] (yes/no) + the wording version, so the consent is recorded.
+// Wording is a draft until counsel approves it (PENDING 5.9). No "HIPAA compliant" claim (privacy-consent §5).
 import { SITE } from '../data/site.js';
 
 interface Props {
@@ -14,13 +18,21 @@ interface Props {
   location: string; // analytics label
   heading?: string;
   button?: string; // submit label (Yonkers waitlist: "Notify Me")
+  clinic?: string; // preset preferred clinic (Yonkers waitlist)
 }
-const { formId, location, heading = 'Request a Callback', button = 'Request a Callback' } = Astro.props;
+const { formId, location, heading = 'Request a Callback', button = 'Request a Callback', clinic = '' } = Astro.props;
+// Option values must match the CTM reactor's select lists character for character (forms-ctm §4).
+const CLINICS = ['Rego Park', 'Fresh Meadows', 'Telehealth', 'Not sure', ...(clinic && !['Rego Park', 'Fresh Meadows', 'Telehealth'].includes(clinic) ? [clinic] : [])];
+const HELP = ['Mental health', 'Substance use', 'An evaluation', 'Not sure'];
+const select = 'h-12 w-full min-w-0 appearance-none rounded-[var(--radius-input)] border border-slate/40 bg-white bg-[length:20px] bg-[right_0.75rem_center] bg-no-repeat px-3.5 pr-10 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25';
+const chevron = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a5577' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")";
+const SMS_CONSENT_VERSION = 'sms-v1-2026-09-30';
 const lbl = 'mb-1.5 block text-base leading-snug text-slate';
 const field =
   'h-12 w-full min-w-0 rounded-[var(--radius-input)] border border-slate/40 bg-white px-3.5 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25 aria-[invalid=true]:border-attention';
 ---
 <form
+  data-phone={SITE.phone}
   class="rpc-callback w-full max-w-[500px] rounded-[var(--radius-panel)] bg-white p-5 text-ink shadow-[0_2px_6px_rgba(0,0,0,0.14),0_24px_48px_rgba(7,65,91,0.28)] sm:p-7"
   novalidate
   data-form-id={formId}
@@ -29,10 +41,7 @@ const field =
   action="/api/lead/"
   method="post"
 >
-  <div class="mb-5 flex items-center gap-3">
-    <img src="/images/badges/hipaa-compliant.svg" alt="HIPAA Compliant" width="115" height="64" class="block h-11 w-auto flex-none" />
-    <p class="font-display text-xl font-extrabold leading-tight text-harbor sm:text-[22px]">{heading}</p>
-  </div>
+  <p class="mb-5 font-display text-xl font-extrabold leading-tight text-harbor sm:text-[22px]">{heading}</p>
 
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-end">
     <div>
@@ -50,17 +59,30 @@ const field =
           </svg>
           +1
         </span>
-        <input id={`${formId}-phone`} class={field} type="tel" name="phone" autocomplete="tel-national" inputmode="tel" required />
+        <input id={`${formId}-phone`} class={field} type="tel" name="phone" autocomplete="tel-national" inputmode="numeric" pattern="[0-9]*" maxlength="15" required data-digits-only />
       </div>
     </div>
     <div>
-      <label class={lbl} for={`${formId}-policy`}>Membership Policy ID (optional)</label>
-      <input id={`${formId}-policy`} class={field} type="text" name="policy_id" maxlength="40" autocomplete="off" />
+      <label class={lbl} for={`${formId}-clinic`}>Preferred clinic</label>
+      <select id={`${formId}-clinic`} class={select} style={`background-image:${chevron}`} name="preferred_clinic">
+        <option value="" selected={!clinic}>Choose one</option>
+        {CLINICS.map((c) => <option value={c} selected={c === clinic}>{c}</option>)}
+      </select>
     </div>
     <div>
-      <label class={lbl} for={`${formId}-carrier`}>Insurance Carrier (optional)</label>
-      <input id={`${formId}-carrier`} class={field} type="text" name="insurance_carrier" maxlength="60" autocomplete="off" />
+      <label class={lbl} for={`${formId}-help`}>I need help with</label>
+      <select id={`${formId}-help`} class={select} style={`background-image:${chevron}`} name="help_with">
+        <option value="" selected>Choose one</option>
+        {HELP.map((h) => <option value={h}>{h}</option>)}
+      </select>
     </div>
+    {/* SMS consent: separate, unticked, appears once the visitor starts the form */}
+    <label class="flex cursor-pointer items-start gap-3 text-base leading-snug text-slate sm:col-span-2" data-sms-consent hidden>
+      <input type="checkbox" name="sms_opt_in" value="yes" class="mt-0.5 size-6 flex-none accent-harbor" />
+      <span>Yes, Rego Park Counseling may text me about my callback. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. Not a condition of treatment. <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy and Terms</a>.</span>
+    </label>
+    <input type="hidden" name="sms_consent_version" value={SMS_CONSENT_VERSION} />
+
     {/* Honeypot: hidden from people and autofill */}
     <div class="hidden" aria-hidden="true">
       <label>Leave this empty <input type="text" name="hp_field" tabindex="-1" autocomplete="off" /></label>
@@ -73,10 +95,10 @@ const field =
   </div>
 
   <p class="mt-4 text-center text-base leading-relaxed text-slate">
-    Or call us at <a href={SITE.phoneHref} class="font-bold text-harbor" data-cta="call" data-location={location}>{SITE.phone}</a>. Your information is private.
+    Or call us at <a href={SITE.phoneHref} class="font-bold text-harbor" data-cta="call" data-location={location}>{SITE.phone}</a>. Your information is private. Please don’t include medical details.
   </p>
   <p class="mt-1 text-center text-base leading-relaxed text-slate">
-    By submitting, you agree we may call or text you, and to our <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy</a>.
+    By submitting, you agree we may call you about this request. See our <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy and Terms</a>.
   </p>
 </form>
 
@@ -93,6 +115,28 @@ const field =
       msg.classList.toggle('text-attention', !ok);
       msg.classList.toggle('text-success', ok);
     };
+    // SMS consent box: shown while any field has text, hidden (and unticked) again when all of them are empty.
+    // Never pre-ticked (privacy-consent §4).
+    const consent = form.querySelector<HTMLElement>('[data-sms-consent]');
+    const consentBox = consent?.querySelector<HTMLInputElement>('input[type=checkbox]') ?? null;
+    const typed = [...form.querySelectorAll<HTMLInputElement>('input[name=name], input[name=phone]')];
+    const syncConsent = () => {
+      if (!consent || !consentBox) return;
+      const any = typed.some((el) => el.value.trim().length > 0);
+      consent.hidden = !any;
+      if (!any) consentBox.checked = false;
+    };
+    typed.forEach((el) => el.addEventListener('input', syncConsent));
+    form.addEventListener('reset', () => setTimeout(syncConsent));
+
+    // Phone: digits only (typing, pasting or autofill); anything else is dropped as it arrives.
+    form.querySelectorAll<HTMLInputElement>('[data-digits-only]').forEach((el) => {
+      el.addEventListener('beforeinput', (e) => { if (e.data && /\D/.test(e.data) && e.inputType.startsWith('insert') && e.inputType !== 'insertFromPaste') e.preventDefault(); });
+      el.addEventListener('input', () => {
+        const clean = el.value.replace(/\D/g, '').slice(0, 15);
+        if (clean !== el.value) el.value = clean;
+      });
+    });
     form.querySelectorAll('input').forEach((el) =>
       el.addEventListener('input', () => { el.removeAttribute('aria-invalid'); if (!form.querySelector('[aria-invalid=true]')) msg.hidden = true; }),
     );
@@ -101,24 +145,32 @@ const field =
       e.preventDefault();
       const name = form.elements.namedItem('name') as HTMLInputElement;
       const phone = form.elements.namedItem('phone') as HTMLInputElement;
-      const digits = phone.value.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
+      const digits = phone.value.replace(/\D/g, '');
       const badName = name.value.trim().length < 2;
-      const badPhone = digits.length !== 10;
+      const badPhone = digits.length < 10 || digits.length > 15;
       name.setAttribute('aria-invalid', String(badName));
       phone.setAttribute('aria-invalid', String(badPhone));
       if (badName || badPhone) {
         (badName ? name : phone).focus();
-        return show(badName ? 'Please tell us your name.' : 'Please enter a 10-digit phone number.');
+        return show(badName ? 'Please tell us your name.' : 'Please enter a valid phone number.');
       }
       if (Date.now() - started < MIN_FILL_MS) return show('One moment, then try again.');
 
       const fd = new FormData(form);
+      fd.set('sms_opt_in', (form.elements.namedItem('sms_opt_in') as HTMLInputElement)?.checked ? 'yes' : 'no');
       fd.set('page', location.pathname);
       fd.set('form_location', form.dataset.location || '');
-      const gclid = new URL(location.href).searchParams.get('gclid') || (document.cookie.match(/_gcl_aw=[^;]*\.([^.;]+)/)?.[1] ?? '');
-      if (gclid) fd.set('attribution[gclid]', gclid);
-      const sid = (window as any).__ctm?.config?.sid;
-      if (sid) fd.set('visitor_sid', sid);
+      // Attribution (standards/forms-ctm.md §3). Click ids kept for the visit by Base.astro; gclid also from the
+      // Google Ads cookie. visitor_sid read now (CTM's tracker loads through GTM and may not be ready at page load):
+      // __ctm.config.sid, else the __ctmid cookie, sent only when it is a plain token.
+      let attr: Record<string, string> = {};
+      try { attr = JSON.parse(sessionStorage.getItem('rpc_attr') || '{}'); } catch {}
+      const gclCookie = document.cookie.match(/_gcl_aw=[^;]*\.([^.;]+)/)?.[1];
+      if (!attr.gclid && gclCookie) attr.gclid = gclCookie;
+      Object.entries(attr).forEach(([k, v]) => fd.set(`attribution[${k}]`, v));
+      const cookieSid = document.cookie.match(/(?:^|;\s*)__ctmid=([^;]+)/)?.[1];
+      const sid = String((window as any).__ctm?.config?.sid || (cookieSid ? decodeURIComponent(cookieSid) : ''));
+      if (/^[A-Za-z0-9_-]{1,120}$/.test(sid)) fd.set('visitor_sid', sid);
 
       btn.disabled = true;
       label.textContent = 'Sending…';
@@ -131,7 +183,7 @@ const field =
         form.reset();
         show('Thank you. We’ll call you back soon, usually the same business day.', true);
       } catch (err) {
-        show(`${(err as Error).message} Please call us at (718) 459-2558.`);
+        show(`${(err as Error).message} Please call us at ${form.dataset.phone}.`);
       } finally {
         btn.disabled = false;
         label.textContent = form.dataset.button || 'Request a Callback';

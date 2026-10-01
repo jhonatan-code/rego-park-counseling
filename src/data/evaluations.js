@@ -15,7 +15,8 @@ export const EVAL_POSTS = {
   // join the DWI page's "Learn more" once published.
 };
 
-export const TRUST = ['OASAS-licensed', '[Seen within X days]', '[Report in X days]'];
+// No prices or wait times on the site (what-not-to-publish §1/§4): both are "call us".
+export const TRUST = ['OASAS-licensed', 'Call for current availability'];
 
 export const HUB = {
   cards: [
@@ -50,7 +51,7 @@ export const HUB = {
   ],
   posts: ['court', 'tested', 'alcohol', 'online'],
   faqs: [
-    { q: 'How much does an evaluation cost?', a: 'Call us for current pricing and payment options. [Or show the price — confirm.]' },
+    { q: 'How much does an evaluation cost?', a: 'Call us for current pricing and payment options.' },
     { q: 'Does Medicaid cover evaluations?', a: '[Confirm.]' },
     { q: 'Can I do my evaluation online?', a: '[Confirm whether telehealth evaluations are accepted and offered.]' },
     { q: 'How soon can I get an appointment?', a: '[Confirm.]' },
@@ -66,7 +67,7 @@ export const EVALS = [
     description: 'Get a drug and alcohol evaluation in Rego Park, Queens, from an OASAS-licensed clinic. For court, probation, employers or personal reasons. Fast appointments.',
     h1: 'Substance Abuse Evaluation in Queens',
     sub: 'A professional drug and alcohol assessment from an OASAS-licensed clinic in Rego Park, for court, probation, work or your own peace of mind.',
-    trust: ['OASAS-licensed', '[Seen within X days]', '[Report in X days]', '[In person or telehealth]'],
+    trust: ['OASAS-licensed', 'Call for current availability', '[In person or telehealth]'],
     formHeading: 'Book an Evaluation',
     what: {
       h2: 'What Is a Substance Abuse Evaluation?',
@@ -106,7 +107,7 @@ export const EVALS = [
       { q: 'How fast will I get my report?', a: '[Confirm.]' },
       { q: 'Will my results be shared?', a: 'Only with people you authorize in writing, as required by federal confidentiality rules for substance use records (42 CFR Part 2).' },
       { q: 'Will the court accept your evaluation?', a: 'We are an OASAS-licensed provider. Each court sets its own rules, so check with your attorney or the court before booking.' },
-      { q: 'How much does it cost?', a: 'Call us for current pricing and payment options. [Or show the price — confirm.]' },
+      { q: 'How much does it cost?', a: 'Call us for current pricing and payment options.' },
     ],
     finalH2: 'Book Your Substance Abuse Evaluation',
   },
@@ -119,7 +120,7 @@ export const EVALS = [
     description: 'DWI and DWAI alcohol and drug evaluations in Rego Park, Queens, from an OASAS-licensed clinic. Fast appointments for court or DMV requirements in New York.',
     h1: 'DWI Evaluation in Queens, NY',
     sub: 'Arrested for DWI or DWAI in New York? Get the alcohol and drug evaluation your court or the DMV may require, from an OASAS-licensed clinic in Rego Park.',
-    trust: ['OASAS-licensed', '[Seen within X days]', '[Report in X days]'],
+    trust: ['OASAS-licensed', 'Call for current availability'],
     formHeading: 'Book a DWI Evaluation',
     when: {
       h2: 'When Do You Need a DWI Evaluation in New York?',
@@ -164,7 +165,7 @@ export const EVALS = [
       { q: 'Can I do it online?', a: '[Confirm whether remote DWI evaluations are offered and accepted.]' },
       { q: 'What if I was charged with DWAI or refused the test?', a: 'You may still need an evaluation. Call us with your paperwork and we’ll explain what we can provide.' },
       { q: 'Is my information confidential?', a: 'Yes. We share results only with people you authorize in writing, under federal rules for substance use records.' },
-      { q: 'How much does it cost?', a: 'Call us for current pricing. [Or show the price — confirm.]' },
+      { q: 'How much does it cost?', a: 'Call us for current pricing.' },
     ],
     finalH2: 'Book Your DWI Evaluation in Queens',
   },
@@ -172,7 +173,7 @@ export const EVALS = [
 
 // Cost block (both pages): every piece pending
 export const COST = [
-  { icon: 'receipt', label: 'Price', text: '[Price, or “Call for current pricing”]' },
+  { icon: 'receipt', label: 'Price', text: 'Call for current pricing' },
   { icon: 'medicaid', label: 'Medicaid', text: '[Medicaid coverage for evaluations: confirm]' },
   { icon: 'clipboard', label: 'Payment', text: '[Payment methods]' },
 ];

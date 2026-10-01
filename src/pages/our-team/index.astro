@@ -9,13 +9,23 @@ import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import { SITE } from '../../data/site.js';
-import { LEADERSHIP, TEAM, HAS_PLACEHOLDERS } from '../../data/team.js';
+import { LEADERSHIP, TEAM, HAS_PLACEHOLDERS, personHref } from '../../data/team.js';
 
 const initials = (n: string) => (n.startsWith('[') ? '' : n.split(' ').map((w) => w[0]).slice(0, 2).join(''));
 const real = [...LEADERSHIP, ...TEAM].filter((p) => !p.placeholder);
+const profileLabel = (n: string) => (n.startsWith('[') ? 'Read full profile' : `Read ${n.split(' ')[0]}’s profile`);
 // Person schema only for real, consented staff (brief: hasCredential, worksFor, knowsLanguage)
+// AboutPage always (schema.md by page type); the ProfilePage with Person nodes only for real, consented staff.
+const aboutNode = {
+  '@type': 'AboutPage',
+  '@id': `${SITE.url}/our-team/#aboutpage`,
+  url: `${SITE.url}/our-team/`,
+  name: 'Our Team',
+  about: { '@id': `${SITE.url}/#organization` },
+  isPartOf: { '@id': `${SITE.url}/#website` },
+};
 const schema = real.length
-  ? [{
+  ? [aboutNode,{
       '@type': 'ProfilePage',
       '@id': `${SITE.url}/our-team/#webpage`,
       url: `${SITE.url}/our-team/`,
@@ -28,7 +38,7 @@ const schema = real.length
         ...(p.languages?.length ? { knowsLanguage: p.languages } : {}),
       })),
     }]
-  : [];
+  : [aboutNode];
 ---
 <Base
   title="Our Counselors and Clinicians | Rego Park Counseling, Queens"
@@ -78,8 +88,9 @@ const schema = real.length
             </div>
             <div class="p-6 lg:p-7">
               <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{p.role}</p>
-              <h3 class="mt-1 text-2xl">{p.name}{p.credential && <span class="font-bold text-slate">, {p.credential}</span>}</h3>
+              <h3 class="mt-1 text-2xl">{p.slug ? <a href={personHref(p)} class="hover:underline">{p.name}</a> : p.name}{p.credential && <span class="font-bold text-slate">, {p.credential}</span>}</h3>
               <p class="mt-3 text-slate">{p.bio}</p>
+              {p.slug && <a href={personHref(p)} class="text-link mt-3 inline-flex items-center gap-1 text-base">{profileLabel(p.name)} <Icon name="arrow-right" size={16} /></a>}
             </div>
           </li>
         ))}
@@ -111,7 +122,7 @@ const schema = real.length
               )}
             </div>
             <div class="flex flex-1 flex-col p-5">
-              <h3 class="text-xl">{p.name}, <span class="text-slate">{p.credential}</span></h3>
+              <h3 class="text-xl">{p.slug ? <a href={personHref(p)} class="hover:underline">{p.name}</a> : p.name}, <span class="text-slate">{p.credential}</span></h3>
               <p class="text-base font-bold text-slate">{p.role}</p>
               <dl class="mt-3 space-y-1.5 text-base">
                 <div class="flex gap-2"><dt class="sr-only">Clinics</dt><Icon name="pin" size={18} class="mt-1 flex-none text-harbor" /><dd>{p.clinics.join(' · ')}</dd></div>
@@ -137,8 +148,9 @@ const schema = real.length
       <div class="card flex gap-4 lg:p-8">
         <span class="icon-dot"><Icon name="book" /></span>
         <div>
-          <h3>Who Reviews Our Health Articles</h3>
-          <p class="mt-2 text-slate">Our articles are reviewed by licensed clinicians on our team. [Linked reviewer names → /author/[name]/, once confirmed.]</p>
+          <h3>Plain-Language Health Articles</h3>
+          {/* No "reviewed by" claim until a named clinician actually reviews them (medical-clinical-review; PENDING 3.4) */}
+          <p class="mt-2 text-slate">Guides on mental health, substance use, evaluations and Medicaid, written for people in Queens and the families who support them.</p>
           <a href="/blog/" class="text-link mt-3 inline-flex items-center gap-1.5">Read our blog <Icon name="arrow-right" size={18} /></a>
         </div>
       </div>

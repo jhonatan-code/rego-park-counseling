@@ -64,7 +64,7 @@ const FAQS = [
 const url = `${SITE.url}/insurance/`;
 const crumbs = [{ name: 'Insurance', href: '/insurance/' }];
 const schema = [
-  { '@type': 'WebPage', '@id': `${url}#webpage`, url, name: 'Insurance and Medicaid', about: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
+  { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: 'Insurance and Medicaid', about: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
   { '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: FAQS.filter((f) => clean(f.a)).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) },
 ];
 ---
@@ -137,13 +137,14 @@ const schema = [
       <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
         <h2 class="text-2xl lg:text-[30px]">Other Insurance and Self-Pay</h2>
         <ul class="mt-5 space-y-3">
-          {['Medicare', 'Commercial insurance', 'Self-pay rates'].map((t) => (
+          {/* No self-pay rates or prices on the site (what-not-to-publish §4): self-pay is "call us" */}
+          {['Medicare', 'Commercial insurance'].map((t) => (
             <li class="flex items-center justify-between gap-3 rounded-[var(--radius-card)] bg-porch px-4 py-3">
               <span class="font-bold text-ink">{t}</span><span class="text-base text-slate">[fill once confirmed]</span>
             </li>
           ))}
         </ul>
-        <p class="mt-5 text-slate">Evaluations (substance abuse and DWI) are usually self-pay [confirm]. <a href="/evaluations/" class="text-link">Evaluations</a></p>
+        <p class="mt-5 text-slate">Paying on your own, or asking about an evaluation? Call us and we’ll go over your options. <a href="/evaluations/" class="text-link">Evaluations</a></p>
       </div>
       <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-sand p-6 lg:p-8">
         <NearbyRing class="pointer-events-none absolute hidden -bottom-36 -right-36 size-[320px] lg:block" />

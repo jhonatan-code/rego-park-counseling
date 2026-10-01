@@ -1,0 +1,16 @@
+---
+// Person avatar (SOP Blog/Post/Author §0 "Images"): the headshot when team.js has `photo`, otherwise the branded
+// placeholder (Harbor initials, or the user icon while the name is a placeholder, on Sky Wash with a Sky ring).
+// Decorative: the name is always next to it in text. Standard author size in bylines and author rows: 65px.
+import Icon from './Icon.astro';
+interface Props { person: { name: string; photo?: string | null }; class?: string; text?: string }
+const { person, class: cls = 'size-12', text = 'text-base' } = Astro.props;
+const initials = person.name.startsWith('[') ? '' : person.name.split(' ').map((w) => w[0]).slice(0, 2).join('');
+---
+{person.photo
+  ? <img src={person.photo} alt="" loading="lazy" width="130" height="130" class:list={['flex-none rounded-full object-cover', cls]} />
+  : (
+    <span class:list={['inline-flex flex-none items-center justify-center rounded-full bg-sky-wash font-display font-extrabold leading-none text-harbor ring-2 ring-sky', cls, text]} aria-hidden="true">
+      {initials || <Icon name="user" size={22} class="w-1/2 h-1/2 text-harbor/60" />}
+    </span>
+  )}

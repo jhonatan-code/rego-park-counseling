@@ -62,7 +62,7 @@ export const CLINIC_PAGES = {
     separation: true,
     finalH2: 'Visit Our Rego Park Clinic',
     // Google profile (Cristofer): primary category Addiction treatment center (confirm against live profile)
-    specialty: ['Psychiatric', 'Addiction'],
+    specialty: 'https://schema.org/Psychiatric', // schema.org MedicalSpecialty ("Addiction" isn't a value)
   },
   'fresh-meadows': {
     title: 'Mental Health Clinic in Fresh Meadows & Flushing | Rego Park Counseling',
@@ -121,7 +121,7 @@ export const CLINIC_PAGES = {
     separation: false,
     finalH2: 'Start Counseling in Fresh Meadows',
     // Google profile (Cristofer): primary category Mental health clinic (confirm)
-    specialty: ['Psychiatric'],
+    specialty: 'https://schema.org/Psychiatric',
   },
 };
 

@@ -47,7 +47,7 @@ const schema = [
   {
     '@type': 'FAQPage',
     '@id': `${url}#faq`,
-    mainEntity: page.faqs.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })),
+    mainEntity: page.faqs.filter((f: any) => clean(f.a)).map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })),
   },
 ];
 ---

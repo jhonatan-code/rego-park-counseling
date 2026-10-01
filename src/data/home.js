@@ -1,5 +1,6 @@
-// Home page copy. Headings and structure follow the Header & Home Page Brief section by section;
-// body lines are WORKING COPY for Pavel to refine (brief: "Headings below are working copy for Pavel").
+// Home page copy: "Rego Park Counseling — Home Page Final Copy" (Sep 30, 2026), section by section.
+// Kept from earlier user decisions instead of the final copy: the form keeps the Sunview field set (no Clinic / Help-with
+// selects) and there is one form per page (the closing band has no second form). See docs/PENDING.md 6.1.
 // Anything marked [confirm] waits on Emmanuel (via Julian).
 
 export const HELP_CARDS = [
@@ -7,7 +8,8 @@ export const HELP_CARDS = [
     title: 'Mental Health Counseling',
     href: '/mental-health/',
     icon: 'brain',
-    text: 'Help with anxiety, depression, trauma and more, from counselors licensed by NYS OMH.',
+    text: 'Anxiety, depression, trauma and more, with a counselor who listens.',
+    link: 'Explore mental health care',
     image: '/images/home/counselor-talking-with-adult-client.webp',
     alt: 'Counselor listening to an adult client in a bright room',
   },
@@ -15,7 +17,8 @@ export const HELP_CARDS = [
     title: 'Outpatient Substance Use Treatment',
     href: '/substance-use/',
     icon: 'sprout',
-    text: 'Counseling for alcohol and drug use, licensed by NYS OASAS. You go home every night.',
+    text: 'Help with alcohol or drug use while you keep living at home and working.',
+    link: 'Explore substance use treatment',
     image: '/images/home/group-counseling-session.webp',
     alt: 'Small group of adults talking in a counseling session',
   },
@@ -23,7 +26,8 @@ export const HELP_CARDS = [
     title: 'Substance Abuse and DWI Evaluations',
     href: '/evaluations/',
     icon: 'clipboard',
-    text: 'For court, DMV, work or yourself. Clear steps and a written report.',
+    text: 'Professional assessments for court, the DMV or your employer.',
+    link: 'Book an evaluation',
     image: '/images/home/counselor-taking-notes-evaluation.webp',
     alt: 'Counselor taking notes while talking with a client',
   },
@@ -31,102 +35,58 @@ export const HELP_CARDS = [
 
 // Section 5: main internal-linking block. Anchors use each page's target phrase.
 export const CONDITIONS = [
-  { group: 'Mental health', label: 'Anxiety counseling', href: '/mental-health/anxiety-counseling/', text: 'For worry, panic or stress that gets in the way of your day.' },
-  { group: 'Mental health', label: 'Depression counseling', href: '/mental-health/depression-counseling/', text: 'For low mood, low energy or losing interest in things you enjoyed.' },
-  { group: 'Mental health', label: 'PTSD and trauma counseling', href: '/mental-health/ptsd-trauma-counseling/', text: 'For nightmares, fear or numbness after something hard happened.' },
-  { group: 'Mental health', label: 'Bipolar disorder counseling', href: '/mental-health/bipolar-disorder-counseling/', text: 'For steadier days between the highs and the lows.' },
-  { group: 'Mental health', label: 'Schizophrenia counseling', href: '/mental-health/schizophrenia-counseling/', text: 'Ongoing support to manage symptoms and daily life.' },
-  { group: 'Mental health', label: 'Anger management', href: '/mental-health/anger-management/', text: 'Practical tools to cool down and protect your relationships.' },
-  { group: 'Substance use and evaluations', label: 'Alcohol use treatment', href: '/substance-use/alcohol-use-treatment/', text: 'Cut back or stop drinking, with a plan made for you.' },
-  { group: 'Substance use and evaluations', label: 'Drug use treatment', href: '/substance-use/drug-use-treatment/', text: 'Outpatient counseling for any drug, without judgment.' },
-  { group: 'Substance use and evaluations', label: 'Dual diagnosis treatment', href: '/substance-use/dual-diagnosis/', text: 'Mental health and substance use, treated together by one team.' },
-  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', href: '/evaluations/dwi-evaluation/', text: 'Evaluations for court, DMV or your lawyer, done correctly.' },
+  { group: 'Mental health', label: 'Anxiety counseling', href: '/mental-health/anxiety-counseling/', text: 'Constant worry, panic attacks or fear' },
+  { group: 'Mental health', label: 'Depression counseling', href: '/mental-health/depression-counseling/', text: 'Sadness or emptiness that won’t lift' },
+  { group: 'Mental health', label: 'PTSD and trauma counseling', href: '/mental-health/ptsd-trauma-counseling/', text: 'Painful memories that still take over' },
+  { group: 'Mental health', label: 'Bipolar disorder counseling', href: '/mental-health/bipolar-disorder-counseling/', text: 'Mood swings that shake up your life' },
+  { group: 'Mental health', label: 'Schizophrenia counseling', href: '/mental-health/schizophrenia-counseling/', text: 'Steady support to stay well' },
+  { group: 'Mental health', label: 'Anger management', href: '/mental-health/anger-management/', text: 'Anger that hurts your relationships' },
+  { group: 'Substance use and evaluations', label: 'Alcohol use treatment', href: '/substance-use/alcohol-use-treatment/', text: 'Drinking that’s hard to control' },
+  { group: 'Substance use and evaluations', label: 'Drug use treatment', href: '/substance-use/drug-use-treatment/', text: 'Marijuana, cocaine, opioids, pills and more' },
+  { group: 'Substance use and evaluations', label: 'Dual diagnosis', href: '/substance-use/dual-diagnosis/', text: 'Mental health and substance use together' },
+  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', href: '/evaluations/dwi-evaluation/', text: 'Assessments with fast scheduling' },
 ];
 
 export const PROGRAMS = [
-  { title: 'CORE (HARP)', href: '/programs/core/', icon: 'core', text: 'Hands-on help with work, school and daily goals for HARP members.' },
-  { title: 'Social Care Network', href: '/programs/social-care-network/', icon: 'home', text: 'Connections to help with housing, food and rides to care.' },
-  { title: 'Telehealth', href: '/programs/telehealth/', icon: 'telehealth', text: 'Secure video counseling from home when travel is hard.' },
-  { title: 'Older Adults', href: '/who-we-serve/older-adults/', icon: 'user', text: 'We see people of every age, and we welcome caregivers too.' },
-  { title: 'Court-Involved', href: '/who-we-serve/court-involved/', icon: 'scale', text: 'Counseling and evaluations for court, probation or parole.' },
-  { title: 'Individual, Group and Family Therapy', href: '/therapies/', icon: 'family', text: 'Talk one-on-one, learn in a group, or bring your family in.' },
+  { title: 'CORE services', href: '/programs/core/', icon: 'core', text: 'Community support for HARP members' },
+  { title: 'Social Care Network', href: '/programs/social-care-network/', icon: 'home', text: 'Help with food, housing and rides for Medicaid members' },
+  { title: 'Telehealth', href: '/programs/telehealth/', icon: 'telehealth', text: 'Secure video sessions from home' },
+  { title: 'Older adults', href: '/who-we-serve/older-adults/', icon: 'user', text: 'Patient, respectful care for seniors' },
+  { title: 'Court-involved', href: '/who-we-serve/court-involved/', icon: 'scale', text: 'Evaluations and treatment for court referrals' },
+  { title: 'Individual, group and family therapy', href: '/therapies/', icon: 'family', text: 'The right mix of support for you' },
 ];
 
 export const STEPS = [
-  { title: 'Call or request a callback', text: 'Talk to a real person at our clinic. We’ll find a time that works for you.' },
-  { title: 'We check your insurance', text: 'We confirm your Medicaid plan and book your first visit.' },
-  { title: 'Meet your counselor', text: 'Come in person at a clinic near you, or meet by telehealth.' },
+  { title: 'Reach out', text: 'Call us or request a callback.' },
+  { title: 'We check your coverage', text: 'We confirm your insurance and book your first visit.' },
+  { title: 'Meet your counselor', text: 'In person in Queens or by telehealth, on a schedule that fits your life.' },
 ];
 
 export const WHY = [
-  { icon: 'licensed', title: 'Licensed for both', text: 'NYS OASAS for substance use and OMH for mental health. One team treats both, even when they happen together.' },
-  { icon: 'subway', title: 'Close to home, near the trains', text: 'Clinics in Rego Park and Fresh Meadows, a short ride from most of Queens. Yonkers opens soon.' },
-  { icon: 'heart', title: 'Health, not judgment', text: 'Addiction is a health condition, not a moral failing. You get a plan made for you and respect at every visit.' },
-  // [confirm] add languages spoken once Emmanuel confirms
-  { icon: 'languages', title: 'A team that reflects Queens', text: 'Counselors who know this neighborhood and the many cultures that make it home.' },
+  { icon: 'licensed', title: 'Licensed for both', text: 'We are licensed by New York State for mental health (OMH) and substance use (OASAS), so one team can treat both.' },
+  { icon: 'subway', title: 'Close to home', text: 'Two clinics in Queens near the trains and buses you already use, plus telehealth.' },
+  { icon: 'heart', title: 'No judgment, ever', text: 'We see addiction and mental illness as health conditions, not personal failings.' },
+  { icon: 'languages', title: 'People who understand Queens', text: 'Our counselors reflect the neighborhoods we serve [add: “and speak X, Y and Z” once confirmed].' },
 ];
 
-// Section 13. Answers 40–70 words, identical to the FAQPage schema. Draft copy for Pavel + compliance review.
+// Section 13, word for word from the final copy; the same text feeds FAQPage schema (answers that still carry a
+// [bracket] are left out of the schema until confirmed).
 export const FAQS = [
-  {
-    q: 'Do you accept Medicaid?',
-    a: 'Yes. Most of our patients use Medicaid, and we work with most Medicaid plans in New York. Call us or request a callback and we’ll check your plan before your first visit, usually in a few minutes on the phone. If you’re a HARP member, you may also qualify for our CORE services, which add support beyond therapy.',
-  },
-  {
-    q: 'Where are your clinics in Queens?',
-    a: 'Our main clinic is at 63-36 99th Street in Rego Park, near the M and R trains at 63rd Drive. Our second clinic is at 71-82 Parsons Blvd in Fresh Meadows, close to Flushing and Hillcrest. A third clinic in Yonkers is opening soon. One phone number reaches all of them: (718) 459-2558.',
-  },
-  {
-    q: 'Do you offer telehealth?',
-    a: 'Yes. Many counseling sessions can happen by secure video from home. That helps if you work long hours, care for family or find travel hard. Your counselor will tell you which parts of your care can be done by telehealth and which need a visit to the clinic. Just ask when you call.',
-  },
-  {
-    q: 'Do you treat mental health and substance use together?',
-    a: 'Yes. We are licensed by New York State OASAS for substance use and by OMH for mental health, so one team can treat both in the same clinic. This is called dual diagnosis care. When anxiety, depression or trauma happen together with alcohol or drug use, treating them together usually works better.',
-  },
-  {
-    q: 'How do I get a substance abuse or DWI evaluation?',
-    a: 'Call us or request a callback and we’ll book a time. Bring a photo ID and any letters from the court, DMV, your lawyer or your employer. You’ll meet with a licensed counselor, answer questions about your history, and receive a clear written report with recommendations. We explain every step, but we don’t give legal advice.',
-  },
-  {
-    q: 'What happens at the first appointment?',
-    a: 'Your first visit is a conversation. A counselor asks what brought you in, about your health and history, and what you’d like to change. Together you make a plan that fits your life. Bring a photo ID, your Medicaid or insurance card, and a list of any medicines you take. You can ask questions at any time.',
-  },
-  {
-    q: 'Is counseling confidential?',
-    a: 'Yes. What you share with us is private and protected by federal and New York privacy laws, including HIPAA and the extra federal rules for substance use records. We don’t share your information without your written permission, except in rare cases the law requires, such as a risk of serious harm. Your counselor explains this at your first visit.',
-  },
-  {
-    q: 'Are you connected to the Rego Park Counseling Center on Queens Boulevard?',
-    a: 'No. Rego Park Counseling is an independent clinic. We are not part of the counseling center on Queens Boulevard, which is run by a different organization. Our clinics are at 63-36 99th Street in Rego Park and 71-82 Parsons Blvd in Fresh Meadows, and our phone number is (718) 459-2558.',
-  },
+  { q: 'Do you accept Medicaid?', a: 'Yes. Most of our patients use Medicaid, and we accept most Medicaid plans. Call us with your plan name and member ID, and we’ll confirm your coverage before your first visit. If you have a HARP plan, ask us about CORE services too.' },
+  { q: 'Where are your clinics in Queens?', a: 'Our main clinic is at 63-36 99th Street in Rego Park, NY 11374. Our second clinic is at [71-82 Parsons Boulevard] in Fresh Meadows, NY 11365, close to Flushing. A clinic in Yonkers is opening soon. You can also meet with us by telehealth.' },
+  { q: 'Do you offer telehealth?', a: 'Yes. Many of our counseling services are available by secure video, so you can meet with a licensed counselor from home. Ask about telehealth when you call, and we’ll tell you which services are available that way.' },
+  { q: 'Do you treat mental health and substance use together?', a: 'Yes. We are licensed by New York State for both mental health (OMH) and substance use (OASAS). If you are dealing with anxiety, depression or trauma along with alcohol or drug use, one team can build one plan that covers both.' },
+  { q: 'How do I get a substance abuse or DWI evaluation?', a: 'Call us or request a callback and tell us who asked for the evaluation and your deadline. We’ll schedule your appointment at our Rego Park clinic [confirm], explain what to bring, and let you know when your report will be ready.' },
+  { q: 'What happens at the first appointment?', a: 'You’ll meet with a licensed clinician who asks about what brings you in, your health and your goals. There’s no pressure to share more than you’re ready to. Together you’ll agree on a plan, whether that’s individual, group or family sessions, in person or by telehealth.' },
+  { q: 'Is counseling confidential?', a: 'Yes. Your care is private and protected by HIPAA and New York State law. Substance use treatment records have extra protection under federal law (42 CFR Part 2). We share information only with your written permission, except in rare situations the law requires, like an emergency.' },
+  { q: 'Are you connected to the Rego Park Counseling Center on Queens Boulevard?', a: 'No. Rego Park Counseling is an independent clinic located at 63-36 99th Street in Rego Park and in Fresh Meadows. We are not affiliated with other counseling centers in Queens that have similar names. If you’re looking for a different center, please contact them directly.' },
 ];
 
-// Section 14: chosen by hand from the strongest performers that match home topics (GSC last 12 months,
-// docs/seo), not "latest posts". Posts keep their root-level URLs.
+// Section 14: three hand-picked posts (final copy), not "latest". Slugs are read from posts.json so the card uses the
+// shared post graphic and the real title. "How to Get Free Medicaid Transportation to Therapy in New York" is planned
+// for Oct 5: until it is published, the Medicaid slot shows the existing Medicaid post (swap the slug when it's live).
 export const POSTS = [
-  {
-    title: 'Do You Get Drug Tested at a Substance Abuse Evaluation?',
-    href: '/do-you-get-drug-tested-at-a-substance-abuse-evaluation/',
-    tag: 'Evaluations',
-    image: '/images/blog/do-you-get-drug-tested-at-a-substance-abuse-evaluation.webp',
-    alt: 'Man talking with a clinic staff member at a front counter',
-    text: 'When testing is part of an evaluation, why, and what it means for your results.',
-  },
-  {
-    title: 'Where Can I Get a Substance Abuse Evaluation?',
-    href: '/where-can-i-get-a-substance-abuse-evaluation/',
-    tag: 'Evaluations',
-    image: '/images/blog/where-can-i-get-a-substance-abuse-evaluation.webp',
-    alt: 'Wooden gavel beside an open book on a blue table',
-    text: 'Where to go in New York, who needs one, and what to bring.',
-  },
-  {
-    title: 'Does Medicaid Cover Substance Abuse Treatment?',
-    href: '/does-medicaid-cover-substance-abuse-treatment-vital-guide/',
-    tag: 'Medicaid',
-    image: '/images/blog/does-medicaid-cover-substance-abuse-treatment.webp',
-    alt: 'Medicaid card next to a stethoscope and a clipboard',
-    text: 'What New York Medicaid pays for, and how to check your plan.',
-  },
+  { slug: 'does-medicaid-cover-substance-abuse-treatment-vital-guide', teaser: 'What New York Medicaid pays for, and how to check your plan.' },
+  { slug: 'what-happens-during-a-court-ordered-substance-use-evaluation', teaser: 'Who needs one, what to bring and what happens after.' },
+  { slug: 'can-alcohol-cause-anxiety-and-panic-attacks', teaser: 'How drinking and anxiety feed each other, and how to break the cycle.' },
 ];

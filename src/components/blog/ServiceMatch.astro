@@ -1,0 +1,28 @@
+---
+// End-of-article box: connects the topic the reader just read about to the matching service page and the phone
+// (src/data/postServices.js). Posts bring national search traffic; this tells a Queens reader we treat exactly that.
+// Magenta only on the call button.
+import Icon from '../Icon.astro';
+import { SITE } from '../../data/site.js';
+import { serviceFor } from '../../data/postServices.js';
+interface Props { post: any }
+const s = serviceFor(Astro.props.post);
+// Keep the arrow on the same line as the last word when the link wraps
+const words = s.label.split(' ');
+const last = words.pop();
+---
+<aside class="rounded-[var(--radius-panel)] border border-sky bg-sky-wash p-6 sm:p-8" aria-labelledby="service-match">
+  <div class="flex items-start gap-4">
+    <span class="icon-dot hidden bg-white sm:inline-flex"><Icon name="pin" /></span>
+    <div class="min-w-0">
+      <h2 id="service-match" class="text-2xl lg:text-[1.75rem]">Live in or near Queens?</h2>
+      {/* Only what's true for every topic (content-specificity §1): which clinic, format and coverage vary by service
+          and are still being confirmed (PENDING 1.11, 2a.5, 2b.2, 2b.5, 2b.10), so the call answers them. */}
+      <p class="mt-2 text-lg">We help with {s.topic} at Rego Park Counseling in Queens. Call and a real person will tell you which of our clinics fits, when you can start and what your plan covers.</p>
+      <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
+        <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="post-service-match"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+        <a href={s.href} class="text-link self-start">{words.join(' ')} <span class="whitespace-nowrap">{last}<Icon name="arrow-right" size={18} class="ml-1 inline -translate-y-px" /></span></a>
+      </div>
+    </div>
+  </div>
+</aside>

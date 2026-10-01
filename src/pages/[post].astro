@@ -1,0 +1,286 @@
+---
+// Post template: every blog post, one template (Elev8 SOP Blog/Post/Author §2). URLs stay at the root, /post-slug/
+// (Redirect Map Server Rules #7), so this route sits at src/pages/[post].astro; static pages win over it.
+// Banner (inner-page Harbor band, no form): breadcrumb Home › Blog › Title, H1 at the article column's width, then
+// one compact row: byline left (65px avatar, name + credential · role, 2-line bio, Read more), category · date ·
+// Share on right. Below 1024px the byline is avatar + name + role.
+// Body ≥1024px: article + sticky sidebar (ToC of the H2s, mini call CTA, Medicaid block, related articles).
+// End of article: the "Live in or near Queens?" box (topic → service page + call, src/data/postServices.js).
+// <1024px: no sidebar; "Table of contents" button → drawer; the call CTA is the sitewide bottom call bar; Medicaid
+// and related render after the article. End of article: Share on · author mini-card (<1024px only). No Sources block:
+// the migrated posts cite inline, and SOP says omit it rather than pad it.
+// Client rules over the SOP sidebar: no insurance logo carousel (never name plans; "most Medicaid plans" only) and no
+// Google review (reviews are skipped at launch, like Home section 12).
+// Latest articles: full width below the article + sidebar grid. Then FinalCta, footer.
+import Base from '../layouts/Base.astro';
+import BlogBanner from '../components/blog/BlogBanner.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Icon from '../components/Icon.astro';
+import Avatar from '../components/Avatar.astro';
+import PostCard from '../components/PostCard.astro';
+import ShareLinks from '../components/ShareLinks.astro';
+import TocList from '../components/toc/TocList.astro';
+import TocDrawer from '../components/toc/TocDrawer.astro';
+import ServiceMatch from '../components/blog/ServiceMatch.astro';
+import { SITE } from '../data/site.js';
+import { posts, postUrl, postOgImage, postAuthor, postReviewer, latestPosts, relatedPosts, categoryColor, formatDate, readTime } from '../data/posts.js';
+import { serviceFor } from '../data/postServices.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { post: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const path = postUrl(post);
+const url = new URL(path, SITE.url).href;
+const author = postAuthor(post);
+const reviewer = postReviewer(post);
+const wasUpdated = post.updated && post.updated > post.date;
+const authorUrl = new URL(author.href, SITE.url).href;
+const metaTitle =
+  [post.seoTitle, `${post.title} | Rego Park Counseling`, post.title].find((t) => t && t.length <= 60) ?? post.seoTitle ?? post.title;
+const related = relatedPosts(post, 3);
+const latest = latestPosts(post, 3);
+
+// Bio excerpts from the one team.js record: byline ≈2 lines, mini-card ≈5 lines (cut in the HTML too: the full bio
+// lives on the person page).
+const bioWords = author.bio.split(/\s+/);
+const excerpt = (n: number) => (bioWords.length > n ? `${bioWords.slice(0, n).join(' ').replace(/[,.;:]$/, '')}…` : author.bio);
+
+// Every H2 gets an id for the table of contents (H2s only).
+const slugify = (s: string) =>
+  s.replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/gi, '').toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').trim().replace(/[\s_]+/g, '-').replace(/-+/g, '-');
+const toc: { id: string; text: string }[] = [];
+const body: string = post.body.replace(/<h2>([\s\S]*?)<\/h2>/g, (_: string, inner: string) => {
+  let id = slugify(inner) || 'section';
+  while (toc.some((t) => t.id === id)) id += '-2';
+  toc.push({ id, text: inner.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&#8217;/g, '’').replace(/&nbsp;/g, ' ') });
+  return `<h2 id="${id}" tabindex="-1" class="toc-target">${inner}</h2>`;
+});
+const hasToc = toc.length >= 2;
+
+// Mid-article CTA (Blog Templates brief, block 9): inserted at the end of the 3rd H2 section, i.e. right before the
+// 4th H2. Posts with fewer than 4 H2s don't get one (the end-of-post box still covers them).
+const MID = '<!--mid-cta-->';
+let h2Seen = 0;
+const bodyWithCta = body.replace(/<h2 id=/g, (m: string) => (++h2Seen === 4 ? `${MID}${m}` : m));
+const [bodyA, bodyB] = bodyWithCta.includes(MID) ? bodyWithCta.split(MID) : [bodyWithCta, ''];
+
+// FAQPage from the post's own "FAQs" section (block 10): each H3 question + the first paragraph after it, verbatim.
+const strip = (h: string) => h.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&#8217;|&rsquo;/g, '’').replace(/&#8220;|&#8221;/g, '"').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+const faqSection = body.match(/<h2[^>]*>[^<]*(?:<a><\/a>)?\s*(?:FAQs?|Frequently Asked Questions)[\s\S]*?<\/h2>([\s\S]*?)(?=<h2|$)/i)?.[1] ?? '';
+const faqs = [...faqSection.matchAll(/<h3>([\s\S]*?)<\/h3>\s*<p>([\s\S]*?)<\/p>/g)]
+  .map((m) => ({ q: strip(m[1]), a: strip(m[2]) }))
+  .filter((f) => f.q.endsWith('?') && f.a.length > 20);
+
+const service = serviceFor(post);
+const isLegal = post.category === 'Evaluations & DWI';
+// Top service line (brief example: "Need a substance abuse evaluation in New York? Book at our Queens clinic.")
+const topLine = service.href.startsWith('/evaluations/')
+  ? `Need ${service.href.includes('dwi') ? 'a DWI evaluation' : 'a substance abuse evaluation'} in New York? Book at our Queens clinic.`
+  : service.href === '/insurance/'
+    ? 'Wondering what your plan covers? We accept most Medicaid plans.'
+    : `Looking for help with ${service.topic} in Queens?`;
+
+const schema = [
+  {
+    // MedicalWebPage for health content (schema.md by page type); reviewer + date only when a real review happened
+    '@type': 'MedicalWebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: metaTitle,
+    description: post.description,
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    inLanguage: 'en-US',
+    ...(reviewer
+      ? {
+          lastReviewed: post.reviewed,
+          reviewedBy: { '@type': 'Person', '@id': `${new URL(reviewer.href, SITE.url).href}#person`, name: reviewer.name, url: new URL(reviewer.href, SITE.url).href },
+        }
+      : {}),
+  },
+  {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    isPartOf: { '@id': `${SITE.url}/blog/#blog` },
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    headline: post.title,
+    description: post.description,
+    image: new URL(postOgImage(post), SITE.url).href,
+    datePublished: post.date,
+    dateModified: post.updated,
+    articleSection: post.category,
+    wordCount: post.words,
+    inLanguage: 'en-US',
+    // Clinic byline while authors are placeholders (PENDING 3.4)
+    author: author.isOrg
+      ? { '@id': `${SITE.url}/#organization` }
+      : { '@type': 'Person', '@id': `${authorUrl}#person`, name: author.name, url: authorUrl, jobTitle: author.role },
+    publisher: { '@id': `${SITE.url}/#organization` },
+  },
+  { '@type': 'Blog', '@id': `${SITE.url}/blog/#blog`, url: `${SITE.url}/blog/`, name: `${SITE.name} Blog` },
+  ...(faqs.length
+    ? [{ '@type': 'FAQPage', '@id': `${url}#faq`, isPartOf: { '@id': `${url}#webpage` }, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }]
+    : []),
+];
+const crumbs = [{ name: 'Blog', href: '/blog/' }, { name: post.title, href: path }];
+const label = 'text-sm font-bold uppercase tracking-[0.1em] text-slate';
+const box = 'rounded-[var(--radius-card)] border border-line bg-white p-6';
+---
+<Base title={metaTitle} description={post.description} image={postOgImage(post)} breadcrumbs={crumbs} schema={schema}>
+  <BlogBanner title={post.title} crumbs={crumbs}>
+    <div class="mt-6 flex flex-col gap-4 lg:mt-7 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+      {/* Byline: a byline, not a section (no card, no large photo) */}
+      <div class="flex min-w-0 items-center gap-4 lg:max-w-[62%] lg:items-start">
+        <Avatar person={author} class="size-[65px]" text="text-xl" />
+        <div class="min-w-0">
+          <p class="text-base leading-snug text-white/85">
+            <a href={author.href} class="font-bold text-white hover:underline">{author.name}</a>{author.credential && <span class="hidden font-bold text-white lg:inline">, {author.credential}</span>}<span aria-hidden="true"> · </span><span>{author.role}</span>
+          </p>
+          <p class="mt-1 hidden text-sm leading-[1.55] text-white/80 lg:line-clamp-2">{excerpt(28)}</p>
+          <a href={author.href} class="mt-1 hidden items-center gap-1 text-sm font-bold text-sky hover:text-white hover:underline lg:inline-flex" aria-label={`Read more about ${author.name}`}>Read more <Icon name="arrow-right" size={14} /></a>
+          {reviewer && (
+            <p class="mt-2 flex items-center gap-1.5 text-sm text-white/85">
+              <Icon name="licensed" size={16} class="flex-none text-sky" />
+              <span>Clinically reviewed by <a href={reviewer.href} class="font-bold text-white hover:underline">{reviewer.name}{reviewer.credential && `, ${reviewer.credential}`}</a> · <time datetime={post.reviewed}>{formatDate(post.reviewed)}</time></span>
+            </p>
+          )}
+        </div>
+      </div>
+      <div class="flex flex-none flex-col gap-3 lg:items-end">
+        <p class="flex flex-wrap items-center gap-x-2 text-base font-bold text-white/90">
+          <span class="inline-flex items-center gap-2"><span class="size-2.5 rounded-full bg-cyan" aria-hidden="true"></span><span class="sr-only">Category: </span>{post.category}</span>
+          <span aria-hidden="true" class="text-white/50">·</span>
+          <span><span class="sr-only">Published </span><time datetime={post.date}>{formatDate(post.date)}</time></span>
+          {wasUpdated && <><span aria-hidden="true" class="text-white/50">·</span><span>Updated <time datetime={post.updated}>{formatDate(post.updated)}</time></span></>}
+          <span aria-hidden="true" class="text-white/50">·</span><span>{readTime(post)}</span>
+        </p>
+        <ShareLinks url={url} title={post.title} tone="dark" />
+      </div>
+    </div>
+  </BlogBanner>
+
+  {hasToc && (
+    <div class="border-b border-line bg-white lg:hidden">
+      <TocDrawer items={toc} class="container-x py-3" />
+    </div>
+  )}
+
+  <div class="bg-sky-wash py-10 lg:py-14">
+    <div class="container-x lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-[30px]">
+      <div class="min-w-0">
+        <article class="rounded-[var(--radius-panel)] bg-white p-6 sm:p-10 xl:p-14">
+          {/* Service box, top (block 6): one line + link to the matching service page */}
+          <p class="mb-8 flex flex-col gap-3 rounded-[var(--radius-card)] border border-sky bg-sky-wash px-5 py-4 text-base sm:flex-row sm:items-center sm:justify-between">
+            <span class="font-bold text-harbor">{topLine}</span>
+            <a href={service.href} class="text-link self-start whitespace-nowrap sm:self-auto">{service.label} <Icon name="arrow-right" size={16} class="inline -translate-y-px" /></a>
+          </p>
+          <div class="prose-rpc" set:html={bodyA} />
+          {bodyB && (
+            <>
+              {/* Mid-article CTA (block 9) */}
+              <aside class="my-10 flex flex-col gap-4 rounded-[var(--radius-card)] bg-harbor p-6 text-white sm:flex-row sm:items-center sm:justify-between" aria-label="Talk to a counselor">
+                <p class="font-display text-xl font-extrabold leading-snug text-white">Talk to a counselor in Queens</p>
+                <div class="flex flex-wrap gap-3">
+                  <a href="#callback" class="btn-call" data-open-callback data-location="post-mid">Request a Callback</a>
+                  <a href={SITE.phoneHref} class="btn-on-dark" data-cta="call" data-location="post-mid"><Icon name="phone" size={18} /> {SITE.phone}</a>
+                </div>
+              </aside>
+              <div class="prose-rpc" set:html={bodyB} />
+            </>
+          )}
+          {/* Disclaimers (blocks 12–13) */}
+          <div class="mt-10 space-y-3 text-base text-slate">
+            <p class="flex items-start gap-2"><Icon name="info" size={18} class="mt-1 flex-none text-harbor" /><span>This article is for general information and is not medical advice. If you are in crisis, call <a href="tel:911" class="font-bold text-harbor underline">911</a> or call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>.</span></p>
+            {isLegal && <p class="flex items-start gap-2"><Icon name="scale" size={18} class="mt-1 flex-none text-harbor" /><span>This is general information, not legal advice. Check your requirements with your attorney, the court or the DMV.</span></p>}
+          </div>
+          <div class="mt-12"><ServiceMatch post={post} /></div>
+          <div class="mt-10 space-y-8 border-t border-line pt-8">
+            <ShareLinks url={url} title={post.title} />
+            <aside class="flex flex-col gap-5 rounded-[var(--radius-card)] bg-sand p-6 sm:flex-row sm:p-8 lg:hidden" aria-label="About the author">
+              <Avatar person={author} class="size-[65px]" text="text-xl" />
+              <div class="min-w-0">
+                <span class={label}>About the author</span>
+                <p class="mt-1 font-display text-xl font-extrabold text-harbor"><a href={author.href} class="hover:underline">{author.name}</a>{author.credential && <span class="font-sans text-base font-bold text-slate">, {author.credential}</span>}</p>
+                <p class="text-base font-bold text-slate">{author.role}</p>
+                <p class="mt-3 line-clamp-5 text-base">{excerpt(60)}</p>
+                <a href={author.href} class="text-link mt-3 inline-flex items-center gap-1 text-base" aria-label={`Read more about ${author.name}`}>Read more <Icon name="arrow-right" size={16} /></a>
+              </div>
+            </aside>
+          </div>
+        </article>
+
+        {/* <1024px: sidebar blocks after the article (the call CTA is the sticky bottom bar) */}
+        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:hidden">
+          <div class={box}>
+            <span class={label}>Insurance</span>
+            <p class="mt-2 font-display text-xl font-extrabold text-harbor">We accept most Medicaid plans.</p>
+            <p class="mt-1 text-base text-slate">Call us and we’ll check yours.</p>
+            <a href="/insurance/" class="text-link mt-3 inline-flex items-center gap-1 text-base">Insurance and Medicaid <Icon name="arrow-right" size={16} /></a>
+          </div>
+          <div class={box}>
+            <span class={label}>Related articles</span>
+            <ul class="rpc-related mt-3">{related.map((p) => <li><a href={postUrl(p)}>{p.title}</a></li>)}</ul>
+          </div>
+        </div>
+      </div>
+
+      {/* ≥1024px: sticky sidebar */}
+      <aside class="rpc-sidebar hidden lg:sticky lg:block" aria-label="Article tools" data-sidebar>
+        <div class="space-y-5">
+          {hasToc && (
+            <nav class={box} aria-labelledby="toc-title">
+              <span id="toc-title" class={label}>In this article</span>
+              <TocList items={toc} class="mt-3" />
+            </nav>
+          )}
+          <div class="rounded-[var(--radius-card)] bg-harbor p-6 text-white">
+            <p class="font-display text-xl font-extrabold leading-snug text-white">Want to talk to a counselor in Queens?</p>
+            <p class="mt-1 text-base text-white/85">A real person from our clinic answers.</p>
+            <a href={SITE.phoneHref} class="btn-call mt-4 w-full" data-cta="call" data-location="post-sidebar"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+          </div>
+          <div class={box}>
+            <span class={label}>Insurance</span>
+            <p class="mt-2 flex items-start gap-3 font-display text-lg font-extrabold leading-snug text-harbor"><Icon name="medicaid" class="mt-0.5 flex-none" />We accept most Medicaid plans.</p>
+            <a href="/insurance/" class="text-link mt-3 inline-flex items-center gap-1 text-base">Check your coverage <Icon name="arrow-right" size={16} /></a>
+          </div>
+          <div class={box}>
+            <span class={label}>Related articles</span>
+            <ul class="rpc-related mt-3">{related.map((p) => <li><a href={postUrl(p)}>{p.title}</a></li>)}</ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  {/* Latest articles: full width, outside the article + sidebar grid */}
+  <section class="bg-sky-wash pb-16 lg:pb-24" aria-labelledby="latest-title">
+    <div class="container-x">
+      <h2 id="latest-title">Latest Articles</h2>
+      <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {latest.map((p) => <li><PostCard post={p} as="h3" /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <FinalCta title="Talk to Someone Close to Home" text="Licensed counselors in Rego Park and Fresh Meadows, Queens. Most Medicaid plans accepted." tone="sand" />
+</Base>
+
+<style>
+  .rpc-related { list-style: disc; padding-left: 1.15rem; }
+  .rpc-related li { padding: 0.35rem 0; }
+  .rpc-related li::marker { color: var(--color-cyan); }
+  .rpc-related a { font-weight: 700; line-height: 1.35; color: var(--color-harbor); }
+  .rpc-related a:hover { text-decoration: underline; text-decoration-color: var(--color-sky); text-underline-offset: 4px; }
+  /* Sticky by its bottom when taller than the viewport: the script sets a negative top so every block stays reachable */
+  @media (min-width: 1024px) { .rpc-sidebar { top: var(--rpc-sidebar-top, 96px); } }
+</style>
+
+<script>
+  const sidebar = document.querySelector<HTMLElement>('[data-sidebar]');
+  if (sidebar) {
+    const fit = () => sidebar.style.setProperty('--rpc-sidebar-top', `${Math.min(96, innerHeight - sidebar.offsetHeight - 16)}px`);
+    addEventListener('resize', fit, { passive: true });
+    new ResizeObserver(fit).observe(sidebar);
+  }
+</script>

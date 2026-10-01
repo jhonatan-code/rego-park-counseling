@@ -1,0 +1,244 @@
+---
+// Blog hub (Elev8 SOP Blog/Post/Author §1): banner (breadcrumb, H1, one paragraph, no form) · authors row · category
+// tabs · cards (first row 2 larger, then rows of 3, newest first) · FinalCta.
+// Search box: filters the same cards by title + excerpt + category as you type (every word must match, accents and
+// case ignored). It combines with the author and category filters and, like them, never touches the URL.
+// Copy per the Blog Hub brief (Sep 30): H1 "Mental Health and Recovery Resources", Start Here (3 hand-picked posts,
+// re-pick quarterly from GSC), Latest Articles, mid-page care band after the 6th card.
+// Every post is in the HTML. Author and category filters combine and only hide/show cards; "Show more articles"
+// reveals cards already in the DOM. Nothing touches the URL: no ?query, no hash, no /page/2/ or /category/ pages
+// (old WordPress archives 301 here, vercel.json).
+import Base from '../../layouts/Base.astro';
+import BlogBanner from '../../components/blog/BlogBanner.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import PostCard from '../../components/PostCard.astro';
+import Avatar from '../../components/Avatar.astro';
+import Icon from '../../components/Icon.astro';
+import { SITE } from '../../data/site.js';
+import NearbyRing from '../../components/NearbyRing.astro';
+import { posts, categories, authors, postUrl, categoryColor } from '../../data/posts.js';
+
+const PAGE = 20; // cards visible before "Show more" (2 + 6 rows of 3)
+const BAND_AFTER = 8; // care band after 2 full rows (2 + 3 + 3 cards); the brief says "after the 6th card" for a 3-column grid
+// Start Here: the three strongest posts by Search Console clicks (brief). Re-pick quarterly.
+const START_HERE = ['can-statins-cause-anxiety-and-panic-attacks', 'what-are-the-17-symptoms-of-complex-ptsd', 'does-ocd-go-away-recovery-and-management-strategies']
+  .map((slug) => posts.find((p) => p.slug === slug)!)
+  .filter(Boolean);
+const crumbs = [{ name: 'Blog', href: '/blog/' }];
+const blogUrl = `${SITE.url}/blog/`;
+const schema = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${blogUrl}#webpage`,
+    url: blogUrl,
+    name: 'Mental Health & Recovery Blog | Rego Park Counseling',
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    inLanguage: 'en-US',
+    mainEntity: { '@id': `${blogUrl}#list` },
+  },
+  {
+    // ItemList of every post, in page order (schema.md: hub pages list their items)
+    '@type': 'ItemList',
+    '@id': `${blogUrl}#list`,
+    numberOfItems: posts.length,
+    itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: new URL(postUrl(p), SITE.url).href, name: p.title })),
+  },
+  {
+    '@type': 'Blog',
+    '@id': `${blogUrl}#blog`,
+    url: blogUrl,
+    name: `${SITE.name} Blog`,
+    publisher: { '@id': `${SITE.url}/#organization` },
+    blogPost: posts.map((p) => ({ '@id': `${new URL(postUrl(p), SITE.url).href}#article` })),
+  },
+];
+const count = (c: string) => posts.filter((p) => p.category === c).length;
+const norm = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+---
+<Base
+  title="Mental Health & Recovery Blog | Rego Park Counseling"
+  description="Clear, practical articles on anxiety, depression, addiction, evaluations and Medicaid in New York, from the licensed team at Rego Park Counseling in Queens."
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <BlogBanner title="Mental Health and Recovery Resources" crumbs={crumbs}>
+    {/* The brief adds "written and reviewed by our licensed team" once a reviewer is confirmed (PENDING 3.4) */}
+    <p class="measure mt-5 text-lg leading-relaxed text-white/90 lg:text-xl">Straight answers about mental health, substance use, evaluations and Medicaid in New York.</p>
+  </BlogBanner>
+
+  <section class="section-y bg-sky-wash !pt-12 lg:!pt-16" aria-label="Articles">
+    <div class="container-x" data-blog>
+      {/* Authors row: real people with at least one post (hidden while posts are signed by the clinic). The photo
+          filters; the name links to the person page. */}
+      {authors.length > 0 && (
+      <div class="mb-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <span class="eyebrow">Authors</span>
+        <ul class="flex flex-wrap gap-3">
+          {authors.map((a) => (
+            <li class="rpc-author flex items-center gap-3 rounded-full border-2 border-transparent bg-white py-1.5 pl-1.5 pr-5">
+              <button type="button" class="relative rounded-full" aria-pressed="false" data-author={a.slug} aria-label={`Show only articles by ${a.name}`}>
+                <Avatar person={a} class="size-[65px]" text="text-xl" />
+                <span class="rpc-author-check absolute -bottom-0.5 -right-0.5 hidden size-6 items-center justify-center rounded-full bg-harbor text-white" aria-hidden="true"><Icon name="check" size={14} /></span>
+              </button>
+              <span class="leading-tight">
+                <a href={a.href} class="font-display text-lg font-extrabold text-harbor hover:underline">{a.name}</a>
+                <span class="mt-0.5 block text-base text-slate">{[a.credential, a.role].filter(Boolean).join(' · ')}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      )}
+
+      {/* Search (in-page, no URL) */}
+      <div role="search">
+        <label for="blog-search" class="sr-only">Search articles</label>
+        <div class="relative max-w-xl">
+          <Icon name="search" size={20} class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-harbor" />
+          <input id="blog-search" type="search" autocomplete="off" placeholder="Search articles, e.g. anxiety, alcohol, Medicaid" class="min-h-12 w-full rounded-full border border-sky bg-white py-3 pl-12 pr-5 text-base text-ink placeholder:text-slate focus:border-harbor" data-search />
+        </div>
+      </div>
+
+      {/* Category tabs, generated from the posts */}
+      <div class="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
+        {['All', ...categories].map((c) => (
+          <button type="button" class="rpc-tab" aria-pressed={c === 'All' ? 'true' : 'false'} data-category={c === 'All' ? '' : c}>
+            {c !== 'All' && <span class="size-2.5 rounded-full" style={`background:${categoryColor(c).dot}`} aria-hidden="true"></span>}
+            {c}
+            <span class="rpc-tab-count">{c === 'All' ? posts.length : count(c)}</span>
+          </button>
+        ))}
+      </div>
+
+      <p class="sr-only" aria-live="polite" data-status></p>
+
+      {/* Start Here: hidden while a filter or search is active */}
+      <div class="mt-12" data-start-here>
+        <h2 id="start-title">Start Here</h2>
+        <ul class="mt-6 grid gap-6 md:grid-cols-3" aria-labelledby="start-title">
+          {START_HERE.map((p) => <li><PostCard post={p} as="h3" /></li>)}
+        </ul>
+      </div>
+
+      <h2 id="latest-title" class="mt-14" data-latest-title>Latest Articles</h2>
+      <ul class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-6" aria-labelledby="latest-title">
+        {posts.map((p, i) => (
+          <>
+          <li class:list={['rpc-cell', i < 2 && 'is-lead']} data-author={p.author} data-category={p.category} data-text={norm(`${p.title} ${p.description} ${p.category}`)} hidden={i >= PAGE}>
+            <PostCard post={p} as="h3" eager={i < 2} />
+          </li>
+          {i === BAND_AFTER - 1 && (
+            <li class="rpc-band md:col-span-2 lg:col-span-6" data-band>
+              <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-harbor p-6 text-white sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10 lg:p-10">
+                <NearbyRing class="pointer-events-none absolute -right-32 -top-40 hidden size-[420px] opacity-25 lg:block" />
+                <div class="relative max-w-2xl">
+                  <h2 class="!text-white text-2xl lg:!text-3xl">Reading About It Is a Good First Step</h2>
+                  <p class="mt-3 text-lg text-white/90">If something here sounds like you or someone you love, our counselors in Rego Park and Fresh Meadows can help. Most Medicaid plans accepted.</p>
+                </div>
+                <div class="relative mt-6 flex flex-col gap-3 sm:flex-row lg:mt-0 lg:flex-none">
+                  <a href="#callback" class="btn-call" data-open-callback data-location="blog-band">Request a Callback</a>
+                  <a href={SITE.phoneHref} class="btn-on-dark" data-cta="call" data-location="blog-band"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+                </div>
+              </div>
+            </li>
+          )}
+          </>
+        ))}
+      </ul>
+
+      <div class="mt-10 flex justify-center" data-more-wrap hidden={posts.length <= PAGE}>
+        <button type="button" class="btn-secondary" data-more>Show more articles <Icon name="chevron-down" size={20} /></button>
+      </div>
+
+      <p class="mt-10 hidden rounded-[var(--radius-card)] bg-white p-6 text-center text-lg" data-empty>
+        No articles match these filters. <button type="button" class="text-link" data-reset>Show all</button>
+      </p>
+    </div>
+  </section>
+
+  <FinalCta title="Ready to Talk to Someone?" text="Licensed counselors in Rego Park and Fresh Meadows, Queens. Most Medicaid plans accepted." tone="sand" />
+</Base>
+
+<style>
+  .rpc-author:has(button[aria-pressed='true']) { border-color: var(--color-harbor); }
+  .rpc-author:has(button[aria-pressed='true']) .rpc-author-check { display: inline-flex; }
+  .rpc-tab {
+    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 48px; padding: 0 1.15rem;
+    border-radius: 9999px; border: 1px solid var(--color-sky); background: #fff;
+    font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--color-harbor);
+    transition: background-color .2s, color .2s, border-color .2s;
+  }
+  .rpc-tab:hover { border-color: var(--color-harbor); }
+  .rpc-tab[aria-pressed='true'] { background: var(--color-harbor); border-color: var(--color-harbor); color: #fff; }
+  .rpc-tab-count {
+    font-family: var(--font-sans); font-size: 14px; font-weight: 700; min-width: 1.75rem; padding: 0 .45rem;
+    border-radius: 9999px; background: var(--color-sky-wash); color: var(--color-harbor); text-align: center; line-height: 1.6rem;
+  }
+  .rpc-tab[aria-pressed='true'] .rpc-tab-count { background: rgb(255 255 255 / .18); color: #fff; }
+  @media (min-width: 1024px) {
+    .rpc-cell { grid-column: span 2; }
+    .rpc-cell.is-lead { grid-column: span 3; }
+    .rpc-cell.is-lead :global(.pc-body) { padding: 1.75rem 2rem 2rem; }
+    .rpc-cell.is-lead :global(.pc-title) { font-size: 1.75rem; line-height: 1.2; }
+  }
+</style>
+
+<script>
+  // Author × category filters and "Show more": show/hide cards already in the page. Never touches location.
+  const root = document.querySelector<HTMLElement>('[data-blog]');
+  if (root) {
+    const PAGE = 20, STEP = 21;
+    const cells = [...root.querySelectorAll<HTMLElement>('.rpc-cell')];
+    const authorBtns = [...root.querySelectorAll<HTMLButtonElement>('button[data-author]')];
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('.rpc-tab')];
+    const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const moreWrap = root.querySelector<HTMLElement>('[data-more-wrap]')!;
+    const search = root.querySelector<HTMLInputElement>('[data-search]')!;
+    const state = { author: '', category: '', query: [] as string[], limit: PAGE };
+    const norm = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const apply = () => {
+      const matches = cells.filter((c) =>
+        (!state.author || c.dataset.author === state.author) &&
+        (!state.category || c.dataset.category === state.category) &&
+        state.query.every((w) => c.dataset.text!.includes(w)));
+      cells.forEach((c) => { c.hidden = true; c.classList.remove('is-lead'); });
+      matches.forEach((c, i) => { c.hidden = i >= state.limit; c.classList.toggle('is-lead', i < 2); });
+      moreWrap.hidden = matches.length <= state.limit;
+      const filtering = !!(state.author || state.category || state.query.length);
+      root.querySelector<HTMLElement>('[data-start-here]')!.hidden = filtering;
+      const band = root.querySelector<HTMLElement>('[data-band]');
+      if (band) band.hidden = filtering || matches.filter((c) => !c.hidden).length < 6;
+      empty.classList.toggle('hidden', matches.length > 0);
+      authorBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.author === state.author)));
+      tabs.forEach((t) => t.setAttribute('aria-pressed', String((t.dataset.category ?? '') === state.category)));
+      status.textContent = matches.length ? `${matches.length} ${matches.length === 1 ? 'article' : 'articles'}` : 'No articles match these filters';
+    };
+
+    authorBtns.forEach((b) => b.addEventListener('click', () => {
+      state.author = state.author === b.dataset.author ? '' : b.dataset.author!;
+      state.limit = PAGE;
+      apply();
+    }));
+    tabs.forEach((t) => t.addEventListener('click', () => { state.category = t.dataset.category ?? ''; state.limit = PAGE; apply(); }));
+    let timer = 0;
+    search.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => { state.query = norm(search.value).split(/\s+/).filter(Boolean); state.limit = PAGE; apply(); }, 150);
+    });
+    // Enter never submits anything (no URL change)
+    search.addEventListener('keydown', (e) => { if (e.key === 'Enter') e.preventDefault(); });
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      state.author = ''; state.category = ''; state.query = []; search.value = ''; state.limit = PAGE; apply();
+    });
+    root.querySelector('[data-more]')?.addEventListener('click', () => {
+      const firstNew = state.limit;
+      state.limit += STEP;
+      apply();
+      // Keyboard users land on the first newly shown card
+      const visible = cells.filter((c) => !c.hidden);
+      visible[firstNew]?.querySelector<HTMLAnchorElement>('.pc-title a')?.focus();
+    });
+  }
+</script>

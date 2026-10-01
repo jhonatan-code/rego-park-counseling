@@ -1,0 +1,38 @@
+---
+// Banner for the blog hub, posts and person pages (SOP Blog/Post/Author §0): the inner-page Harbor band without a
+// form (no form on these three templates). Breadcrumb above the H1, nothing else above it. The H1 uses the article
+// column's width (≈72% of the container) so most post titles fit in 2 lines. One Nearby Ring cropped off the right
+// edge, never behind text. Default slot: what goes under the H1 (paragraph, byline row). `aside` slot: right column
+// (person photo); with an aside the H1 column narrows to leave room.
+import Icon from '../Icon.astro';
+import NearbyRing from '../NearbyRing.astro';
+
+interface Crumb { name: string; href: string }
+interface Props { title: string; crumbs: Crumb[]; titleNote?: string; eyebrow?: string }
+const { title, crumbs, titleNote, eyebrow } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+<section class="relative overflow-hidden bg-harbor text-white" aria-labelledby="page-title">
+  <NearbyRing class="pointer-events-none absolute -right-44 -top-44 hidden size-[560px] opacity-25 lg:block" />
+  <div class:list={['container-x relative py-10 lg:py-14', hasAside && 'grid items-center gap-10 lg:grid-cols-[1fr_300px] lg:gap-16']}>
+    <div class="min-w-0">
+      <nav aria-label="Breadcrumb" class="mb-5 text-base text-white/80">
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href="/" class="hover:text-white hover:underline">Home</a></li>
+          {crumbs.map((c, i) => (
+            <li class="flex min-w-0 items-center gap-1.5">
+              <Icon name="chevron-right" size={16} class="flex-none text-sky" />
+              {i === crumbs.length - 1
+                ? <span aria-current="page" class="line-clamp-1 text-white">{c.name}</span>
+                : <a href={c.href} class="hover:text-white hover:underline">{c.name}</a>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+      {eyebrow && <p class="eyebrow mb-3 !text-sky">{eyebrow}</p>}
+      <h1 id="page-title" class:list={['!text-white lg:!text-[2.875rem] lg:leading-[1.1]', !hasAside && 'lg:max-w-[72%]']}>{title}{titleNote && <span class="font-bold text-sky">, {titleNote}</span>}</h1>
+      <slot />
+    </div>
+    {hasAside && <slot name="aside" />}
+  </div>
+</section>

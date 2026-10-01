@@ -1,0 +1,60 @@
+---
+// Table of contents list (post sidebar + <1024px drawer): the article's H2s only, as a bulleted list.
+// Smooth scroll without touching the URL, focus follows, the active item is highlighted on scroll.
+// Targets carry `toc-target` (global.css: scroll-margin-top = sticky header + 16px) and tabindex="-1".
+interface Props { items: { id: string; text: string }[]; class?: string }
+const { items, class: cls } = Astro.props;
+---
+<ul class:list={['rpc-toc space-y-0.5', cls]}>
+  {items.map((t) => <li><a href={`#${t.id}`} data-toc-link={t.id}>{t.text}</a></li>)}
+</ul>
+
+<style>
+  .rpc-toc a {
+    position: relative; display: block; padding: 0.45rem 0.5rem 0.45rem 1.5rem; border-radius: var(--radius-input);
+    font-size: 16px; line-height: 1.35; color: var(--color-ink);
+  }
+  .rpc-toc a::before {
+    content: ''; position: absolute; left: 0.55rem; top: 1rem; width: 6px; height: 6px; border-radius: 9999px;
+    background: var(--color-sky); transition: background-color .2s;
+  }
+  .rpc-toc a:hover { color: var(--color-harbor); background: var(--color-sky-wash); }
+  .rpc-toc a[aria-current='true'] { color: var(--color-harbor); background: var(--color-sky-wash); font-weight: 700; }
+  .rpc-toc a[aria-current='true']::before { background: var(--color-harbor); }
+</style>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  const heads = [...new Set(links.map((a) => a.dataset.tocLink!))]
+    .map((id) => document.getElementById(id))
+    .filter((h): h is HTMLElement => !!h);
+  const setActive = (id: string) =>
+    links.forEach((a) => (a.dataset.tocLink === id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+
+  links.forEach((a) => a.addEventListener('click', (e) => {
+    const target = document.getElementById(a.dataset.tocLink!);
+    if (!target) return;
+    e.preventDefault();
+    const go = () => {
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      target.focus({ preventScroll: true });
+      setActive(target.id);
+    };
+    const drawer = a.closest('dialog');
+    if (drawer?.open) { drawer.dataset.tocNav = '1'; drawer.close(); requestAnimationFrame(go); } else go();
+  }));
+
+  if (heads.length && 'IntersectionObserver' in window) {
+    const visible = new Set<string>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => (en.isIntersecting ? visible.add(en.target.id) : visible.delete(en.target.id)));
+      const first = heads.find((h) => visible.has(h.id));
+      if (first) setActive(first.id);
+      else {
+        const above = heads.filter((h) => h.getBoundingClientRect().top < 120);
+        setActive((above[above.length - 1] ?? heads[0]).id);
+      }
+    }, { rootMargin: '-100px 0px -55% 0px' });
+    heads.forEach((h) => io.observe(h));
+  }
+</script>

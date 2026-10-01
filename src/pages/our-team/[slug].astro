@@ -1,0 +1,188 @@
+---
+// Person template: /our-team/{slug}/, one page per person, team members and authors alike (Elev8 SOP
+// Blog/Post/Author §3). Data: src/data/team.js (every record with a `slug`).
+// Banner (inner-page Harbor band, no form): breadcrumb Home › Our Team › Name, H1 = name with credential, role,
+// photo or branded placeholder. Body: biography beside a details card (clinics, languages, focus areas).
+// "Articles by {Name}" only when the person authored posts: ≤3 → grid, more → carousel with arrows (no URL changes).
+// No other staff on this page (no "more team members", no cross-links): /our-team/ is where everyone is listed.
+// Placeholder people: noindex, out of the sitemap, no Person schema.
+import Base from '../../layouts/Base.astro';
+import BlogBanner from '../../components/blog/BlogBanner.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import Icon from '../../components/Icon.astro';
+import PostCard from '../../components/PostCard.astro';
+import { SITE } from '../../data/site.js';
+import { PAGED_PEOPLE, personHref } from '../../data/team.js';
+import { postsBy, postsReviewedBy } from '../../data/posts.js';
+
+export function getStaticPaths() {
+  return PAGED_PEOPLE.map((person) => ({ params: { slug: person.slug }, props: { person } }));
+}
+
+const { person: p } = Astro.props;
+const path = personHref(p);
+const url = new URL(path, SITE.url).href;
+const articles = postsBy(p.slug);
+const reviewed = postsReviewedBy(p.slug).filter((r) => !articles.includes(r));
+const carousel = articles.length > 3;
+const crumbs = [{ name: 'Our Team', href: '/our-team/' }, { name: p.name, href: path }];
+const first = p.name.startsWith('[') ? p.name : p.name.split(' ')[0];
+const nameWithCred = p.credential ? `${p.name}, ${p.credential}` : p.name;
+const metaTitle = `${nameWithCred}, ${p.role} | Rego Park Counseling`;
+const description = `${nameWithCred}, ${p.role} at Rego Park Counseling in Queens, NY. ${p.bio}`.slice(0, 155).replace(/\s+\S*$/, '…');
+
+const schema = p.placeholder
+  ? []
+  : [{
+      '@type': 'ProfilePage',
+      '@id': `${url}#webpage`,
+      url,
+      name: metaTitle,
+      isPartOf: { '@id': `${SITE.url}/#website` },
+      inLanguage: 'en-US',
+      mainEntity: {
+        '@type': 'Person',
+        '@id': `${url}#person`,
+        name: p.name,
+        jobTitle: p.role,
+        url,
+        description: p.bio,
+        worksFor: { '@id': `${SITE.url}/#organization` },
+        ...(p.credential ? { hasCredential: { '@type': 'EducationalOccupationalCredential', name: p.credential } } : {}),
+        ...(p.photo ? { image: new URL(p.photo, SITE.url).href } : {}),
+        ...(p.languages?.length ? { knowsLanguage: p.languages } : {}),
+        ...(p.linkedin ? { sameAs: [p.linkedin] } : {}),
+      },
+    }];
+const details = [
+  p.clinics?.length && { icon: 'pin', label: 'Clinics', value: p.clinics.join(' · ') },
+  p.languages?.length && { icon: 'languages', label: 'Languages', value: p.languages.join(', ') },
+].filter(Boolean) as { icon: 'pin' | 'languages'; label: string; value: string }[];
+---
+<Base title={metaTitle} description={description} breadcrumbs={crumbs} schema={schema} noindex={!!p.placeholder}>
+  <BlogBanner title={p.name} titleNote={p.credential} crumbs={crumbs}>
+    <p class="mt-3 font-display text-xl font-bold text-white/90 lg:text-2xl">{p.role}</p>
+    <Fragment slot="aside">
+      <div class="mx-auto w-full max-w-[260px] lg:mr-0">
+        <div class="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[var(--radius-panel)] bg-sky-wash ring-4 ring-white/15">
+          {p.photo
+            ? <img src={p.photo} alt={`Portrait of ${p.name}`} width="400" height="500" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover" />
+            : <Icon name="user" size={72} strokeWidth={1.5} class="text-harbor/40" />}
+        </div>
+      </div>
+    </Fragment>
+  </BlogBanner>
+
+  <section class="section-y bg-white" aria-labelledby="about-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-16">
+      <div>
+        <h2 id="about-title">About {first}</h2>
+        <div class="prose-rpc mt-6">{(p.bioLong ?? p.bio).split(/\n{2,}/).map((para: string) => <p>{para}</p>)}</div>
+        {p.focus?.length > 0 && (
+          <>
+            <h3 class="mt-10">Areas of focus</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {p.focus.map((f: { label: string; href: string }) => (
+                <li><a href={f.href} class="inline-flex min-h-12 items-center rounded-full border border-sky bg-sky-wash px-4 text-base font-bold text-harbor hover:border-harbor">{f.label}</a></li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+      <aside class="self-start lg:sticky lg:top-28" aria-label={`${first} at a glance`}>
+        <div class="relative overflow-hidden rounded-[var(--radius-panel)] border border-line bg-porch p-6 lg:p-7">
+          <p class="font-display text-xl font-extrabold text-harbor">{nameWithCred}</p>
+          <p class="text-base font-bold text-slate">{p.role}</p>
+          {details.length > 0 && (
+            <dl class="mt-5 space-y-3 border-t border-line pt-5 text-base">
+              {details.map((d) => (
+                <div class="flex gap-3"><Icon name={d.icon} size={20} class="mt-0.5 flex-none text-harbor" /><div><dt class="font-bold">{d.label}</dt><dd class="text-slate">{d.value}</dd></div></div>
+              ))}
+            </dl>
+          )}
+          {p.licenseLookupUrl && (
+            <a href={p.licenseLookupUrl} target="_blank" rel="noopener" class="text-link mt-5 inline-flex items-center gap-1.5 text-base"><Icon name="licensed" size={18} />Verify license (NYS)</a>
+          )}
+          <a href={SITE.phoneHref} class="btn-call mt-6 w-full" data-cta="call" data-location="person-card"><Icon name="phone" size={20} /> Call {SITE.phone}</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {articles.length > 0 && (
+    <section class="section-y relative overflow-hidden bg-sky-wash" aria-labelledby="articles-title">
+      <div class="container-x">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <h2 id="articles-title">Articles by {first}</h2>
+          <div class="flex items-center gap-4">
+            <a href="/blog/" class="text-link text-base">All articles</a>
+            {carousel && (
+              <div class="flex gap-2">
+                <button type="button" class="rpc-arrow" aria-label="Previous articles" aria-controls="articles-track" data-dir="-1"><Icon name="chevron-left" /></button>
+                <button type="button" class="rpc-arrow" aria-label="Next articles" aria-controls="articles-track" data-dir="1"><Icon name="chevron-right" /></button>
+              </div>
+            )}
+          </div>
+        </div>
+        {carousel ? (
+          <ul id="articles-track" class="rpc-track mt-8" aria-label={`Articles by ${p.name}`} data-track>
+            {articles.map((post) => <li><PostCard post={post} as="h3" /></li>)}
+          </ul>
+        ) : (
+          <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {articles.map((post) => <li><PostCard post={post} as="h3" /></li>)}
+          </ul>
+        )}
+      </div>
+    </section>
+  )}
+
+  {reviewed.length > 0 && (
+    <section class="section-y bg-white" aria-labelledby="reviewed-title">
+      <div class="container-x">
+        <h2 id="reviewed-title">Articles Reviewed by {first}</h2>
+        <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {reviewed.map((post) => <li><PostCard post={post} as="h3" /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <FinalCta title={p.placeholder ? 'Talk to Someone on Our Team' : `Work With ${first} and Our Team`} text="A real person from our clinic will call you back." tone="sand" />
+</Base>
+
+<style>
+  .rpc-track {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 86%; gap: 1.5rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; overscroll-behavior-x: contain;
+    padding-bottom: 0.75rem; scrollbar-width: thin;
+  }
+  .rpc-track > li { scroll-snap-align: start; }
+  @media (min-width: 768px) { .rpc-track { grid-auto-columns: calc((100% - 1.5rem) / 2); } }
+  @media (min-width: 1024px) { .rpc-track { grid-auto-columns: calc((100% - 3rem) / 3); } }
+  .rpc-arrow {
+    display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 9999px;
+    border: 2px solid var(--color-harbor); color: var(--color-harbor); background: #fff; transition: background-color .2s, color .2s, opacity .2s;
+  }
+  .rpc-arrow:hover:not(:disabled) { background: var(--color-harbor); color: #fff; }
+  .rpc-arrow:disabled { opacity: .35; cursor: default; }
+</style>
+
+<script>
+  // Articles carousel: arrows scroll by one card; no URL changes; arrows disable at the ends.
+  document.querySelectorAll<HTMLElement>('[data-track]').forEach((track) => {
+    const arrows = [...track.closest('section')!.querySelectorAll<HTMLButtonElement>('.rpc-arrow')];
+    const step = () => {
+      const card = track.querySelector<HTMLElement>('li');
+      return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || '24') : track.clientWidth;
+    };
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      arrows.forEach((a) => (a.disabled = a.dataset.dir === '-1' ? track.scrollLeft <= 2 : track.scrollLeft >= max));
+    };
+    arrows.forEach((a) => a.addEventListener('click', () => track.scrollBy({ left: step() * Number(a.dataset.dir), behavior: 'smooth' })));
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    addEventListener('resize', update);
+    update();
+  });
+</script>

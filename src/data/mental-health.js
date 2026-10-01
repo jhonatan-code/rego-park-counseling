@@ -74,7 +74,7 @@ export const SERVICES = {
 const STD_EXPECT = (what) => [
   { title: 'Call or request a callback.', text: 'We check your insurance and find a time.' },
   { title: 'First visit.', text: `A licensed clinician learns about ${what} and your goals.` },
-  { title: 'Regular sessions.', text: 'Individual or group sessions, in person or by telehealth, with a plan you help shape.' },
+  { title: 'Regular sessions.', text: 'Sessions with your counselor on a plan you help shape. On the call we’ll tell you whether group sessions or telehealth are available for you [confirm per condition, PENDING 2.6/2d.5].' },
 ];
 const MED_LINE = 'We can coordinate with your doctor or psychiatrist. [Update if psychiatry is confirmed.]';
 
@@ -392,4 +392,6 @@ export const HUB = {
 };
 
 // Remove [bracket] notes for machine-readable text (schema).
-export const clean = (t) => t.replace(/\s*\[[^\]]*\]\s*/g, ' ').replace(/\s{2,}/g, ' ').trim();
+// FAQ answer text for FAQPage schema. Schema must match the visible answer word for word (schema.md rule 2), so an
+// answer that still carries an editorial bracket ("[confirm]") is left out of the markup entirely ('' → filtered).
+export const clean = (t) => (/\[[^\]]*\]/.test(t) ? '' : t.replace(/\s{2,}/g, ' ').trim());

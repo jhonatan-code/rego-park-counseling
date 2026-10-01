@@ -7,11 +7,13 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "node --env-file-if-exists=.env node_modules/astro/bin/astro.mjs dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "images": "node scripts/images.mjs"
+    "images": "node scripts/images.mjs",
+    "prebuild": "node scripts/lint-posts.mjs",
+    "lint:posts": "node scripts/lint-posts.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -6,7 +6,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
-import FinalCta from '../../components/FinalCta.astro';
+import FormCta from '../../components/FormCta.astro';
 import { SITE, CLINICS } from '../../data/site.js';
 
 const PHILOSOPHY = [
@@ -184,5 +184,5 @@ const schema = [
     </div>
   </section>
 
-  <FinalCta title="Ready to Talk?" text="Taking the first step is the hardest part. We’ll make the rest simple." />
+  <FormCta title="Ready to Talk?" text="Taking the first step is the hardest part. We’ll make the rest simple." formId="cb-about-final" location="about-final-band" />
 </Base>

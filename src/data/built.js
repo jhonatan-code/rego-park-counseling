@@ -12,4 +12,5 @@ export const BUILT = [
   '/programs/', '/programs/core/', '/programs/social-care-network/', '/programs/telehealth/',
   '/who-we-serve/', '/who-we-serve/older-adults/', '/who-we-serve/court-involved/',
   '/therapies/', '/therapies/individual-therapy/', '/therapies/group-therapy/', '/therapies/family-therapy/',
+  '/blog/',
 ];

@@ -144,7 +144,7 @@ export const NAV = [
         href: '/who-we-serve/',
         links: [
           { label: 'Older Adults', href: '/who-we-serve/older-adults/', desc: 'We see people of every age' },
-          { label: 'Court-Involved', href: '/who-we-serve/court-involved/', desc: 'Here’s what to bring, here’s how long' },
+          { label: 'Court-Ordered Counseling', href: '/who-we-serve/court-involved/', desc: 'Here’s what to bring, here’s how long' },
           { label: 'LGBTQ+ Affirming Care', href: '/who-we-serve/lgbtq-affirming-care/', desc: '', pending: true },
         ],
       },
