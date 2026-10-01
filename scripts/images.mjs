@@ -14,7 +14,7 @@ const jobs = [
   ['d-484x322-1.webp', 'home/counselor-taking-notes-evaluation.webp', 484, 322, 72],
   ['2155724.webp', 'home/group-counseling-session.webp', 800, 560, 66],
   ['socialwork.webp', 'home/group-therapy-circle.webp', 800, 560, 66],
-  ['scn-img-3.webp', 'home/community-support-table.webp', 800, 560, 66],
+  // community-support-table.webp removed 2026-10-01 (looked AI-generated, showed a child): no stock stand-in
   ['contact-1452x761-1.webp', 'home/front-desk-callback.webp', 800, 560, 68],
   ['NYC.jpg', 'home/queens-skyline-evening.webp', 1600, 900, 60],
   ['Do-You-Get-Drug-Tested-at-a-Substance-Abuse-Evaluation.jpg', 'blog/do-you-get-drug-tested-at-a-substance-abuse-evaluation.webp', 720, 450, 66],

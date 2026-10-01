@@ -78,19 +78,21 @@ export const readTime = (p) => `${Math.max(1, Math.round(p.words / 230))} min re
 // Byline (medical-clinical-review): a person is named only when they are real and actually wrote the post. While
 // the author is a placeholder, the post is signed by the clinic itself (never a real clinician's name on posts they
 // didn't write or review). Swapping in a person later needs their agreement and a real review, post by post.
+// Byline while no real person is confirmed (DECISIONS-2026-10-01 §7.7): "Rego Park Counseling", no link.
 export const ORG_AUTHOR = {
   isOrg: true,
   slug: 'rego-park-counseling',
-  name: 'Rego Park Counseling editorial team',
+  name: 'Rego Park Counseling',
   credential: '',
   role: 'Outpatient clinic in Queens, NY',
   bio: 'Rego Park Counseling is an independent outpatient clinic for mental health and substance use care in Rego Park and Fresh Meadows, Queens, licensed by New York State OASAS and OMH.',
   photo: '/icon-192.png',
-  href: '/about/',
+  href: null, // no link: the byline only links to a real person's /our-team/{slug}/ page
 };
 export const postAuthor = (p) => {
   const person = personBySlug(p.author);
-  return person.placeholder ? ORG_AUTHOR : { ...person, href: personHref(person) };
+  // A real (non-placeholder) person with a profile page → byline links to /our-team/{slug}/; anyone else → the clinic.
+  return person.placeholder || !person.slug ? ORG_AUTHOR : { ...person, href: personHref(person) };
 };
 
 // Optional clinical reviewer (a team.js slug in `reviewer`, plus `reviewed` ISO date). Rendered only when the person
@@ -98,7 +100,7 @@ export const postAuthor = (p) => {
 export const postReviewer = (p) => {
   if (!p.reviewer || !p.reviewed) return null;
   const person = personBySlug(p.reviewer);
-  return person.placeholder ? null : { ...person, href: personHref(person) };
+  return person.placeholder || !person.slug ? null : { ...person, href: personHref(person) };
 };
 
 // Categories that have at least one post, largest first (blog tabs are generated from this, never a manual list).

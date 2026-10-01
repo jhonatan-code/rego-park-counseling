@@ -80,7 +80,7 @@ export const PAGES = [
     trust: ['For Medicaid members', 'Food, housing, transportation'],
     formHeading: 'Ask About Help With Your Needs',
     blocks: [
-      { type: 'text', h2: 'What Is the Social Care Network?', icon: 'home', image: '/images/home/community-support-table.webp', alt: 'Family of several generations talking around a table', text: 'New York’s Social Care Networks connect Medicaid members with help for health-related social needs, such as food, housing and transportation. [Confirm RPC’s role: screening, referral partner, service provider.]' },
+      { type: 'text', h2: 'What Is the Social Care Network?', icon: 'home', text: 'New York’s Social Care Networks connect Medicaid members with help for health-related social needs, such as food, housing and transportation. [Confirm RPC’s role: screening, referral partner, service provider.]' },
       { type: 'chips', h2: 'What Help May Be Available', note: '[Confirm list]', items: [{ label: 'Food and nutrition', icon: 'heart' }, { label: 'Housing support', icon: 'home' }, { label: 'Transportation', icon: 'car' }, { label: 'Other needs', icon: 'plus' }] },
       { type: 'callout', h2: 'How We Help', text: 'We ask a few questions about your needs and connect you to services in the network [confirm].', phone: 'Talk to us about your needs' },
     ],
@@ -157,7 +157,7 @@ export const PAGES = [
     trust: ['In person or telehealth', 'Most Medicaid plans'],
     blocks: [
       { type: 'chips', h2: 'What We Help Older Adults With', items: [{ label: 'Depression and loneliness', href: '/mental-health/depression-counseling/', icon: 'sunrise' }, { label: 'Anxiety and worry', href: '/mental-health/anxiety-counseling/', icon: 'wind' }, { label: 'Grief and life changes', icon: 'heart' }, { label: 'Drinking or misuse of medications', href: '/substance-use/alcohol-use-treatment/', icon: 'sprout' }, { label: 'Adjusting to health problems', icon: 'shield' }] },
-      { type: 'text', h2: 'Care That Fits Older Adults', icon: 'user', image: '/images/home/community-support-table.webp', alt: 'Older adults and family members talking around a table', list: ['Unhurried sessions', 'Telehealth for people who can’t travel', 'Family involvement if wanted', '[Languages]'] },
+      { type: 'text', h2: 'Care That Fits Older Adults', icon: 'user', list: ['Unhurried sessions', 'Telehealth for people who can’t travel', 'Family involvement if wanted', '[Languages]'] },
       { type: 'callout', h2: 'For Family Members and Caregivers', text: 'Worried about a parent? Call us and we’ll talk through how to help.', phone: 'Call about a parent' },
     ],
     related: ['/mental-health/depression-counseling/', '/substance-use/alcohol-use-treatment/', '/programs/telehealth/'],
@@ -222,7 +222,7 @@ export const PAGES = [
         items: [
           { title: 'Individual Therapy', href: '/therapies/individual-therapy/', text: 'Private, one-on-one time with a licensed counselor who gets to know you and your goals.', image: '/images/home/counselor-talking-with-adult-client.webp', alt: 'Counselor listening to an adult client in a bright room' },
           { title: 'Group Therapy', href: '/therapies/group-therapy/', text: 'Counselor-led groups where you learn from others who understand.', image: '/images/home/group-therapy-circle.webp', alt: 'Adults sitting in a circle during a group counseling session' },
-          { title: 'Family Therapy', href: '/therapies/family-therapy/', text: 'Help the whole family heal and support recovery.', image: '/images/home/community-support-table.webp', alt: 'Family of several generations talking around a table' },
+          { title: 'Family Therapy', href: '/therapies/family-therapy/', text: 'Help the whole family heal and support recovery.', icon: 'family' },
           // Couples: added once Julian confirms
         ],
       },

@@ -1,4 +1,6 @@
 ---
+// Keyword (DECISIONS-2026-10-01 §7.9): this hub targets "drug and alcohol evaluations queens"; "substance abuse evaluation
+// queens" belongs only to /evaluations/substance-abuse-evaluation/.
 // Evaluations hub (Evaluations Pages Content brief, §1): banner with form ("Book an Evaluation") →
 // two big "which evaluation" cards → how it works → why us → learn more → short FAQ → final band.
 // Commercial pages own local, ready-to-book searches; blog posts keep the national "what is" searches and link up.
@@ -14,7 +16,7 @@ import { clean } from '../../data/mental-health.js';
 const url = `${SITE.url}/evaluations/`;
 const crumbs = [{ name: 'Evaluations', href: '/evaluations/' }];
 const schema = [
-  { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: 'Substance Abuse and DWI Evaluations in Queens', provider: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
+  { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: 'Drug and Alcohol Evaluations in Queens', provider: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
   {
     '@type': 'Service',
     '@id': `${url}#service`,
@@ -27,13 +29,13 @@ const schema = [
 ];
 ---
 <Base
-  title="Substance Abuse & DWI Evaluations in Queens, NY | Rego Park Counseling"
-  description="Drug, alcohol and DWI evaluations in Rego Park, Queens, from an OASAS-licensed clinic. Fast appointments for court, DMV or employer requirements. Call today."
+  title="Drug and Alcohol Evaluations in Queens, NY | Rego Park Counseling"
+  description="Drug and alcohol evaluations in Queens, including DWI, from an OASAS-licensed clinic in Rego Park. For court, DMV, employer or personal needs. Call today."
   breadcrumbs={crumbs}
   schema={schema}
 >
   <PageHero
-    title="Substance Abuse and DWI Evaluations in Queens"
+    title="Drug and Alcohol Evaluations in Queens"
     sub="Need an evaluation for court, the DMV, your job or yourself? Get a professional assessment from an OASAS-licensed clinic in Rego Park."
     crumbs={crumbs}
     trust={TRUST}

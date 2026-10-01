@@ -39,7 +39,7 @@ export const CLINICS = [
   {
     id: 'fresh-meadows',
     name: 'Fresh Meadows',
-    label: 'Now welcoming new patients',
+    label: 'Call to check availability', // was "Now welcoming new patients" (DECISIONS-2026-10-01 extras)
     status: 'open',
     // [Confirm format] brand manual + brief say 71-82; the current site shows "7182 Parsons blvd"
     street: '71-82 Parsons Blvd',
@@ -77,20 +77,10 @@ export const CLINICS = [
   },
 ];
 
-// Header navigation (brief, "Menu items and the pages under each"), reordered by the user on 2026-09-30:
-// About first, then the three biggest search clusters, Contact Us last. Items marked `pending` stay out until confirmed.
+// Header navigation (brief, "Menu items and the pages under each"). Six items since 2026-10-01 (DECISIONS §7.8):
+// Mental Health · Substance Use · Evaluations · Programs · Locations · Insurance. Items marked `pending` stay out until confirmed.
 // `desc` = one-line helper shown in the mega panels (plain language, brand voice).
 export const NAV = [
-  {
-    label: 'About',
-    href: '/about/',
-    intro: 'A neighborhood clinic for Queens.',
-    links: [
-      { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
-      { label: 'Our Team', href: '/our-team/', desc: 'Meet our licensed counselors' },
-      { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
-    ],
-  },
   {
     label: 'Mental Health',
     href: '/mental-health/',
@@ -162,6 +152,14 @@ export const NAV = [
   },
   { label: 'Locations', href: '/locations/', intro: 'Three clinics, one team, one number.', locations: true },
   { label: 'Insurance', href: '/insurance/' },
+];
+
+// About, Our Team, Blog and Contact live in the utility bar (desktop), the mobile menu's secondary list and the footer,
+// not in the main menu (DECISIONS-2026-10-01 §7.8: 6-item menu; the call button covers contact).
+export const UTILITY = [
+  { label: 'About Us', href: '/about/' },
+  { label: 'Our Team', href: '/our-team/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'Contact Us', href: '/contact/' },
 ];
 

@@ -15,7 +15,7 @@ const RULES = [
   [/anger|rage/, { topic: 'anger', href: '/mental-health/anger-management/', label: 'Anger management' }],
   [/depress|sadness|grief/, { topic: 'depression', href: '/mental-health/depression-counseling/', label: 'Depression counseling' }],
   [/anxiety|anxious|panic|worry|ocd|phobia|stress/, { topic: 'anxiety', href: '/mental-health/anxiety-counseling/', label: 'Anxiety counseling' }],
-  [/addict|substance|relapse|recovery|sud-|withdrawal/, { topic: 'substance use', href: '/substance-use/', label: 'Substance use counseling' }],
+  [/addict|substance|relapse|recovery|sud-|withdrawal|12-step|twelve-step/, { topic: 'substance use', href: '/substance-use/', label: 'Substance use counseling' }],
   [/court|probation|legal/, { topic: 'court-related counseling', href: '/who-we-serve/court-involved/', label: 'Counseling for court-involved clients' }],
   [/family|parent|couple|marriage|relationship/, { topic: 'family problems', href: '/therapies/family-therapy/', label: 'Family therapy' }],
   [/group-therapy|support-group/, { topic: 'group support', href: '/therapies/group-therapy/', label: 'Group therapy' }],
@@ -27,6 +27,13 @@ const BY_CATEGORY = {
   'Substance Use': { topic: 'substance use', href: '/substance-use/', label: 'Substance use counseling' },
   Evaluations: { topic: 'substance abuse evaluations', href: '/evaluations/', label: 'Evaluations' },
   Insurance: { topic: 'finding out what your insurance covers', href: '/insurance/', label: 'Insurance and Medicaid' },
+  // Display categories (posts.js renames them at load): without these every unmatched Substance Use post fell back to
+  // the Mental Health hub (found 2026-10-01).
+  'Substance Use & Recovery': { topic: 'substance use', href: '/substance-use/', label: 'Substance use counseling' },
+  'Therapy Basics': { topic: 'starting therapy', href: '/therapies/', label: 'Therapy options' },
+  'Families & Relationships': { topic: 'family problems', href: '/therapies/family-therapy/', label: 'Family therapy' },
+  'Medicaid & Insurance': { topic: 'finding out what your insurance covers', href: '/insurance/', label: 'Insurance and Medicaid' },
+  'Evaluations & DWI': { topic: 'substance abuse evaluations', href: '/evaluations/', label: 'Evaluations' },
 };
 
 export const serviceFor = (post) => {

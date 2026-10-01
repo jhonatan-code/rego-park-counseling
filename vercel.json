@@ -1234,6 +1234,36 @@
       "source": "/category/:path*/",
       "destination": "/blog/",
       "statusCode": 301
+    },
+    {
+      "source": "/rego",
+      "destination": "/programs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/rego/",
+      "destination": "/programs/",
+      "statusCode": 301
+    },
+    {
+      "source": "/withdrawal-symptoms",
+      "destination": "/substance-use/",
+      "statusCode": 301
+    },
+    {
+      "source": "/withdrawal-symptoms/",
+      "destination": "/substance-use/",
+      "statusCode": 301
+    },
+    {
+      "source": "/national-mental-health-and-substance-use-statistics",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/national-mental-health-and-substance-use-statistics/",
+      "destination": "/blog/",
+      "statusCode": 301
     }
   ],
   "rewrites": [
@@ -1760,6 +1790,23 @@
     {
       "source": "/couples-therapy-individual-session/",
       "destination": "/api/gone/"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "missing": [
+        {
+          "type": "host",
+          "value": "www.regoparkcounseling.com"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ]
 }

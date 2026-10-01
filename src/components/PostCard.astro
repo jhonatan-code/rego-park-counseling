@@ -29,10 +29,17 @@ const href = postUrl(post);
     <p class="pc-excerpt mt-3 line-clamp-3 text-base text-slate">{post.description}</p>
     <div class="mt-auto pt-5">
       <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-t border-line pt-4">
-        <a href={author.href} class="inline-flex min-w-0 items-center gap-2.5 text-base font-bold text-ink hover:text-harbor">
-          <Avatar person={author} class="size-9" text="text-xs" />
-          <span class="truncate">{author.name}</span>
-        </a>
+        {author.href ? (
+          <a href={author.href} class="inline-flex min-w-0 items-center gap-2.5 text-base font-bold text-ink hover:text-harbor">
+            <Avatar person={author} class="size-9" text="text-xs" />
+            <span class="truncate">{author.name}</span>
+          </a>
+        ) : (
+          <span class="inline-flex min-w-0 items-center gap-2.5 text-base font-bold text-ink">
+            <Avatar person={author} class="size-9" text="text-xs" />
+            <span class="truncate">{author.name}</span>
+          </span>
+        )}
         <a href={href} class="inline-flex flex-none items-center gap-1 font-display text-base font-bold text-harbor hover:underline" aria-label={`Read more: ${post.title}`}>Read more <Icon name="arrow-right" size={16} /></a>
       </div>
     </div>

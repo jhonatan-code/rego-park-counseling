@@ -13,7 +13,8 @@
     "astro": "astro",
     "images": "node scripts/images.mjs",
     "prebuild": "node scripts/lint-posts.mjs",
-    "lint:posts": "node scripts/lint-posts.mjs"
+    "lint:posts": "node scripts/lint-posts.mjs",
+    "test:noindex": "node scripts/test-noindex.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

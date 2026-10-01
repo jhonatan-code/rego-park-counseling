@@ -214,9 +214,9 @@ const help = page.help;
   {page.families && (
     <section class="bg-white pb-16 lg:pb-24" aria-labelledby="families-title">
       <div class="container-x">
-        <div class="grid overflow-hidden rounded-[var(--radius-panel)] bg-sand lg:grid-cols-[1fr_1.4fr]">
-          <img src="/images/home/community-support-table.webp" alt="Family of several generations talking around a table" width="800" height="560" loading="lazy" class="h-full min-h-[220px] w-full object-cover" />
-          <div class="p-6 lg:p-10">
+        <div class="flex flex-col gap-6 overflow-hidden rounded-[var(--radius-panel)] bg-sand p-6 sm:flex-row sm:items-start lg:p-10">
+          <span class="icon-dot size-16 flex-none bg-white"><Icon name="family" size={32} /></span>
+          <div>
             <h2 id="families-title">{page.families.h2}</h2>
             <p class="lead mt-3">{page.families.text}</p>
             <div class="mt-6 flex flex-wrap gap-3">

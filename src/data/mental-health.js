@@ -373,7 +373,7 @@ export const HUB = {
   therapies: [
     { href: '/therapies/individual-therapy/', label: 'Individual Therapy', text: 'One-on-one sessions with your counselor.', image: '/images/home/counselor-talking-with-adult-client.webp', alt: 'Counselor listening to an adult client in a bright room' },
     { href: '/therapies/group-therapy/', label: 'Group Therapy', text: 'Learn and heal alongside people who understand.', image: '/images/home/group-therapy-circle.webp', alt: 'Adults sitting in a circle during a group counseling session' },
-    { href: '/therapies/family-therapy/', label: 'Family Therapy', text: 'Bring the people who matter into your care.', image: '/images/home/community-support-table.webp', alt: 'Family of several generations talking around a table' },
+    { href: '/therapies/family-therapy/', label: 'Family Therapy', text: 'Bring the people who matter into your care.', icon: 'family' },
   ],
   why: [
     { icon: 'licensed', text: 'Licensed by New York State (OMH and OASAS), so we can treat mental health and substance use together' },

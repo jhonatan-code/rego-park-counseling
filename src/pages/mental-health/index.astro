@@ -123,7 +123,8 @@ const schema = [
       <ul class="mt-10 grid gap-6 md:grid-cols-3">
         {HUB.therapies.map((t) => (
           <li class="card-focus group relative overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white">
-            <img src={t.image} alt={t.alt} width="800" height="560" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+            {/* No photo → icon tile (no stock stand-ins: DECISIONS-2026-10-01 extras) */}
+            {t.image ? <img src={t.image} alt={t.alt} width="800" height="560" loading="lazy" class="aspect-[16/10] w-full object-cover" /> : <div class="flex aspect-[16/10] w-full items-center justify-center bg-sky-wash" aria-hidden="true"><span class="icon-dot size-20 bg-white"><Icon name={t.icon ?? 'family'} size={40} /></span></div>}
             <div class="p-6">
               <h3 class="text-xl"><a href={t.href} class="stretched-link">{t.label}</a></h3>
               <p class="mt-2 text-slate">{t.text}</p>
@@ -139,7 +140,7 @@ const schema = [
   <LocationCards
     title="Mental Health Counseling in Rego Park and Fresh Meadows"
     telehealth="Telehealth sessions are available for many services."
-    fmLabel="Now welcoming new mental health patients [confirm]"
+    fmLabel="Call to check availability"
   />
 
   {/* Insurance */}

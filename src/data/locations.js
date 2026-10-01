@@ -68,7 +68,7 @@ export const CLINIC_PAGES = {
     title: 'Mental Health Clinic in Fresh Meadows & Flushing | Rego Park Counseling',
     description: 'Licensed outpatient mental health counseling at 71-82 Parsons Blvd, Fresh Meadows, NY 11365, near Flushing. Anxiety, depression, trauma and more. Most Medicaid plans.',
     h1: 'Mental Health Clinic in Fresh Meadows, Queens',
-    sub: 'Licensed counseling for anxiety, depression, trauma and more, close to home for Fresh Meadows and Flushing. Now welcoming new patients [confirm].',
+    sub: 'Licensed counseling for anxiety, depression, trauma and more, close to home for Fresh Meadows and Flushing. Call to check availability.',
     photos: [
       { label: 'Building front' },
       { label: 'Entrance' },
@@ -113,7 +113,7 @@ export const CLINIC_PAGES = {
     faqH2: 'Fresh Meadows Clinic FAQs',
     faqs: [
       { q: 'Is this clinic close to Flushing?', a: 'Yes. It is in Fresh Meadows, a short bus ride from downtown Flushing [confirm the line].' },
-      { q: 'Can I start mental health counseling here right away?', a: 'We are welcoming new patients. Call us and we’ll find the first available appointment [confirm typical wait].' },
+      { q: 'Can I start mental health counseling here right away?', a: 'Call to check availability. We’ll find the first available appointment [confirm typical wait].' },
       { q: 'Do you treat older adults?', a: 'Yes. We counsel older adults for depression, anxiety, grief and substance use.', link: { href: '/who-we-serve/older-adults/', label: 'Older Adults' } },
       { q: 'Do you accept Medicaid here?', a: 'Yes, we accept most Medicaid plans.' },
       { q: 'Can I do some sessions by telehealth?', a: 'Yes, telehealth is available for many patients.' },
@@ -139,5 +139,5 @@ export const YONKERS = {
     { label: 'Telehealth', href: '/programs/telehealth/', icon: 'telehealth', text: 'Counseling from home, by video.' },
   ],
   beforeH2: 'Need Help Before We Open?',
-  beforeText: 'You do not have to wait. Many of our services are available now by telehealth, and our Queens clinics in Rego Park and Fresh Meadows are welcoming new patients.',
+  beforeText: 'You do not have to wait. Many of our services are available now by telehealth, and our Queens clinics are open in Rego Park and Fresh Meadows. Call to check availability.',
 };

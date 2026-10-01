@@ -14,6 +14,15 @@ const hits = new Map<string, number[]>();
 const json = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 const str = (v: FormDataEntryValue | null, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
+// Logs never carry what the visitor typed (phi-data-handling §4; DECISIONS-2026-10-01 extras): only our own fixed labels,
+// CTM's HTTP status and its error text with anything that could echo a field (digit runs → phone, emails, URLs/keys)
+// blanked. The submitted FormData itself is never logged anywhere.
+const redact = (t: string, secrets: string[] = []) =>
+  secrets.filter((x) => x && x.length > 1).reduce((acc, x) => acc.split(x).join('[redacted]'), t)
+    .replace(/https?:\/\/\S+/g, '[url]')
+    .replace(/\S+@\S+/g, '[email]')
+    .replace(/\+?\d[\d\s().-]{3,}\d/g, '[number]')
+    .slice(0, 160);
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || clientAddress || 'unknown';
@@ -87,11 +96,11 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     } catch {}
     if (!res.ok || status === 'error') {
       // Status and CTM's error text only, never the raw body or submitted fields (phi-data-handling §4)
-      console.error('[lead] CTM rejected lead', res.status, reason || 'no error text');
+      console.error('[lead] CTM rejected lead', res.status, redact(reason, [name, e164, digits]) || 'no error text');
       return json(502, { ok: false, error: 'We couldn’t send your request.' });
     }
   } catch (err) {
-    console.error('[lead] CTM request failed', (err as Error).message);
+    console.error('[lead] CTM request failed', (err as Error).name, redact(String((err as Error).message ?? ''), [key, name, e164, digits]));
     return json(502, { ok: false, error: 'We couldn’t send your request.' });
   }
   return json(200, { ok: true });
