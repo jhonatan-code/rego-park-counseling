@@ -19,7 +19,7 @@ Build rules whose source is not a 301 row of the map (variants without slash, de
 |---|---|---|---|---|---|
 | 301 | `/rego/` | 301→200 | `/programs/` | DECISIONS 7.4: 301 → /programs/ (map: /programs/core/) | 0 / 1096 |
 | 301 | `/addiction-treatments-for-couples/` | 301→200 | `/therapies/family-therapy/` | PENDING 2.9: → /therapies/family-therapy/ until couples therapy is confirmed | 0 / 188 |
-| KEEP | `/national-mental-health-and-substance-use-statistics/` | 301→200 | `/blog/` | DECISIONS 7.5: KEEP → 301 /blog/ | 4 / 524 |
+| KEEP | `/national-mental-health-and-substance-use-statistics/` | 301→200 | `/addiction-and-mental-health-how-they-are-connected/` | DECISIONS 7.5 (revised): KEEP → 301 /addiction-and-mental-health-how-they-are-connected/ | 4 / 524 |
 | KEEP | `/withdrawal-symptoms/` | 301→200 | `/substance-use/` | DECISIONS 7.5: KEEP → 301 /substance-use/ (0 clicks) | 0 / 197 |
 
 ## Failing rows (2), most clicks first
