@@ -1,13 +1,13 @@
 ---
 // Header (Header & Home Page Brief, "Header and navigation"; brand manual 10 "Header · desktop").
-// Utility bar (desktop only: licensing, About · Our Team · Blog · Contact, clinics) → main bar: logo left · 6 items
-// center (DECISIONS-2026-10-01 §7.8) · ONE button right: the magenta call button
+// Utility bar (desktop only: licensing + Medicaid + telehealth, clinics) → main bar: logo left · 7 items center
+// (DECISIONS-2026-10-01 §7.8 revised; About last, as a dropdown) · ONE button right: the magenta call button
 // (user, 2026-09-30: a second header button is unnecessary).
 // Every commercial page is one hover away: each item opens a mega panel (hover or keyboard focus on desktop).
-// Mobile: logo left, phone icon + hamburger right; full-screen menu with the 6 items as accordions + the utility links.
+// Mobile: logo left, phone icon + hamburger right; full-screen menu with the 7 items as accordions.
 import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
-import { SITE, NAV, CLINICS, UTILITY, live } from '../data/site.js';
+import { SITE, NAV, CLINICS, live } from '../data/site.js';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => href !== '/' && path.startsWith(href);
@@ -21,23 +21,17 @@ const itemActive = (item: any) =>
 const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(item) ? 'true' : undefined);
 ---
 <div class="hidden bg-harbor text-white lg:block">
-  <div class="container-header flex h-12 items-center justify-end gap-6 whitespace-nowrap text-base xl:justify-between">
-    {/* 6-item menu (DECISIONS-2026-10-01 §7.8) moved About · Our Team · Blog · Contact here, so the bar keeps only the
-        licensing line (xl+; "Most Medicaid plans accepted · Telehealth available" stay in the mobile menu and on the pages) */}
-    <p class="hidden items-center gap-2 whitespace-nowrap text-white/95 xl:flex">
+  <div class="container-header flex h-12 items-center justify-between gap-6 whitespace-nowrap text-base">
+    {/* Trust line + clinics only (DECISIONS-2026-10-01 §7.8 revised). "Most Medicaid plans accepted · Telehealth
+        available" from 1280px; hidden only between 1024 and 1279px, where it doesn't fit next to the clinics. */}
+    <p class="flex items-center gap-2 text-white/95">
       <Icon name="licensed" size={18} class="text-sky" />
       <span>{SITE.licensing}</span>
+      <span aria-hidden="true" class="hidden text-white/40 xl:inline">·</span>
+      <span class="hidden xl:inline">Most Medicaid plans accepted</span>
+      <span aria-hidden="true" class="hidden text-white/40 xl:inline">·</span>
+      <span class="hidden xl:inline">Telehealth available</span>
     </p>
-    <div class="flex items-center gap-x-5">
-    <nav aria-label="About us" class="flex items-center gap-x-2">
-      {UTILITY.map((l, i) => (
-        <>
-          {i > 0 && <span aria-hidden="true" class="text-white/40">·</span>}
-          <a href={l.href} class="tap-target text-white/95 underline-offset-4 hover:underline" aria-current={path === l.href ? 'page' : undefined}><span>{l.label}</span></a>
-        </>
-      ))}
-    </nav>
-    <span aria-hidden="true" class="h-5 w-px bg-white/30"></span>
     <nav aria-label="Our clinics" class="flex items-center gap-x-2">
       <Icon name="pin" size={18} class="text-sky" />
       {CLINICS.map((c, i) => (
@@ -49,7 +43,6 @@ const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(ite
         </>
       ))}
     </nav>
-    </div>
   </div>
 </div>
 
@@ -94,7 +87,7 @@ const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(ite
                         <p class="eyebrow relative">{item.label}</p>
                         <p class="relative mt-3 font-display text-[22px] font-extrabold leading-tight text-harbor">{item.intro}</p>
                         <a href={item.href} class="text-link relative mt-5 inline-flex items-center gap-1.5 text-base">
-                          {item.locations ? 'See all locations' : item.columns ? 'See all programs' : `Explore ${item.label.toLowerCase()}`}
+                          {item.cta ?? (item.locations ? 'See all locations' : item.columns ? 'See all programs' : `Explore ${item.label.toLowerCase()}`)}
                           <Icon name="arrow-right" size={18} />
                         </a>
                         <p class="relative mt-6 border-t border-sky pt-4 text-base text-slate">
@@ -182,7 +175,7 @@ const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(ite
   </div>
 </header>
 
-{/* Mobile full-screen menu: the 6 items as accordions (details/summary keeps it working without JS) + utility links */}
+{/* Mobile full-screen menu: the 7 items as accordions (details/summary keeps it working without JS) */}
 <div id="mobile-menu" class="fixed inset-0 z-[60] hidden flex-col bg-white xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
   <div class="flex h-[72px] flex-none items-center justify-between border-b border-line px-5">
     <a href="/" aria-label="Rego Park Counseling, home"><img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" class="h-auto w-[170px]" /></a>
@@ -210,7 +203,7 @@ const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(ite
                 </summary>
                 <div class="pb-4">
                   <a href={item.href} class="mb-2 flex min-h-12 items-center gap-1.5 rounded-[var(--radius-card)] bg-sky-wash px-4 font-bold text-harbor">
-                    {item.locations ? 'All locations' : `${item.label} overview`} <Icon name="arrow-right" size={18} />
+                    {item.locations ? 'All locations' : (item.links ?? []).find((l: any) => l.href === item.href)?.label ?? `${item.label} overview`} <Icon name="arrow-right" size={18} />
                   </a>
                   {groups.map((g) => (
                     <div class="mt-2">
@@ -230,11 +223,6 @@ const currentAttr = (item: any) => (path === item.href ? 'page' : itemActive(ite
           </li>
         );
       })}
-    </ul>
-    <ul class="mt-4 grid grid-cols-2 gap-x-4 border-t border-line pt-4" aria-label="About us">
-      {UTILITY.map((l) => (
-        <li><a href={l.href} class="flex min-h-12 items-center text-lg font-bold text-harbor" aria-current={path === l.href ? 'page' : undefined}>{l.label}</a></li>
-      ))}
     </ul>
     <div class="mt-6 rounded-[var(--radius-panel)] bg-sky-wash p-5 text-base">
       <p class="font-bold text-harbor">{SITE.licensing}</p>

@@ -90,7 +90,7 @@ Approved by Jhonatan on 2026-10-01. Details, launch steps and how to use the byp
 | 7.5 | /12-step-program/ post; /withdrawal-symptoms/ → /substance-use/; /national-…-statistics/ → /blog/ |
 | 7.6 | 4 added redirects confirmed |
 | 7.7 | Byline links only to a real person's /our-team/{slug}/ |
-| 7.8 | 6-item menu; About · Our Team · Blog · Contact in utility bar, mobile menu, footer |
+| 7.8 | **Revised:** 7-item menu, About last as a dropdown (About Us, Our Team, Blog, Contact); Contact not a menu item (footer + call button); utility bar back to trust line + clinics, "Most Medicaid plans accepted · Telehealth available" from 1280px |
 | 7.9 | /evaluations/ → "drug and alcohol evaluations queens" |
 | 7.12 | No change |
 | Extras | "Call to check availability"; one callback line; AI image removed; lock + private line with Privacy · HIPAA links; lead logs redacted; redirect crawl (410 bug found and fixed) — `docs/REDIRECT-CRAWL.md` |

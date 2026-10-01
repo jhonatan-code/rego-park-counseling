@@ -77,8 +77,9 @@ export const CLINICS = [
   },
 ];
 
-// Header navigation (brief, "Menu items and the pages under each"). Six items since 2026-10-01 (DECISIONS §7.8):
-// Mental Health · Substance Use · Evaluations · Programs · Locations · Insurance. Items marked `pending` stay out until confirmed.
+// Header navigation (brief, "Menu items and the pages under each"). Seven items (DECISIONS-2026-10-01 §7.8, revised):
+// Mental Health · Substance Use · Evaluations · Programs · Locations · Insurance · About (last, dropdown: About Us, Our
+// Team, Blog, Contact). Contact is not its own menu item (footer + the call button). Items marked `pending` stay out.
 // `desc` = one-line helper shown in the mega panels (plain language, brand voice).
 export const NAV = [
   {
@@ -152,16 +153,20 @@ export const NAV = [
   },
   { label: 'Locations', href: '/locations/', intro: 'Three clinics, one team, one number.', locations: true },
   { label: 'Insurance', href: '/insurance/' },
+  {
+    label: 'About',
+    href: '/about/',
+    intro: 'A neighborhood clinic for Queens.',
+    cta: 'More about us', // mega panel intro link (default "Explore {label}")
+    links: [
+      { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
+      { label: 'Our Team', href: '/our-team/', desc: 'Meet our licensed counselors' },
+      { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
+      { label: 'Contact', href: '/contact/', desc: 'Call, visit or request a callback' },
+    ],
+  },
 ];
 
-// About, Our Team, Blog and Contact live in the utility bar (desktop), the mobile menu's secondary list and the footer,
-// not in the main menu (DECISIONS-2026-10-01 §7.8: 6-item menu; the call button covers contact).
-export const UTILITY = [
-  { label: 'About Us', href: '/about/' },
-  { label: 'Our Team', href: '/our-team/' },
-  { label: 'Blog', href: '/blog/' },
-  { label: 'Contact Us', href: '/contact/' },
-];
 
 // Drop items that are still waiting for client confirmation.
 export const live = (links = []) => links.filter((l) => !l.pending);

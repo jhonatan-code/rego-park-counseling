@@ -25,6 +25,14 @@ for r in list(ws.iter_rows(values_only=True))[1:]:
 print(json.dumps(out))
 `], { encoding: 'utf8' }));
 
+// Rows where the site intentionally differs from map v2 (approved decisions). Reported apart from real failures.
+const INTENDED = {
+  '/rego/': 'DECISIONS 7.4: 301 → /programs/ (map: /programs/core/)',
+  '/withdrawal-symptoms/': 'DECISIONS 7.5: KEEP → 301 /substance-use/ (0 clicks)',
+  '/national-mental-health-and-substance-use-statistics/': 'DECISIONS 7.5: KEEP → 301 /blog/',
+  '/addiction-treatments-for-couples/': 'PENDING 2.9: → /therapies/family-therapy/ until couples therapy is confirmed',
+};
+
 const norm = (p) => (p ? decodeURI(new URL(p, BASE).pathname).replace(/\/?$/, '/') : p);
 async function walk(path) {
   const hops = [];
@@ -64,7 +72,8 @@ await Promise.all(Array.from({ length: 8 }, async () => {
       ok = last.status === 404 || last.status === 410;
       if (!ok) note = `got ${last.status} at ${last.url}`;
     } else { ok = false; note = `unknown action ${r.action}`; }
-    results.push({ ...r, ok, note, chain: hops.map((h) => h.status).join('→') });
+    const intended = !ok && INTENDED[norm(r.path)];
+    results.push({ ...r, ok, intended, note, chain: hops.map((h) => h.status).join('→'), final: last.url });
   }
 }));
 
@@ -73,7 +82,8 @@ const vj = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
 const goneRewrites = (vj.rewrites ?? []).filter((r) => /\/api\/gone/.test(r.destination)).length;
 const mapCount = (a) => rows.filter((r) => r.action === a).length;
 const by = (a) => results.filter((r) => r.action === a);
-const fails = results.filter((r) => !r.ok).sort((a, b) => b.clicks - a.clicks || b.impr - a.impr);
+const deviations = results.filter((r) => r.intended);
+const fails = results.filter((r) => !r.ok && !r.intended).sort((a, b) => b.clicks - a.clicks || b.impr - a.impr);
 const multi = results.filter((r) => r.ok && /hops/.test(r.note));
 const mapSources = new Set(rows.filter((r) => r.action === '301').map((r) => norm(r.path)));
 const extraInBuild = vj.redirects.filter((r) => !mapSources.has(norm(r.source.replace(/:.*$/, ''))) && !r.source.includes(':'));
@@ -86,12 +96,18 @@ const lines = [
   '',
   '| | Map v2 | Build (vercel.json) | Crawl OK | Crawl failing |',
   '|---|---|---|---|---|',
-  `| 301 | ${mapCount('301')} | ${vj.redirects.length} redirect rules | ${by('301').filter((r) => r.ok).length} | ${by('301').filter((r) => !r.ok).length} |`,
+  `| 301 | ${mapCount('301')} | ${vj.redirects.length} redirect rules | ${by('301').filter((r) => r.ok).length} | ${by('301').filter((r) => !r.ok && !r.intended).length} (+${by('301').filter((r) => r.intended).length} intended) |`,
   `| 410 | ${mapCount('410')} | ${goneRewrites} rewrites to /api/gone/ | ${by('410').filter((r) => r.ok).length} | ${by('410').filter((r) => !r.ok).length} |`,
-  `| KEEP | ${mapCount('KEEP')} | — | ${by('KEEP').filter((r) => r.ok).length} | ${by('KEEP').filter((r) => !r.ok).length} |`,
+  `| KEEP | ${mapCount('KEEP')} | — | ${by('KEEP').filter((r) => r.ok).length} | ${by('KEEP').filter((r) => !r.ok && !r.intended).length} (+${by('KEEP').filter((r) => r.intended).length} intended) |`,
   `| 404 | ${mapCount('404')} | — | ${by('404').filter((r) => r.ok).length} | ${by('404').filter((r) => !r.ok).length} |`,
   '',
   `Build rules whose source is not a 301 row of the map (variants without slash, decisions of 2026-10-01, legacy links): ${extraInBuild.length}.`,
+  '',
+  `## Intended differences from map v2 (${deviations.length}): approved decisions, not bugs`,
+  '',
+  '| Action in map | Old path | Live chain | Ends at | Why | Clicks / impr. |',
+  '|---|---|---|---|---|---|',
+  ...deviations.map((r) => `| ${r.action} | \`${r.path}\` | ${r.chain} | \`${r.final}\` | ${r.intended} | ${r.clicks} / ${r.impr} |`),
   '',
   `## Failing rows (${fails.length}), most clicks first`,
   '',
@@ -106,4 +122,4 @@ const lines = [
 ];
 fs.writeFileSync('docs/REDIRECT-CRAWL.md', lines.join('\n'));
 console.log(lines.slice(0, 14).join('\n'));
-console.log(`\nFailing: ${fails.length} · multi-hop 301s: ${multi.length} · report: docs/REDIRECT-CRAWL.md`);
+console.log(`\nIntended: ${deviations.length} · Failing: ${fails.length} · multi-hop 301s: ${multi.length} · report: docs/REDIRECT-CRAWL.md`);
