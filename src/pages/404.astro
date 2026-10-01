@@ -1,10 +1,14 @@
 ---
 // 404 (Remaining Pages brief; "not-found.tsx" there = this page in Astro). Vercel serves it with HTTP 404 for any
-// unknown path. Gone URLs (Redirect Map 410 rows) never reach it: vercel.json rewrites them to /api/gone/ and the
-// middleware backstops them with a 410.
+// unknown path. Gone URLs (Redirect Map 410 rows) never reach it: the middleware answers them with a 410.
 // Tracking: dataLayer page_not_found with the requested path (no query string), so broken links found after launch
 // can go into the redirect map.
 import Base from '../layouts/Base.astro';
+// Rendered on demand (not prerendered) so every unknown path runs src/middleware.ts first: a path in the Redirect Map's
+// 410 list gets the 410, anything else this page with a 404. When this page was static, Astro's catch-all route sent
+// unknown paths straight to /404.html before the vercel.json rewrites to /api/gone/ could run, so all 133 gone URLs
+// answered 404 (found by the redirect-map crawl, 2026-10-01).
+export const prerender = false;
 import Icon from '../components/Icon.astro';
 import NearbyRing from '../components/NearbyRing.astro';
 import { SITE } from '../data/site.js';

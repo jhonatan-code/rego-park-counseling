@@ -851,11 +851,6 @@
       "statusCode": 301
     },
     {
-      "source": "/https\\://www.regoparkcounseling.com/how-can-fidgets-and-music-reduce-anxiety/",
-      "destination": "/how-can-fidgets-and-music-reduce-anxiety/",
-      "statusCode": 301
-    },
-    {
       "source": "/is-a-neurological-disorder-exploring-the-connection/",
       "destination": "/is-anxiety-a-neurological-disorder-exploring-the-connection/",
       "statusCode": 301
@@ -1091,11 +1086,6 @@
       "statusCode": 301
     },
     {
-      "source": "/v/https\\://www.regoparkcounseling.com/what-is-unspecified-anxiety-disorder-counseling-rego-park/",
-      "destination": "/unspecified-anxiety-disorder/",
-      "statusCode": 301
-    },
-    {
       "source": "/what-are-the-17-symbols-of-complex-ptsd/",
       "destination": "/what-are-the-17-symptoms-of-complex-ptsd/",
       "statusCode": 301
@@ -1263,6 +1253,16 @@
     {
       "source": "/national-mental-health-and-substance-use-statistics/",
       "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-unspecified-anxiety-disorder-counseling-rego-park",
+      "destination": "/unspecified-anxiety-disorder/",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-unspecified-anxiety-disorder-counseling-rego-park/",
+      "destination": "/unspecified-anxiety-disorder/",
       "statusCode": 301
     }
   ],

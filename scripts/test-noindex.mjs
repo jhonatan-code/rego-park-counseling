@@ -33,6 +33,8 @@ if (urls.length) {
     const res = await fetch(u, { redirect: 'manual', headers: secret ? { 'x-vercel-protection-bypass': secret } : {} });
     const tag = res.headers.get('x-robots-tag') || '';
     const host = new URL(u).host;
+    // A redirect isn't indexed and Vercel sends redirects before custom headers; its target is what gets checked.
+    if (res.status >= 300 && res.status < 400) { console.log(`- live ${u} (${res.status} → ${res.headers.get('location')}) redirect, not checked`); continue; }
     if (host === PROD) ok(!/noindex/i.test(tag), `live ${u} (${res.status}) has no noindex header`);
     else ok(/noindex/i.test(tag), `live ${u} (${res.status}) has X-Robots-Tag "${tag}"`);
   }
