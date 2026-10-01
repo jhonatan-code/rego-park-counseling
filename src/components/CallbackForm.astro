@@ -9,7 +9,8 @@
 // callback_submit retired). On CTM acceptance the form redirects to /thank-you/?sent=1&clinic=&topic= and leaves a
 // one-time sessionStorage marker; /thank-you/ pushes lead_accepted only when ?sent=1 AND the marker are both there, then
 // clears both, so a reload or a direct visit never counts. `inline` (Yonkers waitlist) confirms in the card and pushes
-// lead_accepted here (form_location "yonkers-waitlist"); if storage is blocked the form pushes it before redirecting.
+// waitlist_signup instead (form_location "yonkers-waitlist"; not a conversion). If storage is blocked the form pushes
+// lead_accepted before redirecting.
 // A failed CTM call is never shown as success.
 // SMS consent (privacy-consent §4, Sunview pattern): its own unticked box, hidden until the visitor starts filling the
 // form; names the sender, message type, frequency, rates, STOP/HELP and links privacy + terms. Declining never blocks
@@ -156,8 +157,12 @@ const field =
       el.addEventListener('input', () => { el.removeAttribute('aria-invalid'); if (!form.querySelector('[aria-invalid=true]')) msg.hidden = true; }),
     );
 
+    // One click = one lead (forms-ctm §5 "no automatic retry"): a submission in flight blocks any other (double click,
+    // Enter key, a second tap) until the route answers; the button is also disabled while it waits.
+    let inFlight = false;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (inFlight) return;
       const name = form.elements.namedItem('name') as HTMLInputElement;
       const phone = form.elements.namedItem('phone') as HTMLInputElement;
       const digits = phone.value.replace(/\D/g, '');
@@ -187,17 +192,20 @@ const field =
       const sid = String((window as any).__ctm?.config?.sid || (cookieSid ? decodeURIComponent(cookieSid) : ''));
       if (/^[A-Za-z0-9_-]{1,120}$/.test(sid)) fd.set('visitor_sid', sid);
 
+      inFlight = true;
       btn.disabled = true;
       label.textContent = 'Sending…';
       let redirecting = false;
       try {
-        const res = await fetch('/api/lead/', { method: 'POST', body: fd });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.ok) throw new Error(data.error || 'We couldn’t send your request.');
+        // A dropped connection throws a browser message ("Failed to fetch"): show ours instead, always with the phone.
+        const res = await fetch('/api/lead/', { method: 'POST', body: fd }).catch(() => null);
+        const data = res ? await res.json().catch(() => ({})) : {};
+        if (!res || !res.ok || !data.ok) throw new Error(data.error || 'We couldn’t send your request.');
         const w = window as any;
         const push = () => (w.dataLayer = w.dataLayer || []).push({ event: 'lead_accepted', form_location: form.dataset.location });
         if (form.dataset.inline) {
-          push();
+          // Yonkers waitlist: its own event, NOT a conversion (PENDING 5.16)
+          (w.dataLayer = w.dataLayer || []).push({ event: 'waitlist_signup', form_location: form.dataset.location });
           form.reset();
           return show('Thank you. We’ll call you back as soon as possible.', true);
         }
@@ -221,6 +229,7 @@ const field =
         show(`${(err as Error).message} Please call us at ${form.dataset.phone}.`);
       } finally {
         if (!redirecting) {
+          inFlight = false;
           btn.disabled = false;
           label.textContent = form.dataset.button || 'Request a Callback';
         }
