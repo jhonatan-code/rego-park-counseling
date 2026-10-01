@@ -14,11 +14,12 @@ interface Props {
   description: string;
   image?: string;
   noindex?: boolean;
+  nofollow?: boolean; // with noindex: thank-you page (brief: noindex, nofollow)
   breadcrumbs?: Crumb[];
   schema?: Record<string, unknown>[]; // page nodes (no @context), merged into one @graph
   preloadImage?: string;
 }
-const { title, description, image = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp', noindex = false, breadcrumbs = [], schema = [], preloadImage } = Astro.props;
+const { title, description, image = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp', noindex = false, nofollow = false, breadcrumbs = [], schema = [], preloadImage } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const ogImage = new URL(image, SITE.url).href;
@@ -60,7 +61,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <meta name="robots" content={noindex ? (nofollow ? 'noindex, nofollow' : 'noindex, follow') : 'index, follow, max-image-preview:large'} />
     <meta name="theme-color" content="#0a5577" />
     {/* Favicons from the high-res emblem (scripts/favicons.mjs): ≤48px without the ribbon text, 180px+ full emblem */}
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />

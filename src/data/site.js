@@ -171,7 +171,7 @@ export const live = (links = []) => links.filter((l) => !l.pending);
 export const LEGAL = [
   { label: 'Privacy Policy', href: '/privacy-policy/' },
   { label: 'HIPAA Notice', href: '/hipaa-notice/' },
-  { label: 'Telehealth Privacy', href: '/telehealth-privacy/' },
+  { label: 'Telehealth & Text Terms', href: '/telehealth-privacy/' },
   { label: 'Accessibility', href: '/accessibility/' },
 ];
 

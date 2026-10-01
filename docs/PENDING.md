@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-09-30 (after Blog, Post and Person templates).
+Last update: 2026-10-01 (after the Remaining Pages brief: Privacy Policy, HIPAA Notice, Telehealth & Text Terms, Accessibility, Thank-you, 404).
 
 **Audit against the elev8 Website System (2026-09-30): see `docs/AUDIT-2026-09-30.md`** — blockers, client asks and content items found there are not all copied below yet.
 
@@ -147,19 +147,37 @@ Last update: 2026-09-30 (after Blog, Post and Person templates).
 |---|---|---|---|---|
 | 5.1 | Create the RPC FormReactor; map custom fields | ◐ 2026-09-30: reactor received (custom fields `membership_policy_id`, `insurance_carrier`); credentials in local `.env` (gitignored), to add as Vercel env vars. GTM-T3S8L3WL and target number (718) 459-2558 confirmed = what the site uses. Pending: one live test lead | Jh / O | ◐ · 2026-09-30: Oriana to add select fields `preferred_clinic` (Rego Park / Fresh Meadows / Telehealth / Yonkers / Not sure) and `help_with` (Mental health / Substance use / An evaluation / Not sure), values exactly as listed; make `membership_policy_id` / `insurance_carrier` optional or remove them |
 | 5.2 | Clinic no longer sent with the lead (field removed by the user) | Route by CTM tracking number per clinic instead | O | ☐ |
-| 5.3 | Redirect to /thank-you/ after submit to fire the conversion (Contact brief) | Inline confirmation today. Recommended | Jh (decision: user) | ☐ |
+| 5.3 | Redirect to /thank-you/ after submit to fire the conversion (Contact brief) | ☑ 2026-10-01 (Remaining Pages brief): every callback form redirects to /thank-you/?clinic=&topic= after CTM accepts; that page pushes `callback_submit` (with `form_location`) once per submission via a sessionStorage marker (reloads/direct visits don't count). Yonkers waitlist keeps the inline confirmation. GTM trigger must listen on `callback_submit` (unchanged name) | Jh | ☑ |
 | 5.4 | CTM Marketing Pro purchase; DNI number pools per clinic | Phones are live text ready for DNI | J | ☐ |
 | 5.5 | Owner of services.regoparkcounseling.com | Unknown | J | ☐ |
 | 5.6 | What is /rego/ (1.1k impressions) before it redirects to /programs/core/ | ◐ Checked 2026-09-30: it's a general landing ("A Safe Space for Healing…", mission, values) that presents BOTH CORE and the Social Care Network, not a CORE page. **Recommendation: 301 to /programs/ (hub) instead of /programs/core/.** Not added to vercel.json until the user decides | Jh (user decides) | ◐ |
 | 5.8 | One CTM tracking number per clinic, and which number goes in the MedicalClinic schema | Schema uses the main number | O | ☐ |
 | 5.7 | Map tiles: OpenStreetMap (free, fine for this traffic) | Switch to a keyed provider only if traffic grows | Jh | ☐ FYI |
-| 5.9 | SMS consent: counsel approves the wording (draft `sms-v1-2026-09-30` in CallbackForm.astro: sender, message types, frequency, rates, STOP/HELP, links); Oriana adds custom fields `sms_opt_in` and `sms_consent_version` to the reactor so the consent is recorded | Box built (unticked, appears once the form is started, Sunview pattern) | counsel / O | ☐ |
+| 5.9 | SMS consent: counsel approves the wording (now `sms-v2-2026-10-01` = the brief's wording + "HELP for help" and "Not a condition of care" that privacy-consent §4 requires; links Telehealth & Text Terms + Privacy Policy. Oriana confirms it matches the carrier registration. Was `sms-v1-2026-09-30` in CallbackForm.astro: sender, message types, frequency, rates, STOP/HELP, links); Oriana adds custom fields `sms_opt_in` and `sms_consent_version` to the reactor so the consent is recorded | Box built (unticked, appears once the form is started, Sunview pattern) | counsel / O | ☐ |
 | 5.10 | Signed BAA between Rego Park Counseling and CTM (phi-data-handling §3) | No record | E / O | ☐ |
 | 5.11 | Review the GTM container: which tags fire, any ad pixel or automatic data collection; consent banner / privacy regime (privacy-consent §6) | Not reviewed | Jh + E decides | ☐ |
 | 5.12 | Call recording: are CTM calls recorded, and where is it disclosed? (privacy-consent §8) | Unknown | E / O | ☐ |
-| 5.13 | Legal pages text from counsel: Privacy Policy + Terms (map folds Terms into /privacy-policy/), HIPAA Notice of Privacy Practices, 42 CFR Part 2 notice, Section 1557 non-discrimination + language taglines, Telehealth Privacy, Accessibility. All are blank placeholders today | ☐ **Launch blocker** | E / counsel | ☐ |
+| 5.13 | Legal pages approved by RPC's attorney / compliance officer: Privacy Policy, HIPAA Notice of Privacy Practices (incl. 42 CFR Part 2 section, current to the 2024 rule / Feb 16 2026 compliance date), Telehealth & Text Messaging Terms. Still open: Section 1557 non-discrimination + language taglines (not in the brief) | ◐ 2026-10-01: built from the brief's drafts (`src/data/legal.js`), each shows a "Draft for review" note until `approved: true` is set with the approver + date. If RPC has an approved NPP, its exact text replaces the draft. **Launch blocker** | E / counsel | ◐ |
 | 5.14 | Social media accounts (navigation §6 asks for them in the footer) | None known | E / J | ☐ |
 | 5.15 | Data inventory for the privacy policy: `docs/DATA-INVENTORY.md` | Written 2026-09-30 | Jh → E | ◐ |
+
+## 5a. Legal and utility pages (Remaining Pages brief, 2026-10-01)
+
+| # | Question | Now | Where | Owner | Status |
+|---|---|---|---|---|---|
+| 5a.1 | Privacy Officer name, phone and email | "[Name], [phone], [email]" | HIPAA Notice → Complaints | E | ☐ |
+| 5a.2 | One email for privacy requests: management@ or admin@regoparkcounseling.com? (also the Telehealth Terms contact and the accessibility email) | "[privacy email]", "[email]", "[accessibility email]" | Privacy Policy, Telehealth & Text Terms, Accessibility | E | ☐ |
+| 5a.3 | Authority to report Part 2 violations to (current rule) | "[the authority named by counsel…]" | HIPAA Notice → Complaints | counsel | ☐ |
+| 5a.4 | Effective / last-updated dates for each legal page | "[date of launch]", "[ ]", "[date]" | all 4 pages | Jh at launch | ☐ |
+| 5a.5 | Telehealth platform name; are sessions recorded; is an account needed; New York State location rule | "[confirm]" brackets | Telehealth & Text Terms (see also 1.15) | E | ☐ |
+| 5a.6 | Which privacy/terms URLs are on the A2P 10DLC registration (old /privacy-policy-terms-and-conditions/ now 301s to /privacy-policy/; /telehealth-privacy/ kept) | Both old and new URLs show the SMS terms | Oriana | O | ☐ |
+| 5a.7 | Ad pixels in use? (Privacy Policy "How We Use Information" bracket; HHS tracking-tech guidance). Overlaps 5.11 | Bracket kept | Privacy Policy | O / ads | ☐ |
+| 5a.8 | Calls recorded? Overlaps 5.12 | Bracket kept | Privacy Policy | O | ☐ |
+| 5a.9 | Clinic accessibility (step-free entrance, elevator, accessible restroom, parking/transit) + accommodations offered (ASL interpreter, languages). Overlaps 1.12, 1.14 | "[Confirm…]" | Accessibility | E | ☐ |
+| 5a.10 | Callback timeframe + the number patients see when we call back | "[within one business day]" and "a number starting with [ ]". Note: the inline Yonkers confirmation still says "usually the same business day" (1.8) | Thank-you | E | ☐ |
+| 5a.11 | Real PDF of the NPP for the clinics | "Download PDF" = print / save as PDF of the page (cannot drift from the web text). Replace with a file only if counsel wants a signed PDF | HIPAA Notice | counsel | ☐ FYI |
+| 5a.12 | Accessibility check on every template before launch (brief build note) | 2026-10-01: axe (WCAG 2.0/2.1 A+AA) clean on the 6 new pages, desktop + HIPAA mobile. The other templates are not checked yet: the statement may only claim what they pass | Jh | ◐ |
+| 5a.13 | GA4: `page_not_found` (param `page_path`, no query string) pushed on the 404; needs a GTM tag + GA4 custom dimension. tracking.md is still BLOCKED (event taxonomy) | Pushed to dataLayer | Jh / O | ☐ |
 
 ## 6. Decisions made during the build (tell Julian / keep for the record)
 

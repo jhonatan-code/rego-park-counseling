@@ -5,12 +5,15 @@
 // Fields per the brand manual ("Four fields max. No email, no insurance ID, no health details. Posts to CTM with
 // source.") and the Home brief / About content: name*, phone*, preferred clinic, "I need help with". Client docs win
 // over the earlier Sunview field set (user, 2026-09-30). Yonkers presets the clinic (About content, Locations). Posts FormData to /api/lead/ (server-side CTM proxy) with source page,
-// form location, then pushes dataLayer {event:'callback_submit', form_location}.
+// form location. On acceptance it redirects to /thank-you/?clinic=&topic= (Remaining Pages brief), leaving a one-time
+// sessionStorage marker so that page pushes dataLayer {event:'callback_submit', form_location} exactly once. `inline`
+// (Yonkers waitlist) confirms in the card instead and pushes the event here.
 // A failed CTM call is never shown as success.
 // SMS consent (privacy-consent §4, Sunview pattern): its own unticked box, hidden until the visitor starts filling the
 // form; names the sender, message type, frequency, rates, STOP/HELP and links privacy + terms. Declining never blocks
 // the form. Sent to CTM as custom_fields[sms_opt_in] (yes/no) + the wording version, so the consent is recorded.
-// Wording is a draft until counsel approves it (PENDING 5.9). No "HIPAA compliant" claim (privacy-consent §5).
+// Wording from the Remaining Pages brief (+ HELP and "not a condition", privacy-consent §4); a draft until counsel and
+// Oriana approve it against the carrier registration (PENDING 5.9). No "HIPAA compliant" claim (privacy-consent §5).
 import { SITE } from '../data/site.js';
 
 interface Props {
@@ -19,14 +22,15 @@ interface Props {
   heading?: string;
   button?: string; // submit label (Yonkers waitlist: "Notify Me")
   clinic?: string; // preset preferred clinic (Yonkers waitlist)
+  inline?: boolean; // confirm in the card, no /thank-you/ redirect
 }
-const { formId, location, heading = 'Request a Callback', button = 'Request a Callback', clinic = '' } = Astro.props;
+const { formId, location, heading = 'Request a Callback', button = 'Request a Callback', clinic = '', inline = false } = Astro.props;
 // Option values must match the CTM reactor's select lists character for character (forms-ctm §4).
 const CLINICS = ['Rego Park', 'Fresh Meadows', 'Telehealth', 'Not sure', ...(clinic && !['Rego Park', 'Fresh Meadows', 'Telehealth'].includes(clinic) ? [clinic] : [])];
 const HELP = ['Mental health', 'Substance use', 'An evaluation', 'Not sure'];
 const select = 'h-12 w-full min-w-0 appearance-none rounded-[var(--radius-input)] border border-slate/40 bg-white bg-[length:20px] bg-[right_0.75rem_center] bg-no-repeat px-3.5 pr-10 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25';
 const chevron = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a5577' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")";
-const SMS_CONSENT_VERSION = 'sms-v1-2026-09-30';
+const SMS_CONSENT_VERSION = 'sms-v2-2026-10-01';
 const lbl = 'mb-1.5 block text-base leading-snug text-slate';
 const field =
   'h-12 w-full min-w-0 rounded-[var(--radius-input)] border border-slate/40 bg-white px-3.5 text-[17px] text-ink focus:border-harbor focus:outline-none focus:ring-[3px] focus:ring-harbor/25 aria-[invalid=true]:border-attention';
@@ -38,6 +42,7 @@ const field =
   data-form-id={formId}
   data-location={location}
   data-button={button}
+  data-inline={inline ? '1' : undefined}
   action="/api/lead/"
   method="post"
 >
@@ -79,7 +84,7 @@ const field =
     {/* SMS consent: separate, unticked, appears once the visitor starts the form */}
     <label class="flex cursor-pointer items-start gap-3 text-base leading-snug text-slate sm:col-span-2" data-sms-consent hidden>
       <input type="checkbox" name="sms_opt_in" value="yes" class="mt-0.5 size-6 flex-none accent-harbor" />
-      <span>Yes, Rego Park Counseling may text me about my callback. Message frequency varies. Message and data rates may apply. Reply STOP to opt out, HELP for help. Not a condition of treatment. <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy and Terms</a>.</span>
+      <span>I agree to receive appointment and service text messages from Rego Park Counseling. Msg &amp; data rates may apply. Msg frequency varies. Reply STOP to opt out, HELP for help. Not a condition of care. See our <a href="/telehealth-privacy/#text-messaging-terms" class="underline underline-offset-2">Telehealth &amp; Text Messaging Terms</a> and <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy</a>.</span>
     </label>
     <input type="hidden" name="sms_consent_version" value={SMS_CONSENT_VERSION} />
 
@@ -98,7 +103,7 @@ const field =
     Or call us at <a href={SITE.phoneHref} class="font-bold text-harbor" data-cta="call" data-location={location}>{SITE.phone}</a>. Your information is private. Please don’t include medical details.
   </p>
   <p class="mt-1 text-center text-base leading-relaxed text-slate">
-    By submitting, you agree we may call you about this request. See our <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy and Terms</a>.
+    By submitting, you agree we may call you about this request. See our <a href="/privacy-policy/" class="underline underline-offset-2">Privacy Policy</a>.
   </p>
 </form>
 
@@ -174,19 +179,38 @@ const field =
 
       btn.disabled = true;
       label.textContent = 'Sending…';
+      let redirecting = false;
       try {
         const res = await fetch('/api/lead/', { method: 'POST', body: fd });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.error || 'We couldn’t send your request.');
         const w = window as any;
-        (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: form.dataset.location });
+        const push = () => (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: form.dataset.location });
+        if (form.dataset.inline) {
+          push();
+          form.reset();
+          return show('Thank you. We’ll call you back soon, usually the same business day.', true);
+        }
+        // /thank-you/ fires the conversion from this marker; if storage is blocked, fire it here instead.
+        try { sessionStorage.setItem('rpc_lead', JSON.stringify({ form_location: form.dataset.location, t: Date.now() })); } catch { push(); }
+        const help = String(fd.get('help_with') || '');
+        const topic = help === 'An evaluation' || (form.dataset.location || '').startsWith('evaluation') ? 'evaluation'
+          : help === 'Mental health' ? 'mental-health' : help === 'Substance use' ? 'substance-use' : '';
+        const q = new URLSearchParams();
+        const clinicSel = String(fd.get('preferred_clinic') || '');
+        if (clinicSel) q.set('clinic', clinicSel);
+        if (topic) q.set('topic', topic);
+        redirecting = true; // keep the button disabled while the next page loads (no double submit)
         form.reset();
-        show('Thank you. We’ll call you back soon, usually the same business day.', true);
+        location.assign(`/thank-you/${q.size ? `?${q}` : ''}`);
+        return;
       } catch (err) {
         show(`${(err as Error).message} Please call us at ${form.dataset.phone}.`);
       } finally {
-        btn.disabled = false;
-        label.textContent = form.dataset.button || 'Request a Callback';
+        if (!redirecting) {
+          btn.disabled = false;
+          label.textContent = form.dataset.button || 'Request a Callback';
+        }
       }
     });
   });

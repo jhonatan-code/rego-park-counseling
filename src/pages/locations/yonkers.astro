@@ -15,7 +15,7 @@ const crumbs = [{ name: 'Locations', href: '/locations/' }, { name: 'Yonkers', h
 const queens = CLINICS.filter((c) => c.status === 'open');
 ---
 <Base title={YONKERS.title} description={YONKERS.description} breadcrumbs={crumbs}>
-  <PageHero title={YONKERS.h1} sub={YONKERS.sub} eyebrow="Opening soon" crumbs={crumbs} formId="yonkers-waitlist" formHeading="Get Notified When We Open" formLocation="yonkers-waitlist" formButton="Notify Me When You Open" formClinic="Yonkers">
+  <PageHero title={YONKERS.h1} sub={YONKERS.sub} eyebrow="Opening soon" crumbs={crumbs} formId="yonkers-waitlist" formHeading="Get Notified When We Open" formLocation="yonkers-waitlist" formButton="Notify Me When You Open" formClinic="Yonkers" formInline>
     <div slot="extra" class="mt-8 flex items-center gap-4">
       <span class="inline-flex size-14 flex-none items-center justify-center rounded-full border-[3px] border-sky bg-transparent" aria-hidden="true"></span>
       <p class="text-lg text-white/90">Leave your number in the form and we’ll call you as soon as the Yonkers clinic opens.</p>

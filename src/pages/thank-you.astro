@@ -1,0 +1,112 @@
+---
+// Thank-you page (Remaining Pages brief, Oct 1 2026). The callback form redirects here only after /api/lead/ says CTM
+// accepted the lead (forms-ctm §5), with ?clinic= and ?topic= to personalize the copy. Yonkers waitlist keeps its
+// inline confirmation (it is not a booking).
+// noindex, nofollow; out of the XML sitemap (astro.config NOINDEX).
+// Conversion: the form leaves a one-time marker in sessionStorage; this page pushes dataLayer callback_submit once and
+// deletes the marker, so a reload, a back/forward visit or a direct visit never counts again.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import NearbyRing from '../components/NearbyRing.astro';
+import { SITE } from '../data/site.js';
+
+const STEPS = [
+  { title: 'We call you.', text: 'We’ll ask a few questions about what’s going on.' },
+  { title: 'We check your coverage.', text: 'Have your insurance card ready if you have one.' },
+  { title: 'We book your first visit', text: '' }, // completed below with the clinic
+];
+const LINKS = [
+  { href: '/insurance/', label: 'Insurance and Medicaid', icon: 'medicaid' },
+  { href: '/#first-visit', label: 'What Happens at Your First Visit', icon: 'faq' },
+  { href: '/locations/', label: 'Our Clinics', icon: 'pin' },
+];
+---
+<Base title="Thank You | Rego Park Counseling" description="We received your request. A member of our team will call you soon." noindex nofollow>
+  <section class="relative overflow-hidden bg-harbor text-white" aria-labelledby="page-title">
+    <NearbyRing class="pointer-events-none absolute -bottom-40 -right-40 hidden size-[600px] opacity-25 lg:block" />
+    <div class="container-x relative py-14 lg:py-20">
+      <span class="inline-flex size-16 items-center justify-center rounded-full bg-white text-success"><Icon name="check" size={34} /></span>
+      <h1 id="page-title" class="mt-6 !text-white lg:!text-[3.25rem] lg:leading-[1.08]">Thank You. We’ll Call You Soon.</h1>
+      <p class="measure mt-5 text-lg leading-relaxed text-white/90 lg:text-xl">
+        We received your request. A member of our team will call you [within one business day] from {SITE.phone} or a number starting with [ ]. Please keep your phone nearby.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-y" aria-labelledby="next-title">
+    <div class="container-x grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+      <div>
+        <h2 id="next-title">What Happens Next</h2>
+        <ol class="mt-8 space-y-4">
+          {STEPS.map((s, i) => (
+            <li class="flex items-start gap-4 rounded-[var(--radius-card)] border border-line bg-white p-5">
+              <span class="inline-flex size-10 flex-none items-center justify-center rounded-full bg-sky-wash font-display text-lg font-extrabold text-harbor">{i + 1}</span>
+              <p class="pt-1.5 text-lg">
+                <strong class="text-harbor">{s.title}</strong>{' '}
+                {i === 2 ? <span data-ty-visit>at the clinic nearest you or by telehealth.</span> : s.text}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-6 hidden items-start gap-3 rounded-[var(--radius-card)] bg-sand px-5 py-4 text-lg" data-ty-eval>
+          <Icon name="calendar" size={22} class="mt-1 flex-none text-harbor" />
+          <span>If you have a court or DMV deadline, mention it when we call so we can schedule you in time.</span>
+        </p>
+      </div>
+
+      <div class="lg:pt-2">
+        <div class="rounded-[var(--radius-panel)] bg-sky-wash p-6 lg:p-8">
+          <p class="font-display text-xl font-extrabold text-harbor">Can’t wait? Call us now.</p>
+          <a href={SITE.phoneHref} class="btn-call mt-4 w-full" data-cta="call" data-location="thank-you"><Icon name="phone" size={20} /> {SITE.phone}</a>
+        </div>
+        <aside class="mt-5 rounded-[var(--radius-panel)] border-l-[6px] border-harbor bg-white p-6" aria-label="Crisis help">
+          <p class="text-lg">
+            If you are in danger, call <a href="tel:911" class="font-bold text-harbor underline">911</a>. For a mental health or substance use crisis, call or text <a href="tel:988" class="font-bold text-harbor underline">988</a>, 24/7.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand py-14 lg:py-16" aria-labelledby="wait-title">
+    <div class="container-x">
+      <h2 id="wait-title">While You Wait</h2>
+      <ul class="mt-8 grid gap-4 md:grid-cols-3">
+        {LINKS.map((l) => (
+          <li>
+            <a href={l.href} class="group flex min-h-20 items-center gap-4 rounded-[var(--radius-card)] bg-white p-5 font-display text-lg font-extrabold text-harbor transition-shadow duration-200 hover:shadow-[0_8px_24px_rgba(7,65,91,0.12)]">
+              <span class="icon-dot bg-sky-wash"><Icon name={l.icon} /></span>
+              <span class="flex-1">{l.label}</span>
+              <Icon name="arrow-right" size={20} class="flex-none" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Personalize from the redirect (whitelisted values only; nothing from the URL is written as HTML).
+  const q = new URLSearchParams(location.search);
+  const clinic = q.get('clinic');
+  const visit = document.querySelector<HTMLElement>('[data-ty-visit]');
+  if (visit) {
+    if (clinic === 'Rego Park' || clinic === 'Fresh Meadows') visit.textContent = `at our ${clinic} clinic or by telehealth.`;
+    else if (clinic === 'Telehealth') visit.textContent = 'by telehealth.';
+  }
+  if (q.get('topic') === 'evaluation') document.querySelector<HTMLElement>('[data-ty-eval]')?.classList.replace('hidden', 'flex');
+
+  // Conversion, once per submission (marker written by CallbackForm after CTM accepted the lead).
+  try {
+    const raw = sessionStorage.getItem('rpc_lead');
+    if (raw) {
+      sessionStorage.removeItem('rpc_lead');
+      const lead = JSON.parse(raw) as { form_location?: string; t?: number };
+      if (lead.t && Date.now() - lead.t < 10 * 60 * 1000) {
+        const w = window as any;
+        (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: lead.form_location || '' });
+      }
+    }
+  } catch {}
+</script>

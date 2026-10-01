@@ -387,7 +387,7 @@ const schema = [
       </div>
       <div class="divide-y divide-line rounded-[var(--radius-panel)] border border-line bg-white px-5 lg:px-8">
         {FAQS.map((f, i) => (
-          <details class="group/faq py-1" open={i === 0}>
+          <details id={f.id} class="group/faq scroll-mt-28 py-1" open={i === 0} data-faq>
             <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-lg font-bold text-harbor lg:text-xl [&::-webkit-details-marker]:hidden">
               <h3 class="text-inherit text-lg font-bold lg:text-xl">{f.q}</h3>
               <span class="inline-flex size-10 flex-none items-center justify-center rounded-full bg-sky-wash transition-transform duration-200 group-open/faq:rotate-45"><Icon name="plus" size={20} /></span>
@@ -398,6 +398,13 @@ const schema = [
       </div>
     </div>
   </section>
+
+  <script>
+    // /#first-visit (thank-you "While You Wait"): open the linked question.
+    const openHash = () => { const d = location.hash && document.getElementById(location.hash.slice(1)); if (d instanceof HTMLDetailsElement && d.hasAttribute('data-faq')) d.open = true; };
+    openHash();
+    addEventListener('hashchange', openHash);
+  </script>
 
   {/* 14a · FROM THE BLOG — hand-picked */}
   <section class="section-y bg-white" aria-labelledby="blog-title">

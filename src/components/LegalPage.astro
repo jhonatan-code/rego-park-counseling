@@ -1,0 +1,126 @@
+---
+// Legal page template (Privacy Policy, HIPAA Notice, Telehealth & Text Terms, Accessibility). Content in src/data/legal.js.
+// Reading layout borrowed from the post template: sky-wash band, white article card, sticky "On this page" list at lg
+// (drawer below lg). No form and no closing CTA band: these pages are for reading (contact sits in the last section).
+// `accordion` (HIPAA Notice, brief): each section is a <details>; below lg only the first is open, at lg all are open
+// and the summary is inert. Printing opens everything. `print`: "Download PDF" = the browser's print / save as PDF of
+// this exact text, so the PDF can never drift from the page. Drafts (`approved: false`) show the counsel-review note.
+import Base from '../layouts/Base.astro';
+import Icon from './Icon.astro';
+import TocList from './toc/TocList.astro';
+import TocDrawer from './toc/TocDrawer.astro';
+import { SITE } from '../data/site.js';
+
+interface Section { id: string; title: string; html: string }
+interface Props {
+  page: {
+    url: string; title: string; description: string; h1: string; dates: string; approved: boolean;
+    intro?: string; callout?: string; print?: boolean; accordion?: boolean; sections: Section[];
+  };
+}
+const { page } = Astro.props;
+const toc = page.sections.map((s) => ({ id: s.id, text: s.title }));
+const schema = [{ '@type': 'WebPage', '@id': `${SITE.url}${page.url}#webpage`, url: `${SITE.url}${page.url}`, name: page.h1, description: page.description, isPartOf: { '@id': `${SITE.url}/#website` }, publisher: { '@id': `${SITE.url}/#organization` } }];
+---
+<Base title={page.title} description={page.description} breadcrumbs={[{ name: page.h1, href: page.url }]} schema={schema}>
+  <section class="border-b border-line bg-white" aria-labelledby="page-title">
+    <div class="container-x py-10 lg:py-14">
+      <nav aria-label="Breadcrumb" class="mb-5 text-base text-slate" data-no-print>
+        <ol class="flex flex-wrap items-center gap-1.5">
+          <li><a href="/" class="hover:text-harbor hover:underline">Home</a></li>
+          <li class="flex items-center gap-1.5"><Icon name="chevron-right" size={16} class="text-harbor" /><span aria-current="page" class="text-ink">{page.h1}</span></li>
+        </ol>
+      </nav>
+      <p class="eyebrow">Legal</p>
+      <h1 id="page-title" class="mt-3">{page.h1}</h1>
+      <p class="mt-4 text-base text-slate">{page.dates}</p>
+      {page.print && (
+        <button type="button" class="btn-secondary mt-6 !min-h-12" data-print data-no-print>
+          <Icon name="download" size={20} /> Download PDF
+        </button>
+      )}
+    </div>
+  </section>
+
+  {!page.accordion && (
+    <div class="border-b border-line bg-white lg:hidden" data-no-print>
+      <TocDrawer items={toc} class="container-x py-3" />
+    </div>
+  )}
+
+  <div class="bg-sky-wash py-10 lg:py-14">
+    <div class="container-x lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-[30px]">
+      <article class="min-w-0 rounded-[var(--radius-panel)] bg-white p-6 sm:p-10 xl:p-14">
+        {!page.approved && (
+          <p class="mb-8 flex items-start gap-3 rounded-[var(--radius-card)] bg-sand px-5 py-4 text-base text-ink" data-legal-draft>
+            <Icon name="info" size={20} class="mt-0.5 flex-none text-harbor" />
+            <span><strong>Draft for review.</strong> This text must be approved by Rego Park Counseling’s attorney or compliance officer before launch. Text in [brackets] still needs a fact.</span>
+          </p>
+        )}
+        {page.callout && <p class="mb-8 rounded-[var(--radius-card)] border-l-[6px] border-harbor bg-sky-wash px-5 py-4 font-bold leading-relaxed text-harbor">{page.callout}</p>}
+        {page.intro && <p class="lead measure mb-2" set:html={page.intro} />}
+
+        {page.accordion ? (
+          <div class="divide-y divide-line border-y border-line lg:divide-y-0 lg:border-0">
+            {page.sections.map((s) => (
+              <details class="legal-sec group/sec" open data-legal-sec>
+                <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 lg:pointer-events-none lg:min-h-0 lg:cursor-auto lg:py-0 [&::-webkit-details-marker]:hidden">
+                  <h2 id={s.id} class="toc-target text-xl lg:mt-10 lg:text-[1.75rem]" tabindex="-1">{s.title}</h2>
+                  <span class="inline-flex size-10 flex-none items-center justify-center rounded-full bg-sky-wash text-harbor transition-transform duration-200 group-open/sec:rotate-45 lg:hidden" aria-hidden="true"><Icon name="plus" size={20} /></span>
+                </summary>
+                <div class="prose-rpc pb-5 lg:pb-0 lg:pt-3" set:html={s.html} />
+              </details>
+            ))}
+          </div>
+        ) : (
+          <div class="prose-rpc">
+            {page.sections.map((s) => (
+              <>
+                <h2 id={s.id} class="toc-target" tabindex="-1">{s.title}</h2>
+                <Fragment set:html={s.html} />
+              </>
+            ))}
+          </div>
+        )}
+      </article>
+
+      <aside class="mt-8 hidden lg:sticky lg:top-28 lg:mt-0 lg:block" aria-label="On this page" data-no-print>
+        <div class="rounded-[var(--radius-panel)] bg-white p-5">
+          <p class="px-2 pb-2 font-display text-lg font-extrabold text-harbor">On this page</p>
+          <TocList items={toc} />
+        </div>
+        <div class="mt-5 rounded-[var(--radius-panel)] bg-white p-6">
+          <p class="font-display text-lg font-extrabold text-harbor">Questions about this page?</p>
+          <p class="mt-2 text-base text-slate">Call us and we’ll explain it or send you a printed copy.</p>
+          <a href={SITE.phoneHref} class="btn-call mt-4 w-full" data-cta="call" data-location="legal-sidebar"><Icon name="phone" size={20} /> {SITE.phone}</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+  @media print {
+    body > *:not(main), [data-no-print], [data-legal-draft] { display: none !important; }
+    .legal-sec summary span { display: none !important; }
+    main .bg-sky-wash { background: none !important; padding: 0 !important; }
+    main article { padding: 0 !important; }
+  }
+</style>
+
+<script>
+  const secs = [...document.querySelectorAll<HTMLDetailsElement>('[data-legal-sec]')];
+  if (secs.length) {
+    const lg = matchMedia('(min-width: 1024px)');
+    const target = () => (location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1)))?.closest<HTMLDetailsElement>('[data-legal-sec]') : null);
+    // Below lg: an accordion with the first section (or the linked one) open. At lg: everything open, summary inert.
+    const layout = () => secs.forEach((d, i) => (d.open = lg.matches || d === target() || (!target() && i === 0)));
+    layout();
+    lg.addEventListener('change', layout);
+    secs.forEach((d) => d.querySelector('summary')!.addEventListener('click', (e) => { if (lg.matches) e.preventDefault(); }));
+    addEventListener('hashchange', () => { const t = target(); if (t) t.open = true; });
+    addEventListener('beforeprint', () => secs.forEach((d) => (d.open = true)));
+    addEventListener('afterprint', layout);
+  }
+  document.querySelector('[data-print]')?.addEventListener('click', () => print());
+</script>

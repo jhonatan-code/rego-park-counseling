@@ -13,4 +13,9 @@ export const BUILT = [
   '/who-we-serve/', '/who-we-serve/older-adults/', '/who-we-serve/court-involved/',
   '/therapies/', '/therapies/individual-therapy/', '/therapies/group-therapy/', '/therapies/family-therapy/',
   '/blog/',
+  '/privacy-policy/', '/hipaa-notice/', '/telehealth-privacy/', '/accessibility/',
+  '/thank-you/',
 ];
+
+// Built but kept out of the XML sitemap (noindex).
+export const NOINDEX = ['/thank-you/'];

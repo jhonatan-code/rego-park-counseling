@@ -240,5 +240,8 @@ const norm = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u
       const visible = cells.filter((c) => !c.hidden);
       visible[firstNew]?.querySelector<HTMLAnchorElement>('.pc-title a')?.focus();
     });
+    // Arriving from the 404 page's search box (/blog/?q=…): prefill and filter.
+    const q = new URLSearchParams(location.search).get('q')?.slice(0, 80).trim();
+    if (q) { search.value = q; search.dispatchEvent(new Event('input')); }
   }
 </script>

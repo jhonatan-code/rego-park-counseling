@@ -112,7 +112,7 @@ export const PAGES = [
     faqH2: 'Telehealth FAQs',
     faqs: [
       { q: 'Is it covered by Medicaid?', a: MEDICAID_TELEHEALTH, draft: true },
-      { q: 'Is it private?', a: 'Yes. Sessions use a secure video platform [confirm platform], and your information is protected.', link: { href: '/telehealth-privacy/', label: 'Telehealth Privacy' }, draft: true },
+      { q: 'Is it private?', a: 'Yes. Sessions use a secure video platform [confirm platform], and your information is protected.', link: { href: '/telehealth-privacy/', label: 'Telehealth & Text Terms' }, draft: true },
       { q: 'What do I need?', a: 'A phone, tablet or computer with a camera, an internet connection, and a quiet, private place to talk.', draft: true },
       { q: 'Can I switch to in person?', a: 'Yes. You can mix in-person and telehealth sessions.', draft: true },
     ],
