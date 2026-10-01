@@ -5,7 +5,7 @@
 // Licensing line, legal links, and the brand-separation line vs the similarly named center.
 import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
-import { SITE, NAV, CLINICS, LEGAL, live } from '../data/site.js';
+import { SITE, NAV, CLINICS, LEGAL, SOCIAL, live } from '../data/site.js';
 
 const byLabel = (l: string) => NAV.find((n) => n.label === l)!;
 const programLinks = byLabel('Programs').columns!.flatMap((c) => live(c.links));
@@ -46,6 +46,17 @@ const year = new Date().getFullYear();
           <Icon name="phone" size={24} class="text-sky" /> {SITE.phone}
         </a>
         <p class="mt-1 text-base text-white/75">Fax {SITE.fax}</p>
+        {SOCIAL.length > 0 && (
+          <ul class="mt-5 flex items-center gap-2" aria-label="Follow Rego Park Counseling">
+            {SOCIAL.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener" class="inline-flex size-12 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:bg-white/10" aria-label={`Rego Park Counseling on ${s.label} (opens in a new tab)`}>
+                  <Icon name={s.icon} size={22} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <ul class="grid gap-4 sm:grid-cols-3">

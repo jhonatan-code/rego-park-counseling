@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
-import { SITE, CLINICS } from '../data/site.js';
+import { SITE, CLINICS, SOCIAL } from '../data/site.js';
 // Above-the-fold fonts, preloaded (latin subset). Two families, four weights (brand manual 12, Speed).
 import nunitoWoff2 from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
 import atkinsonWoff2 from '@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2?url';
@@ -34,7 +34,8 @@ const org = {
   logo: `${SITE.url}/images/brand/rego-park-counseling-logo.png`,
   telephone: '+1-718-459-2558',
   department: CLINICS.filter((c) => c.status === 'open').map((c) => ({ '@id': `${SITE.url}${c.href}#clinic` })),
-  // sameAs: Google profiles + social, to add once confirmed
+  // sameAs: verified social profiles only (site.js SOCIAL); Google Business Profile URLs to add once confirmed (PENDING 4.6)
+  ...(SOCIAL.length ? { sameAs: SOCIAL.map((s) => s.href) } : {}),
 };
 const website = { '@type': 'WebSite', '@id': `${SITE.url}/#website`, url: `${SITE.url}/`, name: SITE.name, publisher: { '@id': `${SITE.url}/#organization` } };
 // Home gets a one-item BreadcrumbList too (schema.md: every page)

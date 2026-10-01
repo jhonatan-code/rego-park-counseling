@@ -166,6 +166,15 @@ export const UTILITY = [
 // Drop items that are still waiting for client confirmation.
 export const live = (links = []) => links.filter((l) => !l.pending);
 
+// Official social profiles: footer icons + Organization schema sameAs. Only accounts verified as RPC's (2026-10-01):
+// Instagram @regoparkcounseling (RPC logo, "Certified OASAS & Mental Health outpatient clinic", (718) 459-2558).
+// NOT ours: facebook.com/regoparkcounseling is The Jewish Board, 97-99 Queens Blvd (the similarly named center — never
+// link it). Unconfirmed: TikTok @regoparkcounseling (empty, nothing ties it to RPC). No LinkedIn company page found.
+// Add Facebook / Google Business Profile / others only once the client confirms the URL (PENDING 5.14, 4.6).
+export const SOCIAL = [
+  { label: 'Instagram', href: 'https://www.instagram.com/regoparkcounseling/', icon: 'instagram' },
+];
+
 export const LEGAL = [
   { label: 'Privacy Policy', href: '/privacy-policy/' },
   { label: 'HIPAA Notice', href: '/hipaa-notice/' },
