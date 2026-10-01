@@ -66,7 +66,7 @@ export const WHY = [
   { icon: 'licensed', title: 'Licensed for both', text: 'We are licensed by New York State for mental health (OMH) and substance use (OASAS), so one team can treat both.' },
   { icon: 'subway', title: 'Close to home', text: 'Two clinics in Queens near the trains and buses you already use, plus telehealth.' },
   { icon: 'heart', title: 'No judgment, ever', text: 'We see addiction and mental illness as health conditions, not personal failings.' },
-  { icon: 'languages', title: 'People who understand Queens', text: 'Our counselors reflect the neighborhoods we serve [add: “and speak X, Y and Z” once confirmed].' },
+  { icon: 'languages', title: 'People who understand Queens', text: 'Our counselors reflect the neighborhoods we serve.' },
 ];
 
 // Section 13, word for word from the final copy; the same text feeds FAQPage schema (answers that still carry a

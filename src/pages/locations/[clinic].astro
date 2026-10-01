@@ -17,6 +17,7 @@ import { SITE, CLINICS, fullAddress } from '../../data/site.js';
 import { CLINIC_PAGES } from '../../data/locations.js';
 import { TEAM } from '../../data/team.js';
 import { clean } from '../../data/mental-health.js';
+import ComingSoon from '../../components/ComingSoon.astro';
 
 export function getStaticPaths() {
   return Object.keys(CLINIC_PAGES).map((id) => ({ params: { clinic: id } }));
@@ -219,7 +220,7 @@ const schema = [
           </li>
         ))}
       </ul>
-      {team.some((p) => p.placeholder) && <p class="mt-4 text-base text-slate">[Pending] Staff at this clinic, with photos and consent.</p>}
+      {team.some((p) => p.placeholder) && <ComingSoon class="mt-5" />}
     </div>
   </section>
 

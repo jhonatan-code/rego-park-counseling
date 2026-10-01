@@ -9,6 +9,7 @@ import ClinicsMap from '../../components/ClinicsMap.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import { SITE, CLINICS, fullAddress } from '../../data/site.js';
 import { SERVICE_TABLE, HUB_COMMUNITIES } from '../../data/locations.js';
+import ComingSoon from '../../components/ComingSoon.astro';
 
 const crumbs = [{ name: 'Locations', href: '/locations/' }];
 const schema = [
@@ -90,7 +91,7 @@ const cols = [
     <div class="container-x">
       <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <h2 id="table-title">Services at Each Clinic</h2>
-        <p class="text-base text-slate">[Pending: Emmanuel to confirm what each clinic offers]</p>
+        <ComingSoon />
       </div>
       <div class="mt-8 overflow-x-auto rounded-[var(--radius-panel)] border border-line">
         <table class="w-full min-w-[640px] border-collapse text-left">

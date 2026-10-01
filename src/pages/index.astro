@@ -12,6 +12,7 @@ import { SITE, CLINICS, fullAddress } from '../data/site.js';
 import { HELP_CARDS, CONDITIONS, PROGRAMS, STEPS, WHY, FAQS, POSTS } from '../data/home.js';
 import { posts as ALL_POSTS, postUrl, postImage } from '../data/posts.js';
 import { clean } from '../data/mental-health.js';
+import ComingSoon from '../components/ComingSoon.astro';
 
 const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
 const groups = [...new Set(CONDITIONS.map((c) => c.group))];
@@ -372,7 +373,7 @@ const schema = [
           </li>
         ))}
       </ul>
-      <p class="mt-4 text-base text-slate">[Pending] Real staff photos, names, credentials and languages from Emmanuel.</p>
+      <ComingSoon class="mt-5" />
     </div>
   </section>
 

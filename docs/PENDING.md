@@ -4,7 +4,7 @@ Running list, updated after every page. Each item stands on its own: what we hav
 Status: ☐ open · ◐ partly answered · ☑ resolved (kept for the record, with the answer and date).
 Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content) · **O** = Oriana (CTM) · **Jh** = Jhonatan · **C** = Cristofer (local SEO).
 
-Last update: 2026-10-01 (after the Remaining Pages brief: Privacy Policy, HIPAA Notice, Telehealth & Text Terms, Accessibility, Thank-you, 404).
+Last update: 2026-10-01 (after the Remaining Pages brief, and `docs/DECISIONS-2026-10-01.md`: internal notes off the public pages, repo stays put).
 
 **Audit against the elev8 Website System (2026-09-30): see `docs/AUDIT-2026-09-30.md`** — blockers, client asks and content items found there are not all copied below yet.
 
@@ -178,6 +178,24 @@ Last update: 2026-10-01 (after the Remaining Pages brief: Privacy Policy, HIPAA 
 | 5a.11 | Real PDF of the NPP for the clinics | "Download PDF" = print / save as PDF of the page (cannot drift from the web text). Replace with a file only if counsel wants a signed PDF | HIPAA Notice | counsel | ☐ FYI |
 | 5a.12 | Accessibility check on every template before launch (brief build note) | 2026-10-01: axe (WCAG 2.0/2.1 A+AA) clean on the 6 new pages, desktop + HIPAA mobile. The other templates are not checked yet: the statement may only claim what they pass | Jh | ◐ |
 | 5a.13 | GA4: `page_not_found` (param `page_path`, no query string) pushed on the 404; needs a GTM tag + GA4 custom dimension. tracking.md is still BLOCKED (event taxonomy) | Pushed to dataLayer | Jh / O | ☐ |
+
+## 5b. Decisions of 2026-10-01 (`docs/DECISIONS-2026-10-01.md`)
+
+| # | Decision / recommendation | Status |
+|---|---|---|
+| 7.1 | Internal notes off the public pages. Block placeholders → "Coming soon" (`components/ComingSoon.astro`): Home "Meet Our Counselors", /locations/ services table, Rego Park + Fresh Meadows staff, /our-team/ staff list, leadership bio, careers. Inline notes deleted: MH + SU "Regular sessions"/"Your plan" (PENDING 2.6, 2d.5, 2a.4 still open here), psychiatry line (2.1), Privacy Policy ad-pixel note (5a.7), HIPAA Part 2 counsel note + "report violations to [authority]" clause (5a.3: re-add the clause once counsel names the authority), DWI "DMV approvals" (2b.9), SA screening tools → "Standard screening questionnaires" (2b.7), Home languages (3.3). PTSD "Tools for today" lost "such as trauma-focused CBT" too: unconfirmed approach (2.2); no EMDR mention. Leadership card name "Emmanuel [Last name]" → "[Name]" until his last name + title arrive (3.2). Check: built output has no PENDING / Emmanuel / Oriana / Pavel / Counsel: / ads team / Confirm with / Update if | ☑ 2026-10-01 |
+| 7.3 | Repo stays at github.com/jhonatan-code/rego-park-counseling (private); Jhonatan adds collaborators. No transfer to elizabeth752 | ☑ 2026-10-01 |
+| 7.2 | Vercel Deployment Protection + `noindex` on every host that is not www.regoparkcounseling.com, before sharing the preview with the client | ☐ Recommended, awaits Jhonatan's approval |
+| 7.4 | /rego/ → 301 /programs/ (not /programs/core/) — see 5.6 | ☐ Awaits approval |
+| 7.5 | /12-step-program/ (7 clicks, 778 impr.) → migrate by hand as a post; /withdrawal-symptoms/ → 301 /substance-use/; /national-mental-health-and-substance-use-statistics/ → 301 /blog/ — see 3a.1 | ☐ Awaits approval |
+| 7.6 | Confirm the 4 added redirects (3a.4) | ☐ Awaits approval |
+| 7.7 | Keep the SOP (no /author/); bylines link to /our-team/{slug}/ once real people are named | ☐ Awaits approval |
+| 7.8 | Menu to 6 items (Mental Health · Substance Use · Evaluations · Programs · Locations · Insurance); About + Contact to footer and top bar | ☐ Awaits approval |
+| 7.9 | "substance abuse evaluation queens" only on /evaluations/substance-abuse-evaluation/; hub targets "drug and alcohol evaluations queens" | ☐ Awaits approval |
+| 7.10 | Share the home copy changes (6.9b) with Pavel and Julian | ☐ Jh |
+| 7.11 | Cookie banner: client + counsel decide; simplest path is no ad pixels (5.11) | ☐ Client |
+| 7.12 | Keep "Download PDF" = print the page unless counsel asks for a signed PDF (5a.11) | ☐ Awaits approval |
+| 7.x | Extras awaiting approval: "Now welcoming new patients" → "Call to check availability" (1.7); one neutral callback line "We'll call you back as soon as possible" until the timeframe is confirmed (1.8, 5a.10); remove `community-support-table.webp`; before DNS, crawl the full redirect map against the preview and reconcile 247/131 (build) vs 270/132 (map v2) | ☐ Awaits approval |
 
 ## 6. Decisions made during the build (tell Julian / keep for the record)
 

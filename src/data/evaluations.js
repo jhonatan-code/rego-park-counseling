@@ -88,7 +88,7 @@ export const EVALS = [
     steps: [
       { title: 'Before', text: 'Bring photo ID and any letter or paperwork from the court, lawyer or employer.' },
       { title: 'Interview', text: 'A clinician asks about your substance use, health, mental health, family and work [confirm length].' },
-      { title: 'Screening tools', text: 'Standard questionnaires [confirm names if you want them listed, e.g. AUDIT, DAST]. [Confirm whether a drug test is part of the evaluation.]', link: { href: '/do-you-get-drug-tested-at-a-substance-abuse-evaluation/', label: 'Do You Get Drug Tested at a Substance Abuse Evaluation?' } },
+      { title: 'Screening tools', text: 'Standard screening questionnaires. [Confirm whether a drug test is part of the evaluation.]', link: { href: '/do-you-get-drug-tested-at-a-substance-abuse-evaluation/', label: 'Do You Get Drug Tested at a Substance Abuse Evaluation?' } },
       { title: 'Recommendation', text: 'No treatment, education, or a level of outpatient treatment.' },
       { title: 'Report', text: '[Confirm format, turnaround and whether we send it to the court or give it to you.]' },
     ],
@@ -149,7 +149,7 @@ export const EVALS = [
     why: {
       h2: 'Why Choose Rego Park Counseling for Your DWI Evaluation',
       items: [
-        { icon: 'licensed', text: 'OASAS-licensed outpatient clinic [add any DMV approvals only if held]' },
+        { icon: 'licensed', text: 'OASAS-licensed outpatient clinic' },
         { icon: 'clock', text: 'Fast scheduling for court deadlines [confirm]' },
         { icon: 'heart', text: 'Professional, respectful, no judgment' },
         { icon: 'sprout', text: 'Treatment available in the same place if needed' },

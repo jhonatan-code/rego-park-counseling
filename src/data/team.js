@@ -17,13 +17,16 @@
 // at /our-team/{slug}/ (src/pages/our-team/[slug].astro); give each person a slug (first-last) once their real
 // name arrives. Placeholder people keep their page noindex and out of the sitemap.
 
+// Block placeholder text (DECISIONS-2026-10-01 §7.1): renders as <ComingSoon />, never as a bio.
+export const COMING_SOON = 'Coming soon';
+
 export const LEADERSHIP = [
   {
     placeholder: true,
-    name: 'Emmanuel [Last name]',
+    name: '[Name]', // Emmanuel's full name once his last name + title arrive (PENDING 3.2); no first-name-only card meanwhile
     credential: '',
     role: '[Title]',
-    bio: '[3 to 4 sentence bio from Emmanuel: his role, why he started Rego Park Counseling, what he wants every patient to feel.]',
+    bio: COMING_SOON, // 3–4 sentences: his role, why he started RPC, what he wants every patient to feel (PENDING 3.2)
     photo: null,
   },
   {

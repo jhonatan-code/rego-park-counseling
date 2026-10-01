@@ -7,7 +7,7 @@
 const SU_EXPECT = [
   { title: 'Call or request a callback.', text: 'We check your insurance and find a time.' },
   { title: 'Assessment.', text: 'A credentialed clinician learns about your use, health and goals.' },
-  { title: 'Your plan.', text: 'Sessions with your counselor on a plan reviewed as you progress. On the call we’ll tell you whether group sessions or telehealth are available for you [confirm, PENDING 2a.4].' },
+  { title: 'Your plan.', text: 'Sessions with your counselor on a plan reviewed as you progress. On the call we’ll tell you whether group sessions or telehealth are available for you.' },
 ];
 
 export const PAGES = [
@@ -158,7 +158,7 @@ export const PAGES = [
       { q: 'How do I know if I have a dual diagnosis?', a: 'You do not need to know before you call. A licensed clinician will assess both your mental health and your substance use at your first visit.' },
       { q: 'Which should be treated first?', a: 'In integrated care, both are treated together, because each affects the other.' },
       { q: 'Is this an inpatient dual diagnosis program?', a: 'No. We provide outpatient care, so you live at home and attend sessions in Queens or by telehealth.' },
-      { q: 'Do you prescribe medication?', a: 'We provide counseling and can coordinate with your doctor or psychiatrist. [Update if psychiatry is confirmed.]' },
+      { q: 'Do you prescribe medication?', a: 'We provide counseling and can coordinate with your doctor or psychiatrist.' },
       { q: 'Does Medicaid cover dual diagnosis treatment?', a: 'We accept most Medicaid plans.' },
     ],
     finalH2: 'Get Care for Both in One Place',

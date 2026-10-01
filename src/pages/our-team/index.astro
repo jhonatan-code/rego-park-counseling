@@ -9,7 +9,8 @@ import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import { SITE } from '../../data/site.js';
-import { LEADERSHIP, TEAM, HAS_PLACEHOLDERS, personHref } from '../../data/team.js';
+import { LEADERSHIP, TEAM, HAS_PLACEHOLDERS, personHref, COMING_SOON } from '../../data/team.js';
+import ComingSoon from '../../components/ComingSoon.astro';
 
 const initials = (n: string) => (n.startsWith('[') ? '' : n.split(' ').map((w) => w[0]).slice(0, 2).join(''));
 const real = [...LEADERSHIP, ...TEAM].filter((p) => !p.placeholder);
@@ -89,7 +90,7 @@ const schema = real.length
             <div class="p-6 lg:p-7">
               <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{p.role}</p>
               <h3 class="mt-1 text-2xl">{p.slug ? <a href={personHref(p)} class="hover:underline">{p.name}</a> : p.name}{p.credential && <span class="font-bold text-slate">, {p.credential}</span>}</h3>
-              <p class="mt-3 text-slate">{p.bio}</p>
+              {p.bio === COMING_SOON ? <ComingSoon class="mt-3" /> : <p class="mt-3 text-slate">{p.bio}</p>}
               {p.slug && <a href={personHref(p)} class="text-link mt-3 inline-flex items-center gap-1 text-base">{profileLabel(p.name)} <Icon name="arrow-right" size={16} /></a>}
             </div>
           </li>
@@ -128,7 +129,7 @@ const schema = real.length
                 <div class="flex gap-2"><dt class="sr-only">Clinics</dt><Icon name="pin" size={18} class="mt-1 flex-none text-harbor" /><dd>{p.clinics.join(' · ')}</dd></div>
                 <div class="flex gap-2"><dt class="sr-only">Languages</dt><Icon name="languages" size={18} class="mt-1 flex-none text-harbor" /><dd>{p.languages.join(', ')}</dd></div>
               </dl>
-              <p class="mt-3 text-base text-slate">{p.bio}</p>
+              {p.bio === COMING_SOON ? <ComingSoon class="mt-3" /> : <p class="mt-3 text-base text-slate">{p.bio}</p>}
               <ul class="mt-auto flex flex-wrap gap-2 pt-4" aria-label="Focus areas">
                 {p.focus.map((f) => (
                   <li><a href={f.href} class="inline-flex min-h-9 items-center rounded-full border border-sky bg-sky-wash px-3 text-base font-bold text-harbor hover:border-harbor">{f.label}</a></li>
@@ -138,7 +139,7 @@ const schema = real.length
           </li>
         ))}
       </ul>
-      {HAS_PLACEHOLDERS && <p class="mt-6 text-base text-slate">[Pending] Staff list with names, credentials, roles, clinics, languages, short bios, headshots and written consent, from Emmanuel. This page stays noindex until then.</p>}
+      {HAS_PLACEHOLDERS && <ComingSoon class="mt-6" />}
     </div>
   </section>
 
@@ -159,7 +160,7 @@ const schema = real.length
         <div>
           <h3 class="!text-white">Join Our Team</h3>
           <p class="mt-2 text-white/90">We are always glad to meet counselors who care about Queens.</p>
-          <p class="mt-3 text-base text-white/75">[Careers email or link: confirm with Emmanuel]</p>
+          <ComingSoon tone="dark" class="mt-4" />
         </div>
       </div>
     </div>

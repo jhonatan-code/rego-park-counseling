@@ -1,0 +1,9 @@
+---
+// Quiet placeholder for a block still waiting for client data (DECISIONS-2026-10-01 §7.1). Never inside a sentence.
+// What the block is waiting for is tracked in docs/PENDING.md, never on the page.
+interface Props { tone?: 'light' | 'dark'; class?: string }
+const { tone = 'light', class: cls } = Astro.props;
+---
+<p class:list={['inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-base', tone === 'dark' ? 'bg-white/10 text-white/80' : 'bg-white text-slate ring-1 ring-sky', cls]}>
+  <span class:list={['size-2 rounded-full', tone === 'dark' ? 'bg-sky' : 'bg-harbor/50']} aria-hidden="true"></span>Coming soon
+</p>

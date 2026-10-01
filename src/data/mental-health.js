@@ -74,9 +74,9 @@ export const SERVICES = {
 const STD_EXPECT = (what) => [
   { title: 'Call or request a callback.', text: 'We check your insurance and find a time.' },
   { title: 'First visit.', text: `A licensed clinician learns about ${what} and your goals.` },
-  { title: 'Regular sessions.', text: 'Sessions with your counselor on a plan you help shape. On the call we’ll tell you whether group sessions or telehealth are available for you [confirm per condition, PENDING 2.6/2d.5].' },
+  { title: 'Regular sessions.', text: 'Sessions with your counselor on a plan you help shape. On the call we’ll tell you whether group sessions or telehealth are available for you.' },
 ];
-const MED_LINE = 'We can coordinate with your doctor or psychiatrist. [Update if psychiatry is confirmed.]';
+const MED_LINE = 'We can coordinate with your doctor or psychiatrist.';
 
 export const CONDITIONS = [
   {
@@ -120,7 +120,7 @@ export const CONDITIONS = [
       { q: 'Do you treat panic attacks?', a: 'Yes. We help people understand what happens in the body during panic and learn ways to calm it and prevent the next one.' },
       { q: 'Can I do anxiety therapy online?', a: 'Yes. Telehealth sessions are available for many patients. Ask about it when you call.' },
       { q: 'Do you accept Medicaid for anxiety counseling?', a: 'Yes, we accept most Medicaid plans. We confirm your coverage before your first visit.' },
-      { q: 'Do you prescribe anxiety medication?', a: 'We provide counseling. If medication could help, we can coordinate with your doctor. [Update if psychiatry is confirmed.]' },
+      { q: 'Do you prescribe anxiety medication?', a: 'We provide counseling. If medication could help, we can coordinate with your doctor.' },
     ],
     finalH2: 'Start Anxiety Counseling in Queens',
   },
@@ -196,7 +196,7 @@ export const CONDITIONS = [
       h2: 'Trauma-Informed Care at Rego Park Counseling',
       cards: [
         { icon: 'shield', title: 'Safety first.', text: 'You set the pace. You never have to share more than you are ready to.' },
-        { icon: 'tools', title: 'Tools for today.', text: 'Learn ways to manage triggers, sleep and stress, using approaches such as trauma-focused CBT [confirm; add EMDR only if a clinician is trained].' },
+        { icon: 'tools', title: 'Tools for today.', text: 'Learn ways to manage triggers, sleep and stress.' },
         { icon: 'family', title: 'Reconnecting.', text: 'Rebuild trust in yourself and your relationships, with family sessions if you want them.' },
       ],
       line: { text: 'Many people use alcohol or drugs to cope with trauma. We treat both together.', href: '/substance-use/dual-diagnosis/', label: 'Dual Diagnosis' },

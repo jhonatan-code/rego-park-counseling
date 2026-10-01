@@ -38,7 +38,7 @@ export const PRIVACY_POLICY = {
         <li>To understand which pages and ads help people find us, so we can improve the website</li>
         <li>To keep the website secure</li>
       </ul>
-      <p>We do not sell your information. We do not use information from this website for advertising based on your health. [Confirm with Oriana and the ads team whether any ad pixels run; if yes, list them and limit them to pages without health information, in line with HHS guidance on tracking technologies.]</p>`,
+      <p>We do not sell your information. We do not use information from this website for advertising based on your health.</p>`,
     },
     {
       id: 'cookies-analytics-call-tracking', title: 'Cookies, Analytics and Call Tracking',
@@ -92,7 +92,7 @@ export const HIPAA_NOTICE = {
     },
     {
       id: 'substance-use-records', title: 'Extra Protection for Substance Use Treatment Records',
-      html: `<p>Records of substance use disorder treatment are also protected by federal law (42 CFR Part 2) and New York State law. In general, we cannot share information that identifies you as receiving substance use treatment without your written consent, except as these laws allow. Part 2 records cannot be used or disclosed in civil, criminal, administrative or legislative proceedings against you without your written consent or a court order that meets Part 2 requirements. [Counsel: update this section to the current Part 2 rule.]</p>`,
+      html: `<p>Records of substance use disorder treatment are also protected by federal law (42 CFR Part 2) and New York State law. In general, we cannot share information that identifies you as receiving substance use treatment without your written consent, except as these laws allow. Part 2 records cannot be used or disclosed in civil, criminal, administrative or legislative proceedings against you without your written consent or a court order that meets Part 2 requirements.</p>`,
     },
     {
       id: 'uses-and-sharing', title: 'How We May Use and Share Your Information',
@@ -126,7 +126,7 @@ export const HIPAA_NOTICE = {
     },
     {
       id: 'complaints', title: 'Complaints',
-      html: `<p>Contact our Privacy Officer: [Name], [phone], [email], ${ADDRESS}. You may also file a complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at <a href="https://www.hhs.gov/ocr/complaints" rel="noopener">hhs.gov/ocr/complaints</a> or <a href="tel:+18776966775">1-877-696-6775</a>. For substance use records, you may also report violations to [the authority named by counsel under current Part 2 rules].</p>`,
+      html: `<p>Contact our Privacy Officer: [Name], [phone], [email], ${ADDRESS}. You may also file a complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at <a href="https://www.hhs.gov/ocr/complaints" rel="noopener">hhs.gov/ocr/complaints</a> or <a href="tel:+18776966775">1-877-696-6775</a>.</p>`,
     },
     {
       id: 'changes', title: 'Changes to This Notice',
