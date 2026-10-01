@@ -6,6 +6,8 @@ Owner: **E** = Emmanuel (via Julian) · **J** = Julian · **P** = Pavel (content
 
 Last update: 2026-10-01 (after the Remaining Pages brief, and `docs/DECISIONS-2026-10-01.md`: internal notes off the public pages, repo stays put).
 
+**What blocks going live: [`docs/LAUNCH-CHECKLIST.md`](LAUNCH-CHECKLIST.md)** — the single launch list (consolidates this file, the audit and the decisions). When a launch item closes, mark it there too.
+
 **Audit against the elev8 Website System (2026-09-30): see `docs/AUDIT-2026-09-30.md`** — blockers, client asks and content items found there are not all copied below yet.
 
 ---
