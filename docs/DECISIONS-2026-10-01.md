@@ -74,3 +74,24 @@ Extra fixes (also wait for approval):
 - Use one neutral callback line everywhere ("We'll call you back as soon as possible") until the real timeframe is confirmed.
 - Remove `community-support-table.webp` (looks AI-generated and shows a child).
 - Before DNS: crawl the full redirect map against the preview and reconcile the counts (247 redirects / 131 × 410 in the build vs 270 / 132 in RPC_Sitemap_Redirect_Map_v2).
+
+---
+
+## IMPLEMENTED — 2026-10-01 (all items of "RECOMMENDED" approved with conditions)
+
+Approved by Jhonatan on 2026-10-01. Details, launch steps and how to use the bypass token: `docs/PENDING.md` §5b.
+
+| # | Done |
+|---|---|
+| 7.1 | Internal notes off the public pages ("Coming soon" blocks, inline notes deleted) |
+| 7.2 | Vercel protection = all (switch back to Standard at DNS launch); noindex by host in vercel.json; `npm run test:noindex`; bypass token in `.env` |
+| 7.3 | Repo stays in jhonatan-code |
+| 7.4 | /rego/ → /programs/ |
+| 7.5 | /12-step-program/ post; /withdrawal-symptoms/ → /substance-use/; /national-…-statistics/ → /blog/ |
+| 7.6 | 4 added redirects confirmed |
+| 7.7 | Byline links only to a real person's /our-team/{slug}/ |
+| 7.8 | 6-item menu; About · Our Team · Blog · Contact in utility bar, mobile menu, footer |
+| 7.9 | /evaluations/ → "drug and alcohol evaluations queens" |
+| 7.12 | No change |
+| Extras | "Call to check availability"; one callback line; AI image removed; lock + private line with Privacy · HIPAA links; lead logs redacted; redirect crawl (410 bug found and fixed) — `docs/REDIRECT-CRAWL.md` |
+| Open | 7.10 (share home copy changes), 7.11 (cookie banner: client + counsel) |
