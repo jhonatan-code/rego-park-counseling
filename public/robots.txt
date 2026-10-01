@@ -3,3 +3,5 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.regoparkcounseling.com/sitemap-index.xml
+
+# A curated summary of this site for language models: https://www.regoparkcounseling.com/llms.txt
