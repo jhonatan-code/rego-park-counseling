@@ -14,7 +14,9 @@ const EMBEDDED_SELF = /^\/(?:v\/)?https?:\/{1,2}(?:www\.)?regoparkcounseling\.co
 export const onRequest = defineMiddleware((context, next) => {
   if (context.isPrerendered) return next();
   if (isGone(context.url.pathname)) return goneResponse();
-  const self = context.url.pathname.match(EMBEDDED_SELF);
+  let path = context.url.pathname;
+  try { path = decodeURIComponent(path); } catch { /* keep raw */ } // Vercel passes ":" as %3A
+  const self = path.match(EMBEDDED_SELF);
   if (self) return context.redirect(self[1].endsWith('/') ? self[1] : `${self[1]}/`, 301);
   return next();
 });
