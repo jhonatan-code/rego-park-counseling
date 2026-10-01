@@ -167,12 +167,15 @@ export const UTILITY = [
 export const live = (links = []) => links.filter((l) => !l.pending);
 
 // Official social profiles: footer icons + Organization schema sameAs. Only accounts verified as RPC's (2026-10-01):
-// Instagram @regoparkcounseling (RPC logo, "Certified OASAS & Mental Health outpatient clinic", (718) 459-2558).
+// Instagram @regoparkcounseling (RPC logo, "Certified OASAS & Mental Health outpatient clinic", (718) 459-2558) and the
+// Yelp listing (claimed, links regoparkcounseling.com, 63-36 99th St, (718) 459-2558). These two only until the client
+// sends its own list (user, 2026-10-01). Reviews are never shown or marked up on the site (client rule).
 // NOT ours: facebook.com/regoparkcounseling is The Jewish Board, 97-99 Queens Blvd (the similarly named center — never
 // link it). Unconfirmed: TikTok @regoparkcounseling (empty, nothing ties it to RPC). No LinkedIn company page found.
 // Add Facebook / Google Business Profile / others only once the client confirms the URL (PENDING 5.14, 4.6).
 export const SOCIAL = [
   { label: 'Instagram', href: 'https://www.instagram.com/regoparkcounseling/', icon: 'instagram' },
+  { label: 'Yelp', href: 'https://www.yelp.com/biz/rego-park-counseling-queens', icon: 'yelp' },
 ];
 
 export const LEGAL = [
