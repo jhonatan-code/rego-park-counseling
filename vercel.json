@@ -1247,12 +1247,12 @@
     },
     {
       "source": "/national-mental-health-and-substance-use-statistics",
-      "destination": "/blog/",
+      "destination": "/addiction-and-mental-health-how-they-are-connected/",
       "statusCode": 301
     },
     {
       "source": "/national-mental-health-and-substance-use-statistics/",
-      "destination": "/blog/",
+      "destination": "/addiction-and-mental-health-how-they-are-connected/",
       "statusCode": 301
     },
     {

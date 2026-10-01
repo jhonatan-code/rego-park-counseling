@@ -5,9 +5,11 @@
 // Fields per the brand manual ("Four fields max. No email, no insurance ID, no health details. Posts to CTM with
 // source.") and the Home brief / About content: name*, phone*, preferred clinic, "I need help with". Client docs win
 // over the earlier Sunview field set (user, 2026-09-30). Yonkers presets the clinic (About content, Locations). Posts FormData to /api/lead/ (server-side CTM proxy) with source page,
-// form location. On acceptance it redirects to /thank-you/?clinic=&topic= (Remaining Pages brief), leaving a one-time
-// sessionStorage marker so that page pushes dataLayer {event:'callback_submit', form_location} exactly once. `inline`
-// (Yonkers waitlist) confirms in the card instead and pushes the event here.
+// form location. The site's ONE conversion is dataLayer {event:'lead_accepted', form_location} (DECISIONS-2026-10-01:
+// callback_submit retired). On CTM acceptance the form redirects to /thank-you/?sent=1&clinic=&topic= and leaves a
+// one-time sessionStorage marker; /thank-you/ pushes lead_accepted only when ?sent=1 AND the marker are both there, then
+// clears both, so a reload or a direct visit never counts. `inline` (Yonkers waitlist) confirms in the card and pushes
+// lead_accepted here (form_location "yonkers-waitlist"); if storage is blocked the form pushes it before redirecting.
 // A failed CTM call is never shown as success.
 // SMS consent (privacy-consent §4, Sunview pattern): its own unticked box, hidden until the visitor starts filling the
 // form; names the sender, message type, frequency, rates, STOP/HELP and links privacy + terms. Declining never blocks
@@ -193,18 +195,21 @@ const field =
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.error || 'We couldn’t send your request.');
         const w = window as any;
-        const push = () => (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: form.dataset.location });
+        const push = () => (w.dataLayer = w.dataLayer || []).push({ event: 'lead_accepted', form_location: form.dataset.location });
         if (form.dataset.inline) {
           push();
           form.reset();
           return show('Thank you. We’ll call you back as soon as possible.', true);
         }
-        // /thank-you/ fires the conversion from this marker; if storage is blocked, fire it here instead.
-        try { sessionStorage.setItem('rpc_lead', JSON.stringify({ form_location: form.dataset.location, t: Date.now() })); } catch { push(); }
+        // /thank-you/?sent=1 fires the conversion from this marker; if storage is blocked, fire it here instead and leave
+        // sent=1 off the URL so the thank-you page can't count it a second time.
+        let marked = true;
+        try { sessionStorage.setItem('rpc_lead', JSON.stringify({ form_location: form.dataset.location, t: Date.now() })); } catch { marked = false; push(); }
         const help = String(fd.get('help_with') || '');
         const topic = help === 'An evaluation' || (form.dataset.location || '').startsWith('evaluation') ? 'evaluation'
           : help === 'Mental health' ? 'mental-health' : help === 'Substance use' ? 'substance-use' : '';
         const q = new URLSearchParams();
+        if (marked) q.set('sent', '1');
         const clinicSel = String(fd.get('preferred_clinic') || '');
         if (clinicSel) q.set('clinic', clinicSel);
         if (topic) q.set('topic', topic);

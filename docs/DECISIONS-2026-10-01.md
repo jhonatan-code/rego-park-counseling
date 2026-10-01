@@ -87,7 +87,7 @@ Approved by Jhonatan on 2026-10-01. Details, launch steps and how to use the byp
 | 7.2 | Vercel protection = all (switch back to Standard at DNS launch); noindex by host in vercel.json; `npm run test:noindex`; bypass token in `.env` |
 | 7.3 | Repo stays in jhonatan-code |
 | 7.4 | /rego/ → /programs/ |
-| 7.5 | /12-step-program/ post; /withdrawal-symptoms/ → /substance-use/; /national-…-statistics/ → /blog/ |
+| 7.5 | /12-step-program/ post; /withdrawal-symptoms/ → /substance-use/; **revised:** /national-…-statistics/ → /addiction-and-mental-health-how-they-are-connected/ (not migrated) |
 | 7.6 | 4 added redirects confirmed |
 | 7.7 | Byline links only to a real person's /our-team/{slug}/ |
 | 7.8 | **Revised:** 7-item menu, About last as a dropdown (About Us, Our Team, Blog, Contact); Contact not a menu item (footer + call button); utility bar back to trust line + clinics, "Most Medicaid plans accepted · Telehealth available" from 1280px |
@@ -95,3 +95,11 @@ Approved by Jhonatan on 2026-10-01. Details, launch steps and how to use the byp
 | 7.12 | No change |
 | Extras | "Call to check availability"; one callback line; AI image removed; lock + private line with Privacy · HIPAA links; lead logs redacted; redirect crawl (410 bug found and fixed) — `docs/REDIRECT-CRAWL.md` |
 | Open | 7.10 (share home copy changes), 7.11 (cookie banner: client + counsel) |
+
+### Later the same day
+
+| # | Done |
+|---|---|
+| Conversion | ONE event: `lead_accepted` (only with `?sent=1` + the one-time marker, after CTM accepts); `callback_submit` retired. Reload / direct visit don't fire it (tested). For Oriana: PENDING 5.16 |
+| Privacy | Draft Privacy Policy discloses ad click identifiers (gclid…) kept for the visit (PENDING 5.11) |
+| CTM | 8 s timeout may duplicate a lead if CTM answers late: Oriana checks de-duplication (PENDING 5.17) |

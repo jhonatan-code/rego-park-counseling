@@ -3,8 +3,9 @@
 // accepted the lead (forms-ctm §5), with ?clinic= and ?topic= to personalize the copy. Yonkers waitlist keeps its
 // inline confirmation (it is not a booking).
 // noindex, nofollow; out of the XML sitemap (astro.config NOINDEX).
-// Conversion: the form leaves a one-time marker in sessionStorage; this page pushes dataLayer callback_submit once and
-// deletes the marker, so a reload, a back/forward visit or a direct visit never counts again.
+// Conversion (the site's only one): dataLayer lead_accepted, pushed only when the URL has ?sent=1 AND the one-time
+// sessionStorage marker the form writes after CTM accepted the lead. Both are cleared on the spot (marker removed, sent=1
+// stripped from the URL with replaceState), so a reload, back/forward or a direct visit to /thank-you/?sent=1 never counts.
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import NearbyRing from '../components/NearbyRing.astro';
@@ -97,15 +98,20 @@ const LINKS = [
   }
   if (q.get('topic') === 'evaluation') document.querySelector<HTMLElement>('[data-ty-eval]')?.classList.replace('hidden', 'flex');
 
-  // Conversion, once per submission (marker written by CallbackForm after CTM accepted the lead).
+  // Conversion, once per submission.
+  const sent = q.get('sent') === '1';
+  if (sent) {
+    q.delete('sent');
+    history.replaceState(history.state, '', `${location.pathname}${q.size ? `?${q}` : ''}${location.hash}`);
+  }
   try {
     const raw = sessionStorage.getItem('rpc_lead');
-    if (raw) {
-      sessionStorage.removeItem('rpc_lead');
+    sessionStorage.removeItem('rpc_lead');
+    if (sent && raw) {
       const lead = JSON.parse(raw) as { form_location?: string; t?: number };
       if (lead.t && Date.now() - lead.t < 10 * 60 * 1000) {
         const w = window as any;
-        (w.dataLayer = w.dataLayer || []).push({ event: 'callback_submit', form_location: lead.form_location || '' });
+        (w.dataLayer = w.dataLayer || []).push({ event: 'lead_accepted', form_location: lead.form_location || '' });
       }
     }
   } catch {}

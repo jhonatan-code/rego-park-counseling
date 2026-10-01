@@ -25,7 +25,7 @@ export const PRIVACY_POLICY = {
       html: `<ul>
         <li><strong>Information you give us:</strong> your name, phone number, email, preferred clinic and the type of help you are looking for when you submit a form or call us.</li>
         <li><strong>Call information:</strong> when you call a number on this website, our call tracking provider records the date, time, length of the call, the number you called from and the web page or ad that led to the call. [Confirm whether calls are recorded; if yes: “Calls may be recorded for quality and training.”]</li>
-        <li><strong>Website usage information:</strong> pages visited, device and browser type, approximate location (city level) and how you arrived at the site, collected through cookies and similar tools.</li>
+        <li><strong>Website usage information:</strong> pages visited, device and browser type, approximate location (city level) and how you arrived at the site, including the ad you clicked if you came from one, collected through cookies and similar tools.</li>
       </ul>
       <p>Please do not share medical details through website forms. We will ask about your health privately, by phone or in person.</p>`,
     },
@@ -42,7 +42,7 @@ export const PRIVACY_POLICY = {
     },
     {
       id: 'cookies-analytics-call-tracking', title: 'Cookies, Analytics and Call Tracking',
-      html: `<p>We use Google Analytics and Google Tag Manager to measure website traffic, and CallTrackingMetrics to know which pages and ads lead to calls and form requests. These tools use cookies or similar technologies. You can block or delete cookies in your browser settings; the website will still work.</p>`,
+      html: `<p>We use Google Analytics and Google Tag Manager to measure website traffic, and CallTrackingMetrics to know which pages and ads lead to calls and form requests. If you arrive by clicking an ad, we keep the ad’s click identifier (such as Google’s gclid) in your browser for the length of your visit, so we can tell which ad led to a call or form request. These tools use cookies or similar technologies. You can block or delete cookies in your browser settings; the website will still work.</p>`,
     },
     {
       id: 'text-messages', title: 'Text Messages',
