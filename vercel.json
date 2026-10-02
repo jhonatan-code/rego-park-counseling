@@ -1,6 +1,21 @@
 {
   "redirects": [
     {
+      "source": "/our-team/:slug/",
+      "destination": "/about/",
+      "statusCode": 302
+    },
+    {
+      "source": "/our-team/",
+      "destination": "/about/",
+      "statusCode": 302
+    },
+    {
+      "source": "/our-team",
+      "destination": "/about/",
+      "statusCode": 302
+    },
+    {
       "source": "/contact-us/",
       "destination": "/contact/",
       "statusCode": 301
@@ -12,13 +27,13 @@
     },
     {
       "source": "/about/our-team/",
-      "destination": "/our-team/",
-      "statusCode": 301
+      "destination": "/about/",
+      "statusCode": 302
     },
     {
       "source": "/about/our-team/:slug/",
-      "destination": "/our-team/:slug/",
-      "statusCode": 301
+      "destination": "/about/",
+      "statusCode": 302
     },
     {
       "source": "/counseling-service/mental-health/",

@@ -30,6 +30,7 @@ const INTENDED = {
   '/rego/': 'DECISIONS 7.4: 301 → /programs/ (map: /programs/core/)',
   '/withdrawal-symptoms/': 'DECISIONS 7.5: KEEP → 301 /substance-use/ (0 clicks)',
   '/national-mental-health-and-substance-use-statistics/': 'DECISIONS 7.5 (revised): KEEP → 301 /addiction-and-mental-health-how-they-are-connected/',
+  '/about/our-team/': 'Launch 2026-10-02: Our Team hidden until the staff list arrives → 302 /about/ (map: /our-team/)',
   '/addiction-treatments-for-couples/': 'PENDING 2.9: → /therapies/family-therapy/ until couples therapy is confirmed',
 };
 

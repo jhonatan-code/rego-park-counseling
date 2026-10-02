@@ -1,7 +1,9 @@
 // Legal pages: Privacy Policy, HIPAA Notice of Privacy Practices, Telehealth & Text Messaging Terms, Accessibility.
 // Source: "Rego Park Counseling — Remaining Pages Content" brief (Oct 1, 2026; docs/content/).
-// ⚠️ privacy-consent §1: Privacy Policy, HIPAA Notice and Telehealth & Text Terms are DRAFTS for RPC's attorney or
-// compliance officer. Set `approved: true` (with the date and approver) only after their sign-off is recorded in
+// ⚠️ privacy-consent §1: Privacy Policy, HIPAA Notice and Telehealth & Text Terms were written as drafts for RPC's
+// attorney or compliance officer. Published WITHOUT counsel approval on 2026-10-02 by decision of Jhonatan (launch):
+// no "Draft" note on the pages; `approved: false` keeps the record until counsel signs off. Set `approved: true`
+// (with the date and approver) only after their sign-off is recorded in
 // docs/PENDING.md 5.13; until then the page shows the review banner. If RPC already has an approved Notice of Privacy
 // Practices, its exact text replaces HIPAA_NOTICE.sections. Text in [brackets] still needs a fact.
 import { SITE, CLINICS } from './site.js';
@@ -19,7 +21,7 @@ export const PRIVACY_POLICY = {
   title: 'Privacy Policy | Rego Park Counseling',
   description: 'How Rego Park Counseling collects and uses information when you visit our website, call us, fill out a form or receive text messages.',
   h1: 'Website Privacy Policy',
-  dates: 'Effective date: [date of launch] · Last updated: [date]',
+  dates: 'Effective date: October 2, 2026 · Last updated: October 2, 2026',
   approved: false,
   intro: `This policy explains how Rego Park Counseling (“we”, “us”) collects and uses information when you visit regoparkcounseling.com, call us, fill out a form or receive text messages from us. Information about your care as a patient is protected by HIPAA and federal confidentiality rules and is described in our <a href="/hipaa-notice/">HIPAA Notice of Privacy Practices</a>.`,
   sections: [
@@ -83,7 +85,7 @@ export const HIPAA_NOTICE = {
   title: 'Notice of Privacy Practices (HIPAA) | Rego Park Counseling',
   description: 'How medical information about you may be used and disclosed at Rego Park Counseling, your rights, and how to reach our Privacy Officer.',
   h1: 'Notice of Privacy Practices',
-  dates: 'Effective date: [ ]',
+  dates: 'Effective date: October 2, 2026',
   approved: false,
   print: true, // "Download PDF" = print / save as PDF of this same text (brief: same text as the PDF and the clinic copy)
   accordion: true, // brief: accordion per section on mobile
@@ -129,7 +131,7 @@ export const HIPAA_NOTICE = {
     },
     {
       id: 'complaints', title: 'Complaints',
-      html: `<p>Contact our Privacy Officer: [Name], [phone], [email], ${ADDRESS}. You may also file a complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at <a href="https://www.hhs.gov/ocr/complaints" rel="noopener">hhs.gov/ocr/complaints</a> or <a href="tel:+18776966775">1-877-696-6775</a>.</p>`,
+      html: `<p>Contact our Privacy Officer: ${tel}, ${mail}, ${ADDRESS}. You may also file a complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at <a href="https://www.hhs.gov/ocr/complaints" rel="noopener">hhs.gov/ocr/complaints</a> or <a href="tel:+18776966775">1-877-696-6775</a>.</p>`,
     },
     {
       id: 'changes', title: 'Changes to This Notice',
@@ -143,7 +145,7 @@ export const TELEHEALTH_TERMS = {
   title: 'Telehealth & Text Messaging Terms | Rego Park Counseling',
   description: 'How telehealth sessions work at Rego Park Counseling, and the terms for appointment and service text messages (STOP to opt out, HELP for help).',
   h1: 'Telehealth and Text Messaging Terms',
-  dates: 'Last updated: [date]',
+  dates: 'Last updated: October 2, 2026',
   approved: false,
   sections: [
     {

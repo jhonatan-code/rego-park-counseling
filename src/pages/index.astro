@@ -213,7 +213,7 @@ const schema = [
                 <address class="mt-3 space-y-2 not-italic">
                   <span class="flex items-start gap-2"><Icon name="pin" size={20} class="mt-0.5 flex-none text-harbor" />{fullAddress(c)}</span>
                   <a href={c.phoneHref} class="flex items-center gap-2 font-bold text-harbor hover:underline" data-cta="call" data-location={c.id}><Icon name="phone" size={20} class="flex-none" />{c.phone}</a>
-                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Hours coming soon. Call us to book.'}</span>
+                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Call for hours.'}</span>
                 </address>
               ) : (
                 <p class="mt-3 text-slate">Licensed outpatient care is coming to Yonkers.</p>

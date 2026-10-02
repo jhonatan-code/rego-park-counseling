@@ -19,7 +19,6 @@ const cols = [
     href: '/about/',
     links: [
       { label: 'About Us', href: '/about/' },
-      { label: 'Our Team', href: '/our-team/' },
       { label: 'Insurance', href: '/insurance/' },
       { label: 'Locations', href: '/locations/' },
       { label: 'Blog', href: '/blog/' },
@@ -69,7 +68,7 @@ const year = new Date().getFullYear();
                 {c.street}<br />{c.city}, {c.region} {c.postal}
               </address>
             ) : (
-              <p class="mt-2 text-base leading-snug text-white/80">Address and opening date coming soon.</p>
+              <p class="mt-2 text-base leading-snug text-white/80">Opening soon. Join the list to hear when we open.</p>
             )}
             <a href={c.phoneHref} class="tap-target mt-1 text-base font-bold text-white hover:underline" data-cta="call" data-location={`footer-${c.id}`}>{c.phone}</a>
             {/* Hours pending from Emmanuel: shown once confirmed */}

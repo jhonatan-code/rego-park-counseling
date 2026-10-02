@@ -4,7 +4,7 @@
 // (drawer below lg). No form and no closing CTA band: these pages are for reading (contact sits in the last section).
 // `accordion` (HIPAA Notice, brief): each section is a <details>; below lg only the first is open, at lg all are open
 // and the summary is inert. Printing opens everything. `print`: "Download PDF" = the browser's print / save as PDF of
-// this exact text, so the PDF can never drift from the page. Drafts (`approved: false`) show the counsel-review note.
+// this exact text, so the PDF can never drift from the page. No draft note on the page (published for launch 2026-10-02; counsel approval tracked in PENDING 5.13).
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
 import TocList from './toc/TocList.astro';
@@ -51,12 +51,6 @@ const schema = [{ '@type': 'WebPage', '@id': `${SITE.url}${page.url}#webpage`, u
   <div class="bg-sky-wash py-10 lg:py-14">
     <div class="container-x lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-[30px]">
       <article class="min-w-0 rounded-[var(--radius-panel)] bg-white p-6 sm:p-10 xl:p-14">
-        {!page.approved && (
-          <p class="mb-8 flex items-start gap-3 rounded-[var(--radius-card)] bg-sand px-5 py-4 text-base text-ink" data-legal-draft>
-            <Icon name="info" size={20} class="mt-0.5 flex-none text-harbor" />
-            <span><strong>Draft for review.</strong> This text must be approved by Rego Park Counseling’s attorney or compliance officer before launch. Text in [brackets] still needs a fact.</span>
-          </p>
-        )}
         {page.callout && <p class="mb-8 rounded-[var(--radius-card)] border-l-[6px] border-harbor bg-sky-wash px-5 py-4 font-bold leading-relaxed text-harbor">{page.callout}</p>}
         {page.intro && <p class="lead measure mb-2" set:html={page.intro} />}
 

@@ -165,7 +165,7 @@ export const NAV = [
     cta: 'More about us', // mega panel intro link (default "Explore {label}")
     links: [
       { label: 'About Us', href: '/about/', desc: 'Who we are and how we work' },
-      { label: 'Our Team', href: '/our-team/', desc: 'Meet our licensed counselors' },
+      // Our Team hidden until the real staff list arrives (launch, 2026-10-02); /our-team/ 302s to /about/
       { label: 'Blog', href: '/blog/', desc: 'Plain-language guides and answers' },
       { label: 'Contact', href: '/contact/', desc: 'Call, visit or request a callback' },
     ],
