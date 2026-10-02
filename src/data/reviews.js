@@ -1,7 +1,9 @@
 // Google reviews for Rego Park Counseling, supplied by Jhonatan on 2026-10-02 (Google Business Profile). Text is
 // verbatim, including the reviewers' own spelling, punctuation, capitals and emoji. Don't edit it (only the display
 // name is shortened to first name + last initial, as on the Sunview build). Staff first names appear only because the
-// published reviews contain them (what-not-to-publish §7). No reviewer photos. No review or rating schema anywhere:
+// published reviews contain them (what-not-to-publish §7). `photo`: the reviewer's Google profile picture (64px,
+// sources in assets/reviews/), shown by decision of Jhonatan on 2026-10-02 although 5 of them are face photos and
+// what-not-to-publish §7 says no patient photos (PENDING 5g.4). Remove `photo` to fall back to the colored initial. No review or rating schema anywhere:
 // Google reviews are third-party, and self-serving rating markup breaks Google's review-snippet rules.
 // `rating`: shown as 5 stars per the reference design; confirm each review's stars on Google (PENDING 5g).
 
@@ -12,41 +14,49 @@ export const GBP_URL = 'https://www.google.com/maps/search/?api=1&query=Rego+Par
 export const REVIEWS = [
   {
     author: 'Gerald N.',
+    photo: '/images/reviews/gerald-n.webp',
     rating: 5,
     text: 'I have never seen a therapist before I scheduled an appointment with Rego Park Counseling and I did not know what to expect. Since day one the front desk staff is always timely, friendly, and very communicative with scheduling. My therapist Sam is simply stellar. She has been always attentive to my concerns, caring in approach,and sensitive to my needs. My appointments with Sam at Rego Park Counseling has been a totally positive experience that has enhanced my everyday life 100% .',
   },
   {
     author: 'Mayra G.',
+    photo: '/images/reviews/mayra-g.webp',
     rating: 5,
     text: 'I had a wonderful experience here. Friendly staff and very professional. Especially Sasha and Autumn. Thank you! I would recommend this place to anyone who needs this type of service!❤️',
   },
   {
     author: 'Darwin H.',
+    photo: '/images/reviews/darwin-h.webp',
     rating: 5,
     text: 'Well I would have to say at first I wasn’t happy being there due to the fact my job forced me to attend.. but after speaking with MIke who was very helpful and attentive to my\nNeeds her recommended I see Sam for further evaluation..but after a few sessions with Sam I learned to accept my circumstances and realized I in fact needed her guidance support and advice.. she’s been a great help and I would definitely recommend anyone with substance issues to come to Rego park counseling to see SAM!! She’s the best at what she does 💪🏾 and a big shout out to Mike for making it happen for me thank all u guys at rego park counseling !!!',
   },
   {
     author: 'Constantine W.',
+    photo: '/images/reviews/constantine-w.webp',
     rating: 5,
     text: 'Everybody here is great!!! I started coming here a few months ago during a very difficult time in my life. My therapist Mike helped me a great deal in overcoming a great deal of stress I was facing. I highly recommend this place to anybody who needs any help with a therapist!',
   },
   {
     author: 'Zayden Z.',
+    photo: '/images/reviews/zayden-z.webp',
     rating: 5,
     text: 'Sam Is The BEST THERAPIST EVER 💙She Makes Me Feel So Comfortable I Can Express Myself Without No Kind Of Judgement!',
   },
   {
     author: 'Mike L.',
+    photo: '/images/reviews/mike-l.webp',
     rating: 5,
     text: 'This is a great program that provides excellent substance abuse treatment with a very well trained staff who are compassionate and caring to each patient that enters their doors. Would recommend this program at anyone who is in need of treatment.',
   },
   {
     author: 'Luis M.',
+    photo: '/images/reviews/luis-m.webp',
     rating: 5,
     text: 'The staff at Rego Park Counseling are amazing and attuned to my needs.',
   },
   {
     author: 'Jeffrey B.',
+    photo: '/images/reviews/jeffrey-b.webp',
     rating: 5,
     text: 'very professional',
   },
