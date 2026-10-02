@@ -1,22 +1,35 @@
 ---
-// Footer (brief, "Footer"; brand manual 10 "Footer"). Repeats the key links for crawling and trust.
-// One block per clinic = the NAP that must match each Google Business Profile exactly.
-// Link columns: Mental Health, Substance Use, Evaluations, Programs, plus About/Insurance/Blog/Contact.
-// Licensing line, legal links, and the brand-separation line vs the similarly named center.
+// Footer (brief, "Footer"; brand manual 10 "Footer"). Mid-size layout ("Propuesta A", 2026-10-02):
+// brand row (logo, line, phone, social) → clinic cards (the NAP that must match each Google Business
+// Profile exactly) + three short link groups → licensing, brand-separation line and legal links.
+// Link groups collapse to tap-to-open sections below lg (open by default without JS).
+// No Nearby Ring here: the FinalCta band right above already carries the one ring per screen.
 import Icon from './Icon.astro';
-import NearbyRing from './NearbyRing.astro';
-import { SITE, NAV, CLINICS, LEGAL, SOCIAL, live } from '../data/site.js';
+import { SITE, CLINICS, LEGAL, SOCIAL } from '../data/site.js';
 
-const byLabel = (l: string) => NAV.find((n) => n.label === l)!;
-const programLinks = byLabel('Programs').columns!.flatMap((c) => live(c.links));
-const cols = [
-  { title: 'Mental Health', href: '/mental-health/', links: live(byLabel('Mental Health').links) },
-  { title: 'Substance Use', href: '/substance-use/', links: live(byLabel('Substance Use').links).filter((l) => l.href !== '/substance-use/') },
-  { title: 'Evaluations', href: '/evaluations/', links: live(byLabel('Evaluations').links) },
-  { title: 'Programs', href: '/programs/', links: programLinks },
+const groups = [
+  {
+    title: 'Care',
+    links: [
+      { label: 'Mental Health', href: '/mental-health/' },
+      { label: 'Anxiety Counseling', href: '/mental-health/anxiety-counseling/' },
+      { label: 'Depression Counseling', href: '/mental-health/depression-counseling/' },
+      { label: 'Substance Use', href: '/substance-use/' },
+      { label: 'Dual Diagnosis', href: '/substance-use/dual-diagnosis/' },
+    ],
+  },
+  {
+    title: 'Programs',
+    links: [
+      { label: 'Evaluations', href: '/evaluations/' },
+      { label: 'CORE (HARP)', href: '/programs/core/' },
+      { label: 'Telehealth', href: '/programs/telehealth/' },
+      { label: 'Therapies', href: '/therapies/' },
+      { label: 'Older Adults', href: '/who-we-serve/older-adults/' },
+    ],
+  },
   {
     title: 'Rego Park Counseling',
-    href: '/about/',
     links: [
       { label: 'About Us', href: '/about/' },
       { label: 'Insurance', href: '/insurance/' },
@@ -26,27 +39,33 @@ const cols = [
     ],
   },
 ];
+const open = CLINICS.filter((c) => c.status !== 'soon');
+const soon = CLINICS.filter((c) => c.status === 'soon');
 const year = new Date().getFullYear();
 ---
 <footer class="relative overflow-hidden bg-harbor text-white">
+  <div class="container-x pt-12 lg:pt-14">
 
-  {/* Clinics + NAP */}
-  <div class="container-x relative pt-14 lg:pt-20">
-    <div class="grid gap-10 lg:grid-cols-[1.1fr_2fr]">
-      <div>
+    {/* Brand row */}
+    <div class="flex flex-col gap-6 border-b border-white/15 pb-8 lg:flex-row lg:items-center lg:justify-between">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
         {/* Logo always on a white plate on dark grounds (brand manual 02) */}
-        <a href="/" class="inline-block rounded-[var(--radius-card)] bg-white px-5 py-4" aria-label="Rego Park Counseling, home">
-          <img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" loading="lazy" class="h-auto w-[220px]" />
+        <a href="/" class="inline-block shrink-0 self-start rounded-[var(--radius-card)] bg-white px-4 py-3 sm:self-auto" aria-label="Rego Park Counseling, home">
+          <img src="/images/brand/rego-park-counseling-logo.png" alt="Rego Park Counseling" width="347" height="75" loading="lazy" class="h-auto w-[200px]" />
         </a>
-        <p class="mt-6 max-w-sm text-lg leading-relaxed text-white/90">
+        <p class="max-w-sm text-base leading-relaxed text-white/90 lg:text-lg">
           Licensed outpatient counseling for mental health and substance use, close to home in Queens.
         </p>
-        <a href={SITE.phoneHref} class="mt-4 inline-flex min-h-12 items-center gap-2 font-display text-2xl font-extrabold text-white hover:text-sky" data-cta="call" data-location="footer">
-          <Icon name="phone" size={24} class="text-sky" /> {SITE.phone}
-        </a>
-        <p class="mt-1 text-base text-white/75">Fax {SITE.fax}</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+        <div>
+          <a href={SITE.phoneHref} class="inline-flex min-h-12 items-center gap-2 font-display text-2xl font-extrabold text-white hover:text-sky" data-cta="call" data-location="footer">
+            <Icon name="phone" size={24} class="text-sky" /> {SITE.phone}
+          </a>
+          <p class="text-sm text-white/75">Fax {SITE.fax}</p>
+        </div>
         {SOCIAL.length > 0 && (
-          <ul class="mt-5 flex items-center gap-2" aria-label="Follow Rego Park Counseling">
+          <ul class="flex items-center gap-2" aria-label="Follow Rego Park Counseling">
             {SOCIAL.map((s) => (
               <li>
                 <a href={s.href} target="_blank" rel="noopener" class="inline-flex size-12 items-center justify-center rounded-full border border-white/25 text-white transition-colors duration-200 hover:bg-white/10" aria-label={`Rego Park Counseling on ${s.label} (opens in a new tab)`}>
@@ -57,52 +76,66 @@ const year = new Date().getFullYear();
           </ul>
         )}
       </div>
+    </div>
 
-      <ul class="grid gap-4 sm:grid-cols-3">
-        {CLINICS.map((c) => (
-          <li class="rounded-[var(--radius-card)] border border-white/15 bg-white/[0.06] p-5">
-            <p class="text-sm font-bold uppercase tracking-[0.1em] text-sky">{c.label}</p>
-            <a href={c.href} class="tap-target font-display text-xl font-extrabold text-white hover:underline">{c.name}</a>
-            {c.street ? (
-              <address class="mt-2 text-base not-italic leading-snug text-white/90">
-                {c.street}<br />{c.city}, {c.region} {c.postal}
-              </address>
-            ) : (
-              <p class="mt-2 text-base leading-snug text-white/80">Opening soon. Join the list to hear when we open.</p>
+    <div class="grid gap-8 pt-8 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1fr] lg:gap-6">
+
+      {/* Clinic cards */}
+      <ul class="grid gap-3.5 sm:grid-cols-2 lg:col-span-2 lg:self-start">
+        {open.map((c) => (
+          <li class="rounded-[var(--radius-card)] border border-white/15 bg-white/[0.06] p-4 lg:p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.1em] text-sky">{c.label}</p>
+            <a href={c.href} class="font-display text-lg font-extrabold text-white hover:underline">{c.name}</a>
+            <address class="mt-1.5 flex gap-2 text-[15px] not-italic leading-snug text-white/85">
+              <Icon name="pin" size={16} class="mt-0.5 shrink-0 text-sky" />
+              <span>{c.street}, {c.city}, {c.region} {c.postal}</span>
+            </address>
+            {c.hours && (
+              <p class="mt-1.5 flex gap-2 text-[15px] leading-snug text-white/85">
+                <Icon name="clock" size={16} class="mt-0.5 shrink-0 text-sky" />
+                <span>{c.hours}</span>
+              </p>
             )}
-            <a href={c.phoneHref} class="tap-target mt-1 text-base font-bold text-white hover:underline" data-cta="call" data-location={`footer-${c.id}`}>{c.phone}</a>
-            {/* Hours pending from Emmanuel: shown once confirmed */}
-            {c.hours && <p class="mt-1 text-base text-white/80">{c.hours}</p>}
             {c.directions && (
-              <a href={c.directions} class="mt-1 inline-flex min-h-12 items-center gap-1.5 text-base font-bold text-sky hover:underline" target="_blank" rel="noopener" data-cta="directions" data-location={c.id}>
-                <Icon name="navigation" size={16} /> Get directions
+              <a href={c.directions} class="mt-1 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-bold text-sky hover:underline" target="_blank" rel="noopener" data-cta="directions" data-location={c.id}>
+                <Icon name="navigation" size={15} /> Get directions
               </a>
             )}
           </li>
         ))}
+        {soon.map((c) => (
+          <li class="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-card)] border border-dashed border-white/25 px-4 py-3 sm:col-span-2 lg:px-5">
+            <span>
+              <span class="block text-xs font-bold uppercase tracking-[0.1em] text-sky">{c.label}</span>
+              <a href={c.href} class="font-display text-lg font-extrabold text-white hover:underline">{c.name}</a>
+            </span>
+            <a href={c.href} class="inline-flex min-h-11 items-center gap-1 text-[15px] font-bold text-sky hover:underline">Join the list <span aria-hidden="true">→</span></a>
+          </li>
+        ))}
       </ul>
+
+      {/* Short link groups; tap-to-open below lg */}
+      <nav aria-label="Footer" class="lg:col-span-3 lg:grid lg:grid-cols-3 lg:gap-6">
+        {groups.map((g) => (
+          <details class="footer-group border-t border-white/15 lg:border-0" open>
+            <summary class="flex min-h-13 cursor-pointer list-none items-center justify-between font-display text-lg font-extrabold text-white lg:pointer-events-none lg:mb-2 lg:min-h-0 [&::-webkit-details-marker]:hidden">
+              {g.title}
+              <Icon name="plus" size={22} class="footer-plus text-sky transition-transform duration-200 lg:hidden" />
+            </summary>
+            <ul class="pb-3 lg:pb-0">
+              {g.links.map((l) => (
+                <li><a href={l.href} class="tap-target text-base leading-snug text-white/85 hover:text-white hover:underline">{l.label}</a></li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </nav>
     </div>
   </div>
 
-  {/* Link columns */}
-  <div class="container-x relative mt-12 lg:mt-16">
-    <nav aria-label="Footer" class="grid border-t border-white/15 pt-10 grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-5">
-      {cols.map((col) => (
-        <div>
-          <a href={col.href} class="tap-target font-display text-lg font-extrabold text-white hover:underline">{col.title}</a>
-          <ul class="mt-1">
-            {col.links.map((l) => (
-              <li><a href={l.href} class="tap-target text-base leading-snug text-white/85 hover:text-white hover:underline">{l.label}</a></li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </nav>
-  </div>
-
   {/* Licensing, separation line, legal */}
-  <div class="relative mt-12 bg-harbor-deep pb-28 lg:pb-0">
-    <div class="container-x flex flex-col gap-4 py-6 text-base text-white/85 lg:flex-row lg:items-center lg:justify-between">
+  <div class="relative mt-10 bg-harbor-deep pb-28 lg:mt-12 lg:pb-0">
+    <div class="container-x flex flex-col gap-3 py-5 text-[15px] text-white/85 lg:flex-row lg:items-center lg:justify-between">
       <div class="space-y-1">
         <p><strong class="text-white">{SITE.independentLine}</strong> Licensed by the New York State Office of Addiction Services and Supports (OASAS) and the Office of Mental Health (OMH).</p>
         <p>© {year} Rego Park Counseling. Outpatient care only.</p>
@@ -115,3 +148,15 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-group[open] :global(.footer-plus) { transform: rotate(45deg); }
+</style>
+
+<script>
+  // Below lg the link groups start closed (tap to open); at lg+ they are always open.
+  const mq = window.matchMedia('(min-width: 1024px)');
+  const sync = () => document.querySelectorAll<HTMLDetailsElement>('.footer-group').forEach((d) => { d.open = mq.matches; });
+  sync();
+  mq.addEventListener('change', sync);
+</script>
