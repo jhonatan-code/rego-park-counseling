@@ -51,7 +51,9 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': [org, website, crum
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Google Tag Manager: production host only, so local/preview visits never reach the client's GA4 or CTM -->
+    {/* GTM loads on the production host only, so local/preview visits never reach the client's GA4 or CTM.
+        (Astro comment: never shipped. Only the standard GTM markers below reach the page source.) */}
+    <!-- Google Tag Manager -->
     <script is:inline define:vars={{ gtm: SITE.gtm }}>if (/(^|\.)regoparkcounseling\.com$/.test(location.hostname)) (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -91,9 +93,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </main>
     <Footer />
     <MobileCallBar />
+    {/* Ad click ids (standards/forms-ctm.md §3): read from the landing URL and kept for the visit (sessionStorage),
+        because the visitor may fill the form on a later page. Only these keys; no personal data. */}
     <script is:inline>
-      // Ad click ids (standards/forms-ctm.md §3): read from the landing URL and kept for the visit (sessionStorage),
-      // because the visitor may fill the form on a later page. Only these keys; no personal data.
       (function () {
         var KEYS = ['gclid', 'gbraid', 'wbraid', 'msclkid', 'fbclid', 'campaignid', 'campaign_id', 'adgroupid', 'adgroup_id', 'creative', 'creative_id'];
         try {
