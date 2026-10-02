@@ -233,6 +233,20 @@ Fixed in this pass:
 Not issues: the dashed connector between steps is a decorative `aria-hidden` list item; the blog's empty `sr-only`
 paragraph is the screen-reader live region for search results.
 
+## 5f. Map section (2026-10-02, user: proposal B + Google Maps, ~80% of pages, always above the FAQ)
+
+- `ClinicMapPanel`: clinic switcher (Rego Park · Fresh Meadows) + one panel per clinic = Google map + label, name,
+  address, landmark line, phone, hours, Get directions, View clinic; optional telehealth card and Yonkers strip (a
+  single card takes the whole row). Both panels are in the HTML; the hidden clinic's map loads on its first open.
+- On 31 pages: home, about, contact, insurance, locations hub, Yonkers, MH/SU hubs + 9 condition pages, evaluations
+  hub + 2, programs/who-we-serve/therapies hubs + pages. **Placed directly above the FAQ** wherever a page has one;
+  pages without an FAQ (contact, about, locations, Yonkers, Social Care Network) keep it before the closing sections.
+  Not on: blog, posts, person pages, legal pages, thank-you, 404. Clinic pages keep a single Google map of that clinic.
+- Google Maps keyless embed by **address** (never by business name: the similarly named center on Queens Blvd),
+  `loading="lazy"`, `referrerpolicy="no-referrer"` (Google never gets the URL of the health page). Leaflet/OSM,
+  `ClinicsMap` and the old `LocationCards` removed. Privacy Policy (draft text) now names Google Maps and its cookies.
+- Evaluations pages: panel note "Call to confirm the location for your evaluation."; cost box is its own section.
+
 ## 5c. Brackets plan applied (2026-10-02, `docs/BRACKETS-FILL-PLAN-2026-10-02.md`)
 
 **Result:** the built site (220 pages) shows **no `[…]` in visible text, meta tags, JSON-LD, alt text or /llms.txt**, except the

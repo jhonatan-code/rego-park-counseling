@@ -9,7 +9,7 @@
 import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
 import PageHero from './PageHero.astro';
-import LocationCards from './LocationCards.astro';
+import ClinicMapPanel from './ClinicMapPanel.astro';
 import RelatedServices from './RelatedServices.astro';
 import InsuranceLine from './InsuranceLine.astro';
 import FaqList from './FaqList.astro';
@@ -205,8 +205,6 @@ const help = page.help;
   </section>
 
   {/* 5 · Where to get care */}
-  <LocationCards title={page.whereH2} telehealth={page.telehealth} />
-
   {/* 6 · Insurance line */}
   <InsuranceLine extra={page.insuranceExtra} />
 
@@ -232,6 +230,8 @@ const help = page.help;
   <RelatedServices related={page.related} posts={page.posts} />
 
   {/* 8 · FAQ */}
+  <ClinicMapPanel title={page.whereH2} eyebrow="Where to get care" telehealth={page.telehealth} />
+
   <FaqList title={page.faqH2} faqs={page.faqs} />
 
   {/* 9 · Crisis note */}

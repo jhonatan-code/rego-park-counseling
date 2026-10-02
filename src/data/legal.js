@@ -47,7 +47,7 @@ export const PRIVACY_POLICY = {
     },
     {
       id: 'cookies-analytics-call-tracking', title: 'Cookies, Analytics and Call Tracking',
-      html: `<p>We use Google Analytics and Google Tag Manager to measure website traffic, and CallTrackingMetrics to know which pages and ads lead to calls and form requests. If you arrive by clicking an ad, we keep the ad’s click identifier (such as Google’s gclid) in your browser for the length of your visit, so we can tell which ad led to a call or form request. These tools use cookies or similar technologies. You can block or delete cookies in your browser settings; the website will still work.</p>`,
+      html: `<p>We use Google Analytics and Google Tag Manager to measure website traffic, and CallTrackingMetrics to know which pages and ads lead to calls and form requests. If you arrive by clicking an ad, we keep the ad’s click identifier (such as Google’s gclid) in your browser for the length of your visit, so we can tell which ad led to a call or form request. These tools use cookies or similar technologies. Clinic maps on this website are provided by Google Maps; when a map loads, Google may set its own cookies under its privacy policy. We load maps without sending Google the address of the page you are on. You can block or delete cookies in your browser settings; the website will still work.</p>`,
     },
     {
       id: 'text-messages', title: 'Text Messages',

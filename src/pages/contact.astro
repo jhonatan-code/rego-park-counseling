@@ -6,9 +6,9 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
-import ClinicsMap from '../components/ClinicsMap.astro';
 import { SITE, CLINICS, fullAddress } from '../data/site.js';
 import MobileFormSection from '../components/MobileFormSection.astro';
+import ClinicMapPanel from '../components/ClinicMapPanel.astro';
 
 const open = CLINICS.filter((c) => c.status === 'open');
 const yonkers = CLINICS.find((c) => c.id === 'yonkers')!;
@@ -45,60 +45,8 @@ const schema = [
     bigPhone
   />
 
-  {/* Visit our clinics */}
-  <section class="section-y" aria-labelledby="visit-title">
-    <div class="container-x">
-      <div class="max-w-2xl">
-        <p class="eyebrow">Our clinics</p>
-        <h2 id="visit-title" class="mt-3">Visit Our Clinics</h2>
-      </div>
-
-      <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_1fr_1.15fr]">
-        {open.map((c) => (
-          <article class="flex flex-col rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-7" aria-labelledby={`clinic-${c.id}`}>
-            <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{c.id === 'rego-park' ? 'Main clinic' : c.label}</p>
-            <h3 id={`clinic-${c.id}`} class="mt-1 text-2xl">{c.name} Clinic</h3>
-            <dl class="mt-5 space-y-4">
-              <div class="flex gap-3">
-                <dt><span class="sr-only">Address</span><Icon name="pin" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd><address class="not-italic">{c.street}<br />{c.city}, {c.region} {c.postal}</address></dd>
-              </div>
-              <div class="flex gap-3">
-                <dt><span class="sr-only">Phone</span><Icon name="phone" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd><a href={c.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location={`contact-${c.id}`}>{c.phone}</a></dd>
-              </div>
-              <div class="flex gap-3">
-                <dt><span class="sr-only">Hours</span><Icon name="clock" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd class="text-slate">{c.hours ?? 'Call for hours.'}</dd>
-              </div>
-              <div class="flex gap-3">
-                <dt><span class="sr-only">Getting here</span><Icon name="subway" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd class="text-slate">{NEAR[c.id]}</dd>
-              </div>
-            </dl>
-            <div class="mt-auto flex flex-wrap gap-3 pt-6">
-              <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary !min-h-11 !px-4 !text-base" data-cta="directions" data-location={c.id}><Icon name="navigation" size={18} /> Get Directions</a>
-              <a href={c.href} class="inline-flex min-h-11 items-center gap-1.5 px-2 font-bold text-harbor hover:underline">View Clinic <Icon name="arrow-right" size={18} /></a>
-            </div>
-          </article>
-        ))}
-        <div class="min-h-[360px] overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white p-2 lg:min-h-0"><ClinicsMap /></div>
-      </div>
-
-      {/* Yonkers: opening soon */}
-      <div class="mt-6 flex flex-col gap-4 rounded-[var(--radius-panel)] border-2 border-dashed border-sky bg-sky-wash/60 p-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-        <div class="flex items-center gap-4">
-          <span class="inline-flex size-12 flex-none items-center justify-center rounded-full border-[3px] border-harbor bg-white" aria-hidden="true"></span>
-          <div>
-            <p class="text-sm font-bold uppercase tracking-[0.1em] text-attention">Opening soon</p>
-            <h3 class="text-xl">{yonkers.name} Clinic</h3>
-            <p class="text-slate">A new clinic in Yonkers is on the way. Leave your number and we’ll let you know when we open.</p>
-          </div>
-        </div>
-        <a href="#callback" class="btn-secondary flex-none" data-open-callback data-location="contact-yonkers">Get notified when we open</a>
-      </div>
-    </div>
-  </section>
+  {/* Visit our clinics: map panel (Google Maps) + Yonkers */}
+  <ClinicMapPanel id="visit" eyebrow="Our clinics" title="Visit Our Clinics" yonkers />
 
   {/* Other ways to reach us + crisis */}
   <section class="section-y bg-white" aria-labelledby="other-title">

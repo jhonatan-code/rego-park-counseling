@@ -8,7 +8,7 @@ import Base from '../layouts/Base.astro';
 import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
 import PageHero from './PageHero.astro';
-import LocationCards from './LocationCards.astro';
+import ClinicMapPanel from './ClinicMapPanel.astro';
 import InsuranceLine from './InsuranceLine.astro';
 import RelatedServices from './RelatedServices.astro';
 import FaqList from './FaqList.astro';
@@ -192,9 +192,10 @@ const slug = page.path.split('/').filter(Boolean).join('-');
     return null;
   })}
 
-  {page.where && <LocationCards title={page.where.h2} telehealth={page.where.telehealth} eyebrow={page.where.note ?? 'Where to get care'} />}
   {!page.hub && <InsuranceLine bg={page.where ? 'bg-white' : 'bg-white pt-16 lg:pt-24'} />}
   {page.related && <RelatedServices related={page.related} posts={page.posts ?? []} />}
+  {/* Clinic map panel on every block page (map section, user 2026-10-02) */}
+  <ClinicMapPanel title={page.where?.h2 ?? 'Find the Clinic Nearest You'} eyebrow="Where to get care" telehealth={page.where?.telehealth} />
   {faqs.length > 0 && <FaqList title={page.faqH2} faqs={page.faqs} />}
   <CrisisNote samhsa={page.path.startsWith('/programs/') || page.path.startsWith('/who-we-serve/court')} />
   <FinalCta title={page.finalH2} text="We’ll check your Medicaid plan on the call." note={legal} />

@@ -6,12 +6,12 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import NearbyRing from '../components/NearbyRing.astro';
 import CallbackForm from '../components/CallbackForm.astro';
-import ClinicsMap from '../components/ClinicsMap.astro';
 import FormCta from '../components/FormCta.astro';
 import { SITE, CLINICS, fullAddress } from '../data/site.js';
 import { HELP_CARDS, CONDITIONS, PROGRAMS, STEPS, WHY, FAQS, POSTS } from '../data/home.js';
 import { posts as ALL_POSTS, postUrl, postImage } from '../data/posts.js';
 import { clean } from '../data/mental-health.js';
+import ClinicMapPanel from '../components/ClinicMapPanel.astro';
 
 const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
 const groups = [...new Set(CONDITIONS.map((c) => c.group))];
@@ -186,70 +186,6 @@ const schema = [
     </div>
   </section>
 
-  {/* 6 · OUR CLINICS — local SEO section */}
-  <section class="section-y" aria-labelledby="clinics-title">
-    <div class="container-x">
-      <div class="max-w-3xl">
-        <p class="eyebrow">Our clinics</p>
-        <h2 id="clinics-title" class="mt-3">Counseling Near You in Rego Park, Fresh Meadows and Yonkers</h2>
-        <p class="lead mt-3">Care is easier when it’s close. Choose the clinic nearest home, or meet with us by telehealth.</p>
-      </div>
-
-      <ul class="mt-10 grid gap-6 md:grid-cols-3">
-        {CLINICS.map((c) => (
-          <li class="flex flex-col overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white">
-            {c.image ? (
-              <img src={c.image} alt={c.imageAlt} width="640" height="420" loading="lazy" class="aspect-[16/10] w-full object-cover" />
-            ) : (
-              <div class="relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden bg-sky-wash">
-                <NearbyRing class="absolute size-[360px]" />
-                <span class="relative rounded-full bg-white px-4 py-2 font-display font-extrabold text-harbor shadow">{c.name}</span>
-              </div>
-            )}
-            <div class="flex flex-1 flex-col p-6">
-              <p class:list={['text-sm font-bold uppercase tracking-[0.1em]', c.status === 'soon' ? 'text-attention' : 'text-slate']}>{c.label}</p>
-              <h3 class="mt-1">{c.name}</h3>
-              {c.street ? (
-                <address class="mt-3 space-y-2 not-italic">
-                  <span class="flex items-start gap-2"><Icon name="pin" size={20} class="mt-0.5 flex-none text-harbor" />{fullAddress(c)}</span>
-                  <a href={c.phoneHref} class="flex items-center gap-2 font-bold text-harbor hover:underline" data-cta="call" data-location={c.id}><Icon name="phone" size={20} class="flex-none" />{c.phone}</a>
-                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Call for hours.'}</span>
-                </address>
-              ) : (
-                <p class="mt-3 text-slate">Licensed outpatient care is coming to Yonkers.</p>
-              )}
-              <div class="mt-auto flex flex-wrap gap-3 pt-6">
-                {c.status === 'soon' ? (
-                  <a href="#callback" class="btn-secondary" data-open-callback data-location="yonkers-card">Get Notified</a>
-                ) : (
-                  <>
-                    <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary !min-h-11 !px-4 !text-base" data-cta="directions" data-location={c.id}><Icon name="navigation" size={18} /> Get Directions</a>
-                    <a href={c.href} class="inline-flex min-h-11 items-center gap-1.5 px-2 font-bold text-harbor hover:underline">View Clinic <Icon name="arrow-right" size={18} /></a>
-                  </>
-                )}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <div class="mt-8 grid overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white lg:grid-cols-[1fr_1.4fr]">
-        <div class="p-6 lg:p-10">
-          <h3>Getting here</h3>
-          <ul class="mt-5 space-y-5">
-            {CLINICS.filter((c) => c.nearby).map((c) => (
-              <li class="flex gap-3">
-                <span class="icon-dot"><Icon name={c.id === 'rego-park' ? 'subway' : 'pin'} /></span>
-                <p><strong class="font-display text-harbor">{c.name}.</strong> {c.nearby}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="min-h-[340px] p-2 lg:p-3"><ClinicsMap /></div>
-      </div>
-    </div>
-  </section>
-
   {/* 7 · INSURANCE AND MEDICAID — light Sky Wash band (the dark band now sits at section 2). Never list plan names. */}
   <section class="relative overflow-hidden bg-sky-wash" aria-labelledby="insurance-title">
     <div class="container-x section-y relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
@@ -350,6 +286,17 @@ const schema = [
 
   {/* 11 · Team block removed until real staff, photos and consent arrive (BRACKETS-FILL-PLAN 2.1; /our-team/ keeps
       "Coming soon" and noindex) */}
+
+  {/* 12b · OUR CLINICS (above the FAQ) — map panel (proposal B, Google Maps) + Yonkers */}
+  <ClinicMapPanel
+    id="clinics"
+    bg="porch"
+    eyebrow="Our clinics"
+    title="Counseling Near You in Rego Park, Fresh Meadows and Yonkers"
+    lead="Care is easier when it’s close. Choose the clinic nearest home, or meet with us by telehealth."
+    telehealth="Meet with a licensed counselor by secure video."
+    yonkers
+  />
 
   {/* 13 · FAQ — all answers in the HTML (feeds FAQPage schema) */}
   <section class="section-y" aria-labelledby="faq-title">

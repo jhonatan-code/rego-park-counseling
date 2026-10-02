@@ -10,7 +10,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
-import ClinicsMap from '../../components/ClinicsMap.astro';
+import GoogleMap from '../../components/GoogleMap.astro';
 import InsuranceLine from '../../components/InsuranceLine.astro';
 import FaqList from '../../components/FaqList.astro';
 import FinalCta from '../../components/FinalCta.astro';
@@ -128,7 +128,7 @@ const schema = [
         </dl>
         <a href={c.directions} target="_blank" rel="noopener" class="btn-secondary mt-8" data-cta="directions" data-location={`${id}-getting`}><Icon name="navigation" size={18} /> Get Directions</a>
       </div>
-      <div class="min-h-[380px] overflow-hidden rounded-[var(--radius-panel)] border border-line p-2"><ClinicsMap only={id} /></div>
+      <div class="h-[380px] overflow-hidden rounded-[var(--radius-panel)] border border-line bg-sky-wash"><GoogleMap clinic={c} /></div>
     </div>
   </section>
 

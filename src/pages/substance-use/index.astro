@@ -7,7 +7,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
-import LocationCards from '../../components/LocationCards.astro';
+import ClinicMapPanel from '../../components/ClinicMapPanel.astro';
 import InsuranceLine from '../../components/InsuranceLine.astro';
 import FaqList from '../../components/FaqList.astro';
 import CrisisNote from '../../components/CrisisNote.astro';
@@ -131,8 +131,8 @@ const schema = [
     </div>
   </section>
 
-  <LocationCards title="Substance Use Counseling in Rego Park and Fresh Meadows" telehealth="Prefer to stay home? Ask about telehealth." />
   <InsuranceLine />
+  <ClinicMapPanel title="Substance Use Counseling in Rego Park and Fresh Meadows" telehealth="Prefer to stay home? Ask about telehealth." />
   <FaqList title="Outpatient Substance Use Treatment FAQs" faqs={HUB.faqs} />
   <CrisisNote samhsa />
   <FinalCta title="Start Outpatient Treatment in Queens" text="Outpatient care close to home. We’ll check your Medicaid plan on the call." />

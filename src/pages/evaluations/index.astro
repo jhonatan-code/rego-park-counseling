@@ -12,6 +12,7 @@ import FinalCta from '../../components/FinalCta.astro';
 import { SITE } from '../../data/site.js';
 import { HUB, TRUST, EVAL_POSTS, NOT_LEGAL_ADVICE } from '../../data/evaluations.js';
 import { clean } from '../../data/mental-health.js';
+import ClinicMapPanel from '../../components/ClinicMapPanel.astro';
 
 const url = `${SITE.url}/evaluations/`;
 const crumbs = [{ name: 'Evaluations', href: '/evaluations/' }];
@@ -118,6 +119,7 @@ const schema = [
     </div>
   </section>
 
+  <ClinicMapPanel id="where" eyebrow="Where to get your evaluation" title="Evaluations in Queens" note="Call to confirm the location for your evaluation." />
   <FaqList title="Evaluation FAQs" faqs={HUB.faqs} lead="Deadline coming up? Call us with your paperwork." />
   <FinalCta title="Book Your Evaluation in Queens" text="Tell us who requested the evaluation and when it is due." note={`DWI: ${NOT_LEGAL_ADVICE}`} secondary="Book an Evaluation" />
 </Base>

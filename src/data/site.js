@@ -39,6 +39,7 @@ export const CLINICS = [
     image: '/images/clinics/rego-park-counseling-clinic-card.webp',
     imageAlt: 'Front entrance of the 63-36 99th Street building in Rego Park, Queens',
     // [Confirm with Emmanuel] neighborhoods + transit (brief, section 6 "Proposed")
+    reference: 'Near the 63rd Drive–Rego Park station (M and R trains).', // map panel landmark line
     nearby: 'Close to Forest Hills, Elmhurst, Middle Village and Kew Gardens. M and R trains at 63rd Drive.',
   },
   {
@@ -59,6 +60,7 @@ export const CLINICS = [
     geo: { lat: 40.7276, lng: -73.8107 }, // approximate (Parsons Blvd at 71st Ave); refine from the GBP pin
     image: null, // no clinic photo yet
     imageAlt: '',
+    reference: 'Close to Flushing, on Parsons Boulevard.',
     nearby: 'Close to Flushing, Hillcrest, Bayside and Jamaica Estates.',
   },
   {

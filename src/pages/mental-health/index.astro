@@ -6,7 +6,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
-import LocationCards from '../../components/LocationCards.astro';
+import ClinicMapPanel from '../../components/ClinicMapPanel.astro';
 import FaqList from '../../components/FaqList.astro';
 import CrisisNote from '../../components/CrisisNote.astro';
 import FinalCta from '../../components/FinalCta.astro';
@@ -137,12 +137,6 @@ const schema = [
   </section>
 
   {/* Where to get care */}
-  <LocationCards
-    title="Mental Health Counseling in Rego Park and Fresh Meadows"
-    telehealth="Telehealth sessions are available for many services."
-    fmLabel="Call to check availability"
-  />
-
   {/* Insurance */}
   <section class="section-y relative overflow-hidden bg-sky-wash" aria-labelledby="ins-title">
     <NearbyRing class="pointer-events-none absolute hidden -bottom-52 -right-40 size-[560px] lg:block" />
@@ -175,6 +169,10 @@ const schema = [
     </div>
   </section>
 
+  <ClinicMapPanel
+    title="Mental Health Counseling in Rego Park and Fresh Meadows"
+    telehealth="Telehealth sessions are available for many services."
+  />
   <FaqList title="Mental Health Clinic FAQs" faqs={HUB.faqs} />
   <CrisisNote />
   <FinalCta title="Talk to a Counselor in Queens" text="Licensed, outpatient and close to home. We’ll check your Medicaid plan on the call." />

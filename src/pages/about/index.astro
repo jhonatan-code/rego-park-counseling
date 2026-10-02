@@ -8,6 +8,7 @@ import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
 import FormCta from '../../components/FormCta.astro';
 import { SITE, CLINICS } from '../../data/site.js';
+import ClinicMapPanel from '../../components/ClinicMapPanel.astro';
 
 const PHILOSOPHY = [
   { icon: 'heart', title: 'Addiction is a health condition.', text: 'We treat it as a chronic illness, not a moral failing. You will not be judged here.' },
@@ -184,5 +185,6 @@ const schema = [
     </div>
   </section>
 
+  <ClinicMapPanel id="clinics" title="Find the Clinic Nearest You" telehealth="Meet with a licensed counselor by secure video." yonkers />
   <FormCta title="Ready to Talk?" text="Taking the first step is the hardest part. We’ll make the rest simple." formId="cb-about-final" location="about-final-band" />
 </Base>

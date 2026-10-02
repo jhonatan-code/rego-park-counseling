@@ -1,0 +1,18 @@
+---
+// Google Maps embed for one clinic (user, 2026-10-02: Google instead of Leaflet/OSM). Keyless embed by address (never by
+// business name: a similarly named center exists on Queens Blvd). Lazy, and referrerpolicy="no-referrer" so Google never
+// receives the URL of the health page the visitor is on. `defer`: no src until the tab is opened (ClinicMapPanel).
+import { SITE, fullAddress } from '../data/site.js';
+interface Props { clinic: any; defer?: boolean; class?: string }
+const { clinic: c, defer = false, class: cls } = Astro.props;
+const src = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress(c))}&z=16&output=embed`;
+---
+<iframe
+  class:list={['block h-full w-full border-0', cls]}
+  title={`Map of ${SITE.name}, ${c.name} clinic: ${fullAddress(c)}`}
+  src={defer ? undefined : src}
+  data-src={src}
+  loading="lazy"
+  referrerpolicy="no-referrer"
+  allowfullscreen
+></iframe>

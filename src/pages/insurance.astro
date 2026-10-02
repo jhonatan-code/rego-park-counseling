@@ -14,6 +14,7 @@ import FaqList from '../components/FaqList.astro';
 import FinalCta from '../components/FinalCta.astro';
 import { SITE } from '../data/site.js';
 import { clean } from '../data/mental-health.js';
+import ClinicMapPanel from '../components/ClinicMapPanel.astro';
 
 const EXTRA = [
   {
@@ -165,6 +166,7 @@ const schema = [
     </div>
   </section>
 
+  <ClinicMapPanel id="clinics" bg="porch" title="Find the Clinic Nearest You" telehealth="Many plans cover telehealth counseling. We’ll check yours." />
   <FaqList title="Insurance FAQs" faqs={FAQS} lead="Have your plan name ready and call us. We’ll check it for you." />
   <FinalCta title="Let Us Check Your Coverage" text="Coverage depends on your plan. We confirm before your first visit." secondary="Check My Coverage" />
 </Base>
