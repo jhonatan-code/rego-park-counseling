@@ -4,21 +4,25 @@
 // no-JS readers); the hidden clinic's map loads only when its tab is opened. Optional telehealth line and Yonkers strip.
 import Icon from './Icon.astro';
 import GoogleMap from './GoogleMap.astro';
+import Reviews from './Reviews.astro';
 import { CLINICS, fullAddress } from '../data/site.js';
 
 interface Props {
   title?: string; eyebrow?: string; lead?: string; telehealth?: string; note?: string;
   initial?: string; yonkers?: boolean; bg?: 'white' | 'porch' | 'wash'; id?: string; bare?: boolean;
+  reviews?: boolean; // Google reviews right above the map (user 2026-10-02: ~70% of pages; off on transactional pages)
 }
 const {
   title = 'Find the Clinic Nearest You', eyebrow = 'Our clinics', lead, telehealth, note,
-  initial = 'rego-park', yonkers = false, bg = 'white', id = 'clinics-map', bare = false,
+  initial = 'rego-park', yonkers = false, bg = 'white', id = 'clinics-map', bare = false, reviews = true,
 } = Astro.props;
 const open = CLINICS.filter((c) => c.status === 'open' && c.street);
 const first = open.find((c) => c.id === initial) ?? open[0];
 const soon = CLINICS.find((c) => c.status === 'soon');
 const bgClass = { white: 'bg-white', porch: 'bg-porch', wash: 'bg-sky-wash' }[bg];
 ---
+{/* 6 of the 8 reviews, a stable different window per page (Sunview pattern) */}
+{reviews && <Reviews limit={6} />}
 <section class:list={[bare ? '' : `section-y ${bgClass}`]} aria-labelledby={`${id}-title`} data-clinic-panel>
   <div class:list={[bare ? '' : 'container-x']}>
     <div class="max-w-3xl">

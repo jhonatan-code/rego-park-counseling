@@ -197,7 +197,7 @@ const legal = page.legal ? NOT_LEGAL_ADVICE : undefined;
   </section>
 
   {/* Where (map panel, Rego Park first) + cost */}
-  <ClinicMapPanel id="where" eyebrow="Where to get your evaluation" title={page.whereH2} note="Call to confirm the location for your evaluation." />
+  <ClinicMapPanel reviews={false} id="where" eyebrow="Where to get your evaluation" title={page.whereH2} note="Call to confirm the location for your evaluation." />
   <FaqList title={page.faqH2} faqs={page.faqs} lead="Deadline coming up? Call us with your paperwork and we’ll explain what we can provide." />
 
   <FinalCta title={page.finalH2} text="Tell us who requested the evaluation and when it is due." note={legal} secondary="Book an Evaluation" />

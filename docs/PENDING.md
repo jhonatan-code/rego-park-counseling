@@ -243,6 +243,7 @@ initial, reviewer photos (5g.4), **no Review / AggregateRating schema**.
 
 | # | Open item | Owner |
 |---|---|---|
+| 5g.0 | **Also on ~70% of pages (user 2026-10-02):** `ClinicMapPanel` renders the reviews (6 of 8, stable window per page) right above the map, so the order is reviews → map → FAQ. On 22 of the 31 map pages; off (`reviews={false}`) on Contact, Insurance, Yonkers, the 3 Evaluations pages, CORE, Social Care Network and Court-Ordered (transactional pages); Home keeps its own section with all 8 | ☑ |
 | 5g.1 | Every card shows **5 stars** (as in the reference). Confirm on Google that each of the 8 reviews is 5-star; change `rating` for any that isn't | Jh / C |
 | 5g.2 | "Read our reviews on Google" opens a Google Maps search for "Rego Park Counseling, 63-36 99th Street…". Replace `GBP_URL` with the profile's own link (`maps.google.com/?cid=…`) once Cristofer confirms it (4.6) | C |
 | 5g.4 | **Reviewer photos shown by decision of Jhonatan (2026-10-02)**: the 8 Google profile pictures he supplied (sources `assets/reviews/`, 64px WebP in `public/images/reviews/`). 5 are face photos (Gerald, Darwin, Constantine, Zayden, Mike); Mayra = illustration, Jeffrey/Luis = Google letter avatars. ⚠️ what-not-to-publish §7 says "No photographs of patients, ever" (Sunview kept initials for this reason): warned before publishing; recommend Elizabeth/Julian sign-off. To revert: delete the `photo` lines in `src/data/reviews.js` (colored initials come back) | Jh → Elizabeth/Julian |

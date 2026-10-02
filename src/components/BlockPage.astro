@@ -195,7 +195,7 @@ const slug = page.path.split('/').filter(Boolean).join('-');
   {!page.hub && <InsuranceLine bg={page.where ? 'bg-white' : 'bg-white pt-16 lg:pt-24'} />}
   {page.related && <RelatedServices related={page.related} posts={page.posts ?? []} />}
   {/* Clinic map panel on every block page (map section, user 2026-10-02) */}
-  <ClinicMapPanel title={page.where?.h2 ?? 'Find the Clinic Nearest You'} eyebrow="Where to get care" telehealth={page.where?.telehealth} />
+  <ClinicMapPanel reviews={!['/programs/core/', '/programs/social-care-network/', '/who-we-serve/court-involved/'].includes(Astro.url.pathname)} title={page.where?.h2 ?? 'Find the Clinic Nearest You'} eyebrow="Where to get care" telehealth={page.where?.telehealth} />
   {faqs.length > 0 && <FaqList title={page.faqH2} faqs={page.faqs} />}
   <CrisisNote samhsa={page.path.startsWith('/programs/') || page.path.startsWith('/who-we-serve/court')} />
   <FinalCta title={page.finalH2} text="We’ll check your Medicaid plan on the call." note={legal} />

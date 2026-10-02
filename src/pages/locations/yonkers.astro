@@ -26,7 +26,7 @@ const queens = CLINICS.filter((c) => c.status === 'open');
 
   {/* Planned services list removed until confirmed (BRACKETS-FILL-PLAN 1.8) */}
 
-  <ClinicMapPanel id="open-now" eyebrow="Open now" title="Our Queens Clinics Are Open" lead="You don’t have to wait for Yonkers. Visit us in Rego Park or Fresh Meadows, or meet by telehealth." telehealth="Meet with a licensed counselor by secure video." />
+  <ClinicMapPanel reviews={false} id="open-now" eyebrow="Open now" title="Our Queens Clinics Are Open" lead="You don’t have to wait for Yonkers. Visit us in Rego Park or Fresh Meadows, or meet by telehealth." telehealth="Meet with a licensed counselor by secure video." />
 
   {/* Mobile: the waitlist form (not in the banner below 1024px) */}
   <MobileFormSection />
