@@ -4,10 +4,12 @@
 import Icon from './Icon.astro';
 import NearbyRing from './NearbyRing.astro';
 import { SITE } from '../data/site.js';
+import MobileFormSection from './MobileFormSection.astro';
 
 interface Props { title: string; text: string; tone?: 'sand' | 'sky'; note?: string; secondary?: string }
 const { title, text, tone = 'sand', note, secondary = 'Request a Callback' } = Astro.props;
 ---
+<MobileFormSection />
 <section class:list={['relative overflow-hidden', tone === 'sand' ? 'bg-sand' : 'bg-sky-wash']} aria-labelledby="final-cta">
   <NearbyRing class="pointer-events-none absolute -right-48 -top-64 hidden size-[560px] lg:block" />
   <div class="container-x relative flex flex-col items-start gap-8 py-14 lg:flex-row lg:items-center lg:justify-between lg:py-20">

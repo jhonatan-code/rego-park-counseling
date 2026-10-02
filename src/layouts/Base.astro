@@ -106,11 +106,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       })();
     </script>
     <script>
-      // "Request a Callback" buttons: go to this page's form if it has one, else /contact/.
+      // "Request a Callback" buttons: go to the form that is visible at this screen size (banner on desktop,
+      // #callback-mobile below 1024px; home: section 2), else /contact/. Resolved on click so a resize is respected.
+      const visibleForm = () => [...document.querySelectorAll<HTMLFormElement>('form.rpc-callback')].find((f) => f.offsetParent !== null);
+      const formSection = () => visibleForm()?.closest<HTMLElement>('[id]') ?? null;
       document.querySelectorAll<HTMLAnchorElement>('[data-open-callback]').forEach((a) => {
-        const form = document.getElementById('callback');
-        a.href = form ? '#callback' : '/contact/';
-        if (form) a.addEventListener('click', () => setTimeout(() => (form.querySelector('input[name=name]') as HTMLInputElement | null)?.focus({ preventScroll: true }), 450));
+        const sec = formSection();
+        a.href = sec ? `#${sec.id}` : '/contact/';
+        a.addEventListener('click', (e) => {
+          const target = formSection();
+          if (!target) return;
+          e.preventDefault();
+          history.replaceState(history.state, '', `#${target.id}`);
+          target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+          setTimeout(() => (visibleForm()?.querySelector('input[name=name]') as HTMLInputElement | null)?.focus({ preventScroll: true }), 450);
+        });
       });
       // GA4 events through GTM (brief, "Tracking"): click_to_call and directions_click, with a location parameter.
       document.addEventListener('click', (e) => {

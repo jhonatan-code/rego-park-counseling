@@ -237,6 +237,7 @@ EXAMPLE_REWRITES = {
 for r in result:
     for k, v in EXAMPLE_REWRITES.items():
         r['body'] = r['body'].replace(k, v)
+    r['body'] = re.sub(r'<a>\s*</a>', '', r['body'])  # empty WP anchors inside headings (QA 2026-10-02)
 # Hand-migrated posts ("manual": true, e.g. /12-step-program/, whose text the API doesn't return) survive a re-run.
 old = json.loads((ROOT / 'src/data/posts.json').read_text()) if (ROOT / 'src/data/posts.json').exists() else []
 result += [o for o in old if o.get('manual') and o['slug'] not in {r['slug'] for r in result}]

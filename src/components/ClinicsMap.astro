@@ -3,6 +3,9 @@
 // when the map scrolls near the viewport, so it never touches LCP. OSM tiles, desaturated to stay calm.
 // OSM's tile policy fits a small clinic site; switch to a keyed provider if traffic grows.
 import { CLINICS, fullAddress } from '../data/site.js';
+// Leaflet's CSS is bundled with the page (inlined like every stylesheet here). A dynamic import() of it produced a
+// CSS chunk the build never emitted (404 → Vite preload error → no map), found in QA 2026-10-02.
+import 'leaflet/dist/leaflet.css';
 interface Props { only?: string } // clinic id → single-pin map for a clinic page
 const { only } = Astro.props;
 const pins = CLINICS.filter((c) => c.geo && (!only || c.id === only)).map((c) => ({ name: c.name, address: fullAddress(c), lat: c.geo.lat, lng: c.geo.lng, href: c.href }));
@@ -15,7 +18,7 @@ const pins = CLINICS.filter((c) => c.geo && (!only || c.id === only)).map((c) =>
   const el = document.querySelector<HTMLElement>('.rpc-map');
   if (el) {
     const load = async () => {
-      const [{ default: L }] = await Promise.all([import('leaflet'), import('leaflet/dist/leaflet.css')]);
+      const { default: L } = await import('leaflet');
       const pins = JSON.parse(el.dataset.pins || '[]') as { name: string; address: string; lat: number; lng: number; href: string }[];
       el.innerHTML = '';
       const map = L.map(el, { scrollWheelZoom: false, attributionControl: true });

@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import PageHero from '../components/PageHero.astro';
 import ClinicsMap from '../components/ClinicsMap.astro';
 import { SITE, CLINICS, fullAddress } from '../data/site.js';
+import MobileFormSection from '../components/MobileFormSection.astro';
 
 const open = CLINICS.filter((c) => c.status === 'open');
 const yonkers = CLINICS.find((c) => c.id === 'yonkers')!;
@@ -137,6 +138,9 @@ const schema = [
       </aside>
     </div>
   </section>
+
+  {/* Mobile: the form (not in the banner below 1024px) */}
+  <MobileFormSection />
 
   {/* Brand separation line */}
   <section class="border-t border-line bg-porch" aria-label="About our name">

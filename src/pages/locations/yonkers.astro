@@ -10,6 +10,7 @@ import NearbyRing from '../../components/NearbyRing.astro';
 import PageHero from '../../components/PageHero.astro';
 import { SITE, CLINICS } from '../../data/site.js';
 import { YONKERS } from '../../data/locations.js';
+import MobileFormSection from '../../components/MobileFormSection.astro';
 
 const crumbs = [{ name: 'Locations', href: '/locations/' }, { name: 'Yonkers', href: '/locations/yonkers/' }];
 const queens = CLINICS.filter((c) => c.status === 'open');
@@ -23,6 +24,9 @@ const queens = CLINICS.filter((c) => c.status === 'open');
   </PageHero>
 
   {/* Planned services list removed until confirmed (BRACKETS-FILL-PLAN 1.8) */}
+
+  {/* Mobile: the waitlist form (not in the banner below 1024px) */}
+  <MobileFormSection />
 
   {/* Until we open */}
   <section class="section-y relative overflow-hidden bg-sand" aria-labelledby="before-title">

@@ -1,0 +1,23 @@
+---
+// Mobile-only form section (user, 2026-10-02): below 1024px the banner shows no form; the page's form lives here,
+// just before the closing band. Same form as the banner (PageHero stores its settings in Astro.locals.rpcForm), with
+// its own ids and a "-mobile" form_location. Rendered by FinalCta, and directly on pages without one (Contact, Yonkers).
+// Pages whose closing band already holds the form (FormCta: About) don't render this.
+import CallbackForm from './CallbackForm.astro';
+const f = (Astro.locals as any).rpcForm as
+  | { formId: string; location: string; heading: string; button?: string; clinic?: string; inline?: boolean }
+  | undefined;
+const title = f?.inline ? 'Join the Yonkers List' : 'Talk to Someone This Week';
+const lead = f?.inline ? 'Leave your number and we’ll call you when the Yonkers clinic opens.' : 'Leave your number. We’ll call you back as soon as possible.';
+---
+{f && (
+  <section id="callback-mobile" class="scroll-mt-24 bg-harbor py-12 text-white lg:hidden" aria-labelledby="callback-mobile-title">
+    <div class="container-x">
+      <h2 id="callback-mobile-title" class="!text-white">{title}</h2>
+      <p class="mt-3 text-lg text-white/90">{lead}</p>
+      <div class="mt-6">
+        <CallbackForm formId={`${f.formId}-m`} location={`${f.location}-mobile`} heading={f.heading} button={f.button} clinic={f.clinic} inline={f.inline} />
+      </div>
+    </div>
+  </section>
+)}

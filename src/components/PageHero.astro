@@ -25,6 +25,8 @@ interface Props {
   formInline?: boolean;   // confirm in the card instead of /thank-you/ (Yonkers waitlist: not a booking)
 }
 const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callback', points = [], bigPhone = false, trust = [], formLocation = 'page-hero', formButton, note, formClinic, formInline = false } = Astro.props;
+// Below 1024px the form is not in the banner: MobileFormSection (rendered before the closing band) shows it instead.
+(Astro.locals as any).rpcForm = { formId, location: formLocation, heading: formHeading, button: formButton, clinic: formClinic, inline: formInline };
 ---
 <section id="callback" class="relative scroll-mt-24 overflow-hidden bg-harbor text-white" aria-labelledby="page-title">
   <NearbyRing class="pointer-events-none absolute -bottom-40 -right-40 hidden size-[640px] opacity-25 lg:block" />
@@ -76,8 +78,9 @@ const { title, sub, eyebrow, crumbs = [], formId, formHeading = 'Request a Callb
         </a>
       )}
       {note && <p class="measure mt-6 flex items-start gap-2 text-base text-white/80"><Icon name="info" size={18} class="mt-0.5 flex-none text-sky" />{note}</p>}
+      <a href="#callback-mobile" class="btn-on-dark mt-6 w-full sm:w-auto lg:hidden" data-open-callback data-location="page-hero-mobile">{formButton ?? formHeading}</a>
     </div>
-    <div class="flex justify-center lg:justify-end">
+    <div class="hidden lg:flex lg:justify-end">
       <CallbackForm formId={formId} location={formLocation} heading={formHeading} button={formButton} clinic={formClinic} inline={formInline} />
     </div>
   </div>

@@ -214,6 +214,25 @@ Last update: 2026-10-01 (after the Remaining Pages brief, and `docs/DECISIONS-20
 | L4 | ☑ 2026-10-02: `CTM_FORMREACTOR_ENDPOINT` and `CTM_FORMREACTOR_KEY` set in Vercel (Production + Preview, Sensitive) by Jhonatan; production redeployed. **Test lead sent** from /contact/ on rego-park-counseling.vercel.app ("elev8 Test Lead", (212) 555-0100, Rego Park, Not sure, no SMS opt-in): route 200 `{ok:true}` (CTM accepted), thank-you shown, `lead_accepted` fired once. Pending for Oriana: check the record in CTM field by field, then mark/delete it in CTM and any CRM. Expected on the preview: no web visit/`visitor_sid` (GTM + CTM tracker load only on www.regoparkcounseling.com) — re-check one lead after DNS | ◐ Oriana checks the record |
 | L5 | ⛔ **At DNS go-live, switch Vercel Deployment Protection back to Standard** (`all_except_custom_domains`), or www.regoparkcounseling.com will ask visitors for a Vercel login (see 7.2) | ☐ **Launch step** |
 
+## 5e. Launch QA (2026-10-02)
+
+Full crawl of the built site, 219 pages × mobile 390px + desktop 1440px (playwright + checks): no horizontal scroll or
+off-screen elements, no broken internal links (218) or images (196), one H1 per page, no JS errors, no empty sections,
+headings, lists or links, at most one visible form per page (Home: 2 by design, section 2 + closing band; About desktop: 2),
+no brackets / draft / coming soon / TBD / internal names or notes in visible text, attributes or page source.
+
+Fixed in this pass:
+- **Mobile form (user):** below 1024px the banner shows no form (a "Request a Callback" button instead); the page's form
+  lives in a new mobile-only section just before the closing band (`MobileFormSection`, rendered by FinalCta; Contact and
+  Yonkers add it directly; About keeps its closing-band form). Own ids, `form_location` "…-mobile". All "Request a
+  Callback" links (hero, closing band, mobile bar) go to whichever form is visible at that size.
+- **Maps were broken on the live site:** Leaflet's CSS was dynamically imported and never emitted (404 → no map on Home,
+  Contact, Locations, clinic pages). Now bundled with the page; verified markers + tiles on mobile and desktop.
+- 3,314 empty `<a></a>` left by WordPress inside post headings removed (posts.json + importer).
+
+Not issues: the dashed connector between steps is a decorative `aria-hidden` list item; the blog's empty `sr-only`
+paragraph is the screen-reader live region for search results.
+
 ## 5c. Brackets plan applied (2026-10-02, `docs/BRACKETS-FILL-PLAN-2026-10-02.md`)
 
 **Result:** the built site (220 pages) shows **no `[…]` in visible text, meta tags, JSON-LD, alt text or /llms.txt**, except the
