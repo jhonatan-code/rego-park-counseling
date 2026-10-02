@@ -1,24 +1,26 @@
 ---
-// One-line Medicaid strip used on service and clinic pages. Never names plans.
+// Medicaid band (proposal B, user 2026-10-02): slim full-width Harbor band between sections on service, program,
+// therapy, SU hub and clinic pages. Big message + shield, magenta call button, outline Insurance link; one Nearby Ring
+// cropped off the right edge (behind the buttons, never behind text). Never names plans.
 import Icon from './Icon.astro';
+import NearbyRing from './NearbyRing.astro';
 import { SITE } from '../data/site.js';
 interface Props { text?: string; extra?: { text: string; href: string; label: string }; bg?: string }
-const { text = 'Call us and we’ll check yours.', extra, bg = 'bg-white' } = Astro.props;
+const { text = 'Call us and we’ll check yours.', extra } = Astro.props;
 ---
-<section class:list={[bg, 'pb-16 lg:pb-24']} aria-label="Insurance">
-  <div class="container-x">
-    <div class="relative flex flex-col gap-4 overflow-hidden rounded-[var(--radius-panel)] border border-sky bg-sky-wash p-6 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-      <div class="flex items-start gap-4">
-        <span class="icon-dot bg-white"><Icon name="medicaid" /></span>
-        <div>
-          <p class="font-display text-xl font-extrabold text-harbor">We accept most Medicaid plans.</p>
-          <p class="text-slate">{text}{extra && <> {extra.text} <a href={extra.href} class="text-link">{extra.label}</a></>}</p>
-        </div>
+<section class="relative overflow-hidden bg-harbor text-white" aria-label="Insurance">
+  <NearbyRing class="pointer-events-none absolute -right-24 -top-28 hidden size-[300px] opacity-20 md:block" />
+  <div class="container-x relative flex flex-col gap-5 py-8 md:flex-row md:items-center md:justify-between lg:py-9">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex size-14 flex-none items-center justify-center rounded-full bg-white/10 text-sky"><Icon name="medicaid" size={26} /></span>
+      <div>
+        <p class="font-display text-2xl font-extrabold leading-tight text-white">We accept most Medicaid plans.</p>
+        <p class="mt-1 text-white/90">{text}{extra && <> {extra.text} <a href={extra.href} class="font-bold text-white underline decoration-sky decoration-2 underline-offset-4 hover:decoration-white">{extra.label}</a></>}</p>
       </div>
-      <div class="flex flex-none flex-wrap gap-3">
-        <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="insurance-line"><Icon name="phone" size={20} /> Check my plan</a>
-        <a href="/insurance/" class="btn-secondary">Insurance</a>
-      </div>
+    </div>
+    <div class="flex flex-none flex-col gap-3 sm:flex-row">
+      <a href={SITE.phoneHref} class="btn-call" data-cta="call" data-location="insurance-line"><Icon name="phone" size={20} /> Check my plan</a>
+      <a href="/insurance/" class="btn-on-dark">Insurance</a>
     </div>
   </div>
 </section>
