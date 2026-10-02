@@ -233,6 +233,20 @@ Fixed in this pass:
 Not issues: the dashed connector between steps is a decorative `aria-hidden` list item; the blog's empty `sr-only`
 paragraph is the screen-reader live region for search results.
 
+## 5g. Google reviews on Home (2026-10-02, user)
+
+Reverses decisions 6.6 / "Reviews section skipped on Home": the user supplied 8 Google reviews and asked for the Sunview
+reviews section, identical, right above the Home map (order: reviews → map → FAQ). `src/components/Reviews.astro` is the
+Sunview component (carousel 4.1/2.1/1.1 cards, arrows, 5-line text + "More", Google Reviews badge, "Read our reviews on
+Google"); data in `src/data/reviews.js`: text verbatim (spelling, capitals, emoji kept), names as first name + last
+initial, no photos, **no Review / AggregateRating schema**.
+
+| # | Open item | Owner |
+|---|---|---|
+| 5g.1 | Every card shows **5 stars** (as in the reference). Confirm on Google that each of the 8 reviews is 5-star; change `rating` for any that isn't | Jh / C |
+| 5g.2 | "Read our reviews on Google" opens a Google Maps search for "Rego Park Counseling, 63-36 99th Street…". Replace `GBP_URL` with the profile's own link (`maps.google.com/?cid=…`) once Cristofer confirms it (4.6) | C |
+| 5g.3 | Reviews name staff (Sam, Sasha, Autumn, Mike): fine as published text (what-not-to-publish §7); remove a card if a staff member or reviewer asks | E |
+
 ## 5f. Map section (2026-10-02, user: proposal B + Google Maps, ~80% of pages, always above the FAQ)
 
 - `ClinicMapPanel`: clinic switcher (Rego Park · Fresh Meadows) + one panel per clinic = Google map + label, name,

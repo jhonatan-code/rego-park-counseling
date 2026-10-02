@@ -12,6 +12,7 @@ import { HELP_CARDS, CONDITIONS, PROGRAMS, STEPS, WHY, FAQS, POSTS } from '../da
 import { posts as ALL_POSTS, postUrl, postImage } from '../data/posts.js';
 import { clean } from '../data/mental-health.js';
 import ClinicMapPanel from '../components/ClinicMapPanel.astro';
+import Reviews from '../components/Reviews.astro';
 
 const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
 const groups = [...new Set(CONDITIONS.map((c) => c.group))];
@@ -286,6 +287,9 @@ const schema = [
 
   {/* 11 · Team block removed until real staff, photos and consent arrive (BRACKETS-FILL-PLAN 2.1; /our-team/ keeps
       "Coming soon" and noindex) */}
+
+  {/* 12a · GOOGLE REVIEWS — Sunview design, right above the map (user, 2026-10-02) */}
+  <Reviews />
 
   {/* 12b · OUR CLINICS (above the FAQ) — map panel (proposal B, Google Maps) + Yonkers */}
   <ClinicMapPanel
