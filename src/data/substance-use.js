@@ -168,9 +168,9 @@ export const PAGES = [
 export const HUB = {
   treat: [
     { href: '/substance-use/alcohol-use-treatment/', label: 'Alcohol Use Treatment', icon: 'sprout', text: 'For drinking that has become hard to control.' },
-    { href: '/substance-use/drug-use-treatment/', label: 'Drug Use Treatment', icon: 'shield', text: 'For marijuana, cocaine, opioids, pills and other drugs.' },
+    { href: '/substance-use/drug-use-treatment/', label: 'Drug Use Treatment', icon: 'cycle', text: 'For marijuana, cocaine, opioids, pills and other drugs.' },
     { href: '/substance-use/dual-diagnosis/', label: 'Dual Diagnosis', icon: 'link', text: 'When substance use and mental health problems happen together.' },
-    { href: '/evaluations/', label: 'Evaluations', icon: 'clipboard', text: 'Court, DMV or employer assessments.' },
+    { href: '/evaluations/', label: 'Evaluations', icon: 'clipboard', text: 'Court, probation or DMV assessments.' },
   ],
   includes: [
     { label: 'Individual counseling', href: '/therapies/individual-therapy/', icon: 'user' },

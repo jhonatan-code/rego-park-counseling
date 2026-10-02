@@ -13,9 +13,14 @@ import { posts as ALL_POSTS, postUrl, postImage } from '../data/posts.js';
 import { clean } from '../data/mental-health.js';
 import ClinicMapPanel from '../components/ClinicMapPanel.astro';
 import Reviews from '../components/Reviews.astro';
+import ConditionCards from '../components/ConditionCards.astro';
 
 const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
-const groups = [...new Set(CONDITIONS.map((c) => c.group))];
+const titleCase = (t: string) => t.replace(/\b([a-z])([a-z]*)/g, (w, f, r) => (['and', 'or'].includes(w) ? w : f.toUpperCase() + r)).replace(/\bDwi\b/, 'DWI').replace(/\bPtsd\b/, 'PTSD');
+const CONDITION_GROUPS = [
+  { key: 'mh', label: 'Mental Health', icon: 'brain', group: 'Mental health' },
+  { key: 'su', label: 'Substance Use & Evaluations', icon: 'sprout', group: 'Substance use and evaluations' },
+].map((g) => ({ ...g, items: CONDITIONS.filter((c) => c.group === g.group).map((c) => ({ label: titleCase(c.label), text: c.text, href: c.href, icon: c.icon })) }));
 const reading = POSTS.map((r) => ({ ...r, post: ALL_POSTS.find((p) => p.slug === r.slug)! }));
 
 // Clinic nodes are referenced by @id; their full versions live on each location page.
@@ -156,36 +161,10 @@ const schema = [
     </div>
   </section>
 
-  {/* 5 · CONDITIONS WE TREAT — main internal-linking block */}
-  <section class="section-y bg-sky-wash" aria-labelledby="conditions-title">
-    <div class="container-x">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Conditions we treat</p>
-          <h2 id="conditions-title" class="mt-3">What We Help With</h2>
-        </div>
-      </div>
-      <div class="mt-10 grid gap-10 lg:grid-cols-[3fr_2fr]">
-        {groups.map((g, gi) => (
-          <div>
-            <h3 class="flex items-center gap-2 text-lg lg:text-xl">
-              <Icon name={gi === 0 ? 'brain' : 'sprout'} size={22} class="text-cyan" /> {g[0].toUpperCase() + g.slice(1)}
-            </h3>
-            <ul class:list={['mt-4 grid gap-3', gi === 0 ? 'sm:grid-cols-2' : '']}>
-              {CONDITIONS.filter((c) => c.group === g).map((c) => (
-                <li class="card-focus group relative rounded-[var(--radius-card)] border border-transparent bg-white p-4 pr-12 transition-colors duration-200 hover:border-sky">
-                  <a href={c.href} class="stretched-link font-display text-lg font-bold text-harbor">{c.label[0].toUpperCase() + c.label.slice(1)}</a>
-                  <p class="mt-1 text-base leading-snug text-slate">{c.text}</p>
-                  <Icon name="arrow-right" size={20} class="absolute right-4 top-1/2 -translate-y-1/2 text-cyan transition-transform duration-200 group-hover:translate-x-1" />
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <p class="mt-8 text-lg text-slate">Not sure what you need? That’s okay. <a href={SITE.phoneHref} class="text-link" data-cta="call" data-location="conditions">Call us</a> and we’ll help you figure out the next step.</p>
-    </div>
-  </section>
+  {/* 5 · CONDITIONS WE TREAT — area tabs + icon cards (proposal A, user 2026-10-02); main internal-linking block */}
+  <ConditionCards id="conditions" eyebrow="Conditions we treat" title="What We Help With" groups={CONDITION_GROUPS}>
+    <p class="mt-8 text-lg text-slate">Not sure what you need? That’s okay. <a href={SITE.phoneHref} class="text-link" data-cta="call" data-location="conditions">Call us</a> and we’ll help you find the right care.</p>
+  </ConditionCards>
 
   {/* 7 · INSURANCE AND MEDICAID — light Sky Wash band (the dark band now sits at section 2). Never list plan names. */}
   <section class="relative overflow-hidden bg-sky-wash" aria-labelledby="insurance-title">

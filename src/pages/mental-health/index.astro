@@ -12,6 +12,7 @@ import CrisisNote from '../../components/CrisisNote.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import { SITE } from '../../data/site.js';
 import { HUB, SERVICES, clean } from '../../data/mental-health.js';
+import ConditionCards from '../../components/ConditionCards.astro';
 
 const url = `${SITE.url}/mental-health/`;
 const crumbs = [{ name: 'Mental Health', href: '/mental-health/' }];
@@ -61,35 +62,14 @@ const schema = [
     </div>
   </section>
 
-  {/* Conditions we treat — the main link block */}
-  <section class="section-y bg-white" aria-labelledby="conditions-title">
-    <div class="container-x">
-      <div class="max-w-2xl">
-        <p class="eyebrow">What we help with</p>
-        <h2 id="conditions-title" class="mt-3">Conditions We Treat</h2>
-      </div>
-      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {HUB.conditions.map((c) => {
-          const s = SERVICES[c.href];
-          return (
-            <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] border border-line bg-porch p-6 transition-colors duration-200 hover:border-sky hover:bg-sky-wash lg:p-7">
-              <div class="flex items-center justify-between">
-                <span class="icon-dot bg-white"><Icon name={s.icon as any} /></span>
-                <Icon name="arrow-right" size={22} class="text-cyan transition-transform duration-200 group-hover:translate-x-1" />
-              </div>
-              <h3 class="mt-5 text-2xl">{c.name}</h3>
-              <p class="mt-2 flex-1 text-slate">{c.text}</p>
-              <a href={c.href} class="stretched-link mt-4 font-bold text-harbor">{s.label}</a>
-            </li>
-          );
-        })}
-      </ul>
-      <a href="/substance-use/dual-diagnosis/" class="group mt-6 flex flex-col gap-2 rounded-[var(--radius-panel)] bg-harbor p-5 text-white sm:flex-row sm:items-center sm:justify-between lg:px-7">
-        <span class="flex items-center gap-3 text-lg"><Icon name="link" size={22} class="flex-none text-sky" />Also struggling with alcohol or drugs? We treat both together.</span>
-        <span class="inline-flex flex-none items-center gap-1.5 font-bold group-hover:underline">Dual Diagnosis <Icon name="arrow-right" size={18} /></span>
-      </a>
-    </div>
-  </section>
+  {/* Conditions we treat — same block as Home (ConditionCards, one area → no tabs) */}
+  <ConditionCards id="conditions" bg="white" eyebrow="What we help with" title="Conditions We Treat"
+    groups={[{ key: 'mh', label: 'Mental Health', icon: 'brain', items: HUB.conditions.map((c) => ({ label: SERVICES[c.href].label, text: c.text, href: c.href, icon: SERVICES[c.href].icon })) }]}>
+    <a href="/substance-use/dual-diagnosis/" class="group mt-6 flex flex-col gap-2 rounded-[var(--radius-panel)] bg-harbor p-5 text-white sm:flex-row sm:items-center sm:justify-between lg:px-7">
+      <span class="flex items-center gap-3 text-lg"><Icon name="link" size={22} class="flex-none text-sky" />Also struggling with alcohol or drugs? We treat both together.</span>
+      <span class="inline-flex flex-none items-center gap-1.5 font-bold group-hover:underline">Dual Diagnosis <Icon name="arrow-right" size={18} /></span>
+    </a>
+  </ConditionCards>
 
   {/* How care works */}
   <section class="section-y bg-sand" aria-labelledby="how-title">

@@ -15,6 +15,7 @@ import FinalCta from '../../components/FinalCta.astro';
 import { SITE } from '../../data/site.js';
 import { HUB } from '../../data/substance-use.js';
 import { clean } from '../../data/mental-health.js';
+import ConditionCards from '../../components/ConditionCards.astro';
 
 const url = `${SITE.url}/substance-use/`;
 const crumbs = [{ name: 'Substance Use', href: '/substance-use/' }];
@@ -52,22 +53,9 @@ const schema = [
     </div>
   </section>
 
-  {/* What we treat — link block */}
-  <section class="section-y bg-white" aria-labelledby="treat-title">
-    <div class="container-x">
-      <h2 id="treat-title">Treatment for Alcohol and Drug Use</h2>
-      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {HUB.treat.map((t) => (
-          <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] bg-harbor p-6 text-white transition-colors duration-200 hover:bg-harbor-deep">
-            <span class="inline-flex size-12 items-center justify-center rounded-full bg-white/10 text-sky"><Icon name={t.icon as any} /></span>
-            <h3 class="mt-5 text-xl !text-white"><a href={t.href} class="stretched-link">{t.label}</a></h3>
-            <p class="mt-2 flex-1 text-white/85">{t.text}</p>
-            <Icon name="arrow-right" size={22} class="mt-4 text-sky transition-transform duration-200 group-hover:translate-x-1" />
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  {/* What we treat — same block as Home (ConditionCards, one area → no tabs) */}
+  <ConditionCards id="treat" bg="white" eyebrow="What we treat" title="Treatment for Alcohol and Drug Use"
+    groups={[{ key: 'su', label: 'Substance Use', icon: 'sprout', items: HUB.treat.map((t) => ({ label: t.label, text: t.text, href: t.href, icon: t.icon })) }]} />
 
   {/* What is outpatient rehab */}
   <section class="section-y" aria-labelledby="rehab-title">

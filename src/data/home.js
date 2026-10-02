@@ -35,16 +35,16 @@ export const HELP_CARDS = [
 
 // Section 5: main internal-linking block. Anchors use each page's target phrase.
 export const CONDITIONS = [
-  { group: 'Mental health', label: 'Anxiety counseling', href: '/mental-health/anxiety-counseling/', text: 'Constant worry, panic attacks or fear' },
-  { group: 'Mental health', label: 'Depression counseling', href: '/mental-health/depression-counseling/', text: 'Sadness or emptiness that won’t lift' },
-  { group: 'Mental health', label: 'PTSD and trauma counseling', href: '/mental-health/ptsd-trauma-counseling/', text: 'Painful memories that still take over' },
-  { group: 'Mental health', label: 'Bipolar disorder counseling', href: '/mental-health/bipolar-disorder-counseling/', text: 'Mood swings that shake up your life' },
-  { group: 'Mental health', label: 'Schizophrenia counseling', href: '/mental-health/schizophrenia-counseling/', text: 'Steady support to stay well' },
-  { group: 'Mental health', label: 'Anger management', href: '/mental-health/anger-management/', text: 'Anger that hurts your relationships' },
-  { group: 'Substance use and evaluations', label: 'Alcohol use treatment', href: '/substance-use/alcohol-use-treatment/', text: 'Drinking that’s hard to control' },
-  { group: 'Substance use and evaluations', label: 'Drug use treatment', href: '/substance-use/drug-use-treatment/', text: 'Marijuana, cocaine, opioids, pills and more' },
-  { group: 'Substance use and evaluations', label: 'Dual diagnosis', href: '/substance-use/dual-diagnosis/', text: 'Mental health and substance use together' },
-  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', href: '/evaluations/dwi-evaluation/', text: 'Call to check the next available appointment' },
+  { group: 'Mental health', label: 'Anxiety counseling', icon: 'wind', href: '/mental-health/anxiety-counseling/', text: 'Constant worry, panic attacks or fear' },
+  { group: 'Mental health', label: 'Depression counseling', icon: 'sunrise', href: '/mental-health/depression-counseling/', text: 'Sadness or emptiness that won’t lift' },
+  { group: 'Mental health', label: 'PTSD and trauma counseling', icon: 'shield', href: '/mental-health/ptsd-trauma-counseling/', text: 'Painful memories that still take over' },
+  { group: 'Mental health', label: 'Bipolar disorder counseling', icon: 'activity', href: '/mental-health/bipolar-disorder-counseling/', text: 'Mood swings that shake up your life' },
+  { group: 'Mental health', label: 'Schizophrenia counseling', icon: 'compass', href: '/mental-health/schizophrenia-counseling/', text: 'Steady support to stay well' },
+  { group: 'Mental health', label: 'Anger management', icon: 'flame', href: '/mental-health/anger-management/', text: 'Anger that hurts your relationships' },
+  { group: 'Substance use and evaluations', label: 'Alcohol use treatment', icon: 'sprout', href: '/substance-use/alcohol-use-treatment/', text: 'Drinking that’s hard to control' },
+  { group: 'Substance use and evaluations', label: 'Drug use treatment', icon: 'cycle', href: '/substance-use/drug-use-treatment/', text: 'Marijuana, cocaine, opioids, pills and more' },
+  { group: 'Substance use and evaluations', label: 'Dual diagnosis', icon: 'link', href: '/substance-use/dual-diagnosis/', text: 'Mental health and substance use together' },
+  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', icon: 'clipboard', href: '/evaluations/dwi-evaluation/', text: 'Assessments for court, probation or the DMV' },
 ];
 
 export const PROGRAMS = [
