@@ -15,12 +15,6 @@ import FinalCta from '../components/FinalCta.astro';
 import { SITE } from '../data/site.js';
 import { clean } from '../data/mental-health.js';
 
-const COVERS = [
-  { label: 'Mental health counseling', href: '/mental-health/', icon: 'brain' },
-  { label: 'Outpatient substance use treatment', href: '/substance-use/', icon: 'sprout' },
-  { label: 'Individual, group and family therapy', href: '/therapies/', icon: 'users' },
-  { label: 'Telehealth sessions', href: '/programs/telehealth/', icon: 'telehealth' },
-];
 const EXTRA = [
   {
     id: 'harp',
@@ -40,7 +34,7 @@ const EXTRA = [
     id: 'rides',
     icon: 'car',
     h2: 'Free Rides to Your Appointments',
-    text: 'Many New York Medicaid members can get free transportation to medical appointments, including counseling [confirm wording].',
+    text: 'Many Medicaid members can get rides to appointments at no cost. Ask us how.',
   },
 ];
 const STEPS = [
@@ -53,11 +47,11 @@ const POSTS = [
   { href: '/does-medicare-cover-mental-health-complete-2025-guide/', title: 'Does Medicare Cover Mental Health? Complete 2025 Guide' },
 ];
 const FAQS = [
-  { q: 'Do you take my Medicaid plan?', a: 'We accept most Medicaid plans. Call us with your plan name and we’ll confirm in minutes [confirm].' },
-  { q: 'Will I have a copay?', a: '[Confirm typical Medicaid copay for outpatient counseling.]' },
-  { q: 'Do you accept Medicare?', a: '[Confirm.]' },
-  { q: 'What if my plan doesn’t cover you?', a: 'Call us anyway. We’ll talk about options, including self-pay [confirm].' },
-  { q: 'Are evaluations covered by insurance?', a: '[Confirm.]', link: { href: '/evaluations/', label: 'Evaluations' } },
+  { q: 'Do you take my Medicaid plan?', a: 'We accept most Medicaid plans. Call us with your plan name and we’ll check your coverage.' },
+  { q: 'Will I have a copay?', a: 'We’ll explain any costs when we check your coverage.' },
+  // Medicare FAQ removed until confirmed (BRACKETS-FILL-PLAN 6.2)
+  { q: 'What if my plan doesn’t cover you?', a: 'Other insurance: call us and we’ll check.' },
+  { q: 'Are evaluations covered by insurance?', a: 'Call us for current pricing and payment options.', link: { href: '/evaluations/', label: 'Evaluations' } },
   { q: 'Is telehealth covered?', a: 'Many plans cover telehealth counseling. We’ll check yours.' },
 ];
 
@@ -95,21 +89,10 @@ const schema = [
         <p class="mt-6 inline-flex items-center gap-3 rounded-full bg-sky-wash px-5 py-3 font-display text-lg font-extrabold text-harbor"><Icon name="heart" size={22} /> You do not have to figure it out alone.</p>
       </div>
       <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
-        <div class="flex items-baseline justify-between gap-3">
-          <h3 class="text-xl">What Medicaid can help cover with us</h3>
-          <span class="text-base text-slate">[confirm each]</span>
-        </div>
-        <ul class="mt-5 divide-y divide-line">
-          {COVERS.map((c) => (
-            <li>
-              <a href={c.href} class="group flex items-center gap-4 py-3.5">
-                <span class="icon-dot size-10"><Icon name={c.icon as any} size={20} /></span>
-                <span class="flex-1 text-lg font-bold text-harbor group-hover:underline">{c.label}</span>
-                <Icon name="arrow-right" size={18} class="text-cyan transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
-            </li>
-          ))}
-        </ul>
+        <h3 class="text-xl">What Medicaid can help cover with us</h3>
+        {/* Per-service list removed until confirmed (BRACKETS-FILL-PLAN 6.3) */}
+        <p class="mt-4 text-lg text-slate">Coverage depends on your plan and the service. We check before your first visit.</p>
+        <a href={SITE.phoneHref} class="btn-call mt-6" data-cta="call" data-location="insurance-coverage"><Icon name="phone" size={20} /> Check my coverage</a>
       </div>
     </div>
   </section>
@@ -135,21 +118,15 @@ const schema = [
   <section class="section-y" aria-label="Other ways to pay">
     <div class="container-x grid gap-6 lg:grid-cols-2">
       <div class="rounded-[var(--radius-panel)] border border-line bg-white p-6 lg:p-8">
-        <h2 class="text-2xl lg:text-[30px]">Other Insurance and Self-Pay</h2>
-        <ul class="mt-5 space-y-3">
-          {/* No self-pay rates or prices on the site (what-not-to-publish §4): self-pay is "call us" */}
-          {['Medicare', 'Commercial insurance'].map((t) => (
-            <li class="flex items-center justify-between gap-3 rounded-[var(--radius-card)] bg-porch px-4 py-3">
-              <span class="font-bold text-ink">{t}</span><span class="text-base text-slate">[fill once confirmed]</span>
-            </li>
-          ))}
-        </ul>
-        <p class="mt-5 text-slate">Paying on your own, or asking about an evaluation? Call us and we’ll go over your options. <a href="/evaluations/" class="text-link">Evaluations</a></p>
+        <h2 class="text-2xl lg:text-[30px]">Other Insurance</h2>
+        {/* Medicare, commercial plans and self-pay: not listed until confirmed (BRACKETS-FILL-PLAN 6.2, 6.7) */}
+        <p class="mt-4 text-lg text-slate">Other insurance: call us and we’ll check.</p>
+        <p class="mt-3 text-slate">Asking about an evaluation? Call us for current pricing and payment options. <a href="/evaluations/" class="text-link">Evaluations</a></p>
       </div>
       <div class="relative overflow-hidden rounded-[var(--radius-panel)] bg-sand p-6 lg:p-8">
         <NearbyRing class="pointer-events-none absolute hidden -bottom-36 -right-36 size-[320px] lg:block" />
         <h2 class="relative text-2xl lg:text-[30px]">Don’t Have Medicaid Yet?</h2>
-        <p class="lead relative mt-4 max-w-md">If you live in New York and have a low income, you may qualify. We can point you to where to apply [confirm if staff help with applications].</p>
+        <p class="lead relative mt-4 max-w-md">If you live in New York and have a low income, you may qualify. We can point you to where to apply.</p>
         <a href={SITE.phoneHref} class="btn-call relative mt-6" data-cta="call" data-location="insurance-no-medicaid"><Icon name="phone" size={20} /> Ask us where to start</a>
       </div>
     </div>

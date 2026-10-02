@@ -22,24 +22,7 @@ const queens = CLINICS.filter((c) => c.status === 'open');
     </div>
   </PageHero>
 
-  {/* What we will offer */}
-  <section class="section-y" aria-labelledby="offer-title">
-    <div class="container-x">
-      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <h2 id="offer-title">{YONKERS.offerH2}</h2>
-        <p class="text-base text-slate">{YONKERS.offerNote}</p>
-      </div>
-      <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {YONKERS.offer.map((s) => (
-          <li class="card-focus group relative flex flex-col rounded-[var(--radius-panel)] border border-dashed border-sky bg-white p-6">
-            <span class="icon-dot"><Icon name={s.icon as any} /></span>
-            <h3 class="mt-4 text-xl"><a href={s.href} class="stretched-link">{s.label}</a></h3>
-            <p class="mt-1 text-slate">{s.text}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  {/* Planned services list removed until confirmed (BRACKETS-FILL-PLAN 1.8) */}
 
   {/* Until we open */}
   <section class="section-y relative overflow-hidden bg-sand" aria-labelledby="before-title">

@@ -64,7 +64,7 @@ const schema = real.length
         <p class="eyebrow">Who you’ll meet</p>
         <h2 id="intro-title" class="mt-3">The People Behind Your Care</h2>
         <p class="lead mt-5">
-          Our team includes licensed mental health counselors, social workers and credentialed substance use counselors [confirm the mix of licenses: LMHC, LCSW, LMSW, CASAC]. Many of us speak [languages], and every one of us works in person in Queens or by telehealth.
+          Our team includes licensed mental health and substance use professionals.
         </p>
       </div>
     </div>
@@ -75,7 +75,8 @@ const schema = real.length
     <div class="container-x">
       <h2 id="leadership-title">Leadership</h2>
       <ul class="mt-8 grid gap-6 lg:grid-cols-2">
-        {LEADERSHIP.map((p) => (
+        {/* Placeholder people never render (BRACKETS-FILL-PLAN 2.1): "Coming soon" until real names, photos, consent */}
+        {LEADERSHIP.filter((p) => !p.placeholder).map((p) => (
           <li class="grid overflow-hidden rounded-[var(--radius-panel)] border border-line bg-white sm:grid-cols-[200px_1fr]">
             <div class="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-sky-wash sm:aspect-auto">
               {p.photo ? (
@@ -96,6 +97,7 @@ const schema = real.length
           </li>
         ))}
       </ul>
+      {LEADERSHIP.every((p) => p.placeholder) && <ComingSoon class="mt-2" />}
     </div>
   </section>
 
@@ -107,10 +109,10 @@ const schema = real.length
           <p class="eyebrow">Counselors and clinicians</p>
           <h2 id="team-title" class="mt-3">Our Counselors</h2>
         </div>
-        <p class="text-base text-slate">In person in Rego Park and Fresh Meadows, or by telehealth.</p>
+        
       </div>
       <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {TEAM.map((p) => (
+        {TEAM.filter((p) => !p.placeholder).map((p) => (
           <li class="flex flex-col overflow-hidden rounded-[var(--radius-panel)] bg-white">
             <div class="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-porch">
               {p.photo ? (

@@ -27,7 +27,12 @@ export const CLINICS = [
     postal: '11374',
     phone: '(718) 459-2558',
     phoneHref: 'tel:+17184592558',
-    hours: null,
+    // BRACKETS-FILL-PLAN 1.1 (FILL): RPC's current site + directory listings agree. Emmanuel confirms still current.
+    hours: 'Monday–Friday 9:00 AM – 6:00 PM · Sunday 9:00 AM – 12:00 PM · Saturday closed',
+    openingHours: [
+      { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
+      { days: ['Sunday'], opens: '09:00', closes: '12:00' },
+    ],
     href: '/locations/rego-park/',
     directions: 'https://www.google.com/maps/dir/?api=1&destination=63-36+99th+Street%2C+Rego+Park%2C+NY+11374',
     geo: { lat: 40.7318272, lng: -73.8570441 }, // OSM building match for 63-36 99th St
@@ -48,7 +53,7 @@ export const CLINICS = [
     postal: '11365',
     phone: '(718) 459-2558',
     phoneHref: 'tel:+17184592558',
-    hours: null,
+    hours: 'Call for hours.', // plan 1.1 FALLBACK; no schema hours until confirmed
     href: '/locations/fresh-meadows/',
     directions: 'https://www.google.com/maps/dir/?api=1&destination=71-82+Parsons+Blvd%2C+Fresh+Meadows%2C+NY+11365',
     geo: { lat: 40.7276, lng: -73.8107 }, // approximate (Parsons Blvd at 71st Ave); refine from the GBP pin
@@ -113,7 +118,7 @@ export const NAV = [
     intro: 'For court, DMV, work or yourself. We explain every step.',
     links: [
       { label: 'Substance Abuse Evaluation', href: '/evaluations/substance-abuse-evaluation/', desc: 'A clear written assessment and next steps' },
-      { label: 'DWI Evaluation', href: '/evaluations/dwi-evaluation/', desc: 'Done fast and right for New York requirements' },
+      { label: 'DWI Evaluation', href: '/evaluations/dwi-evaluation/', desc: 'For court or DMV requirements in New York' },
     ],
   },
   {

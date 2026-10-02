@@ -55,7 +55,7 @@ export const PAGES = [
     posts: ['can-alcohol-cause-anxiety-and-panic-attacks', 'is-alcoholism-genetic-hereditary-links-and-factors'],
     faqH2: 'Alcohol Treatment FAQs',
     faqs: [
-      { q: 'Do I have to stop drinking completely to start?', a: '[Confirm clinical stance.] You can start counseling where you are; your counselor will talk with you about goals and safety.' },
+      { q: 'Do I have to stop drinking completely to start?', a: 'Your counselor will talk with you about your goals and your safety.' },
       { q: 'Do you offer alcohol detox?', a: 'No. If you may need detox, talk to your doctor first. We can help afterward.' },
       { q: 'Can I get alcohol treatment after a DWI?', a: 'Yes. Many people start with a DWI evaluation and continue treatment here.', link: { href: '/evaluations/dwi-evaluation/', label: 'DWI Evaluation' } },
       { q: 'Is outpatient alcohol rehab effective?', a: 'For many people who are medically stable, outpatient counseling helps reduce drinking and prevent relapse, especially with regular sessions and support.' },
@@ -74,11 +74,11 @@ export const PAGES = [
     sub: 'Whatever you are using, you can talk to someone who will listen without judgment and help you build a plan to change, close to home.',
     substances: {
       h2: 'Substances We Help With',
-      note: '[Confirm list]',
-      items: ['Marijuana', 'Cocaine and crack', 'Opioids and heroin', 'Prescription pills (painkillers, sedatives, stimulants such as Adderall)', 'Methamphetamine', 'Club drugs', 'Using more than one substance'],
+      note: 'We help with alcohol and drug use, including:', // general list only (BRACKETS-FILL-PLAN 4.2)
+      items: ['Alcohol', 'Marijuana', 'Cocaine', 'Opioids', 'Prescription pills'],
       lines: [
-        { icon: 'heart', text: 'If you use opioids, medication can be an important part of recovery. We can help you connect with a medical provider [confirm referral path] and support you with counseling.' },
-        { icon: 'shield', text: 'Keep naloxone (Narcan) on hand; it is free at many New York pharmacies [confirm current program wording].' },
+        { icon: 'heart', text: 'If medication or detox may help you, we’ll talk with you about next steps and where to go.' }, // never name a provider without approval (plan 4.1, PENDING 2a.1)
+        { icon: 'shield', text: 'We can show you how to use naloxone and help you get a kit. In New York you can also get naloxone at many pharmacies without your own prescription, and a state program covers co-pays of up to $40.' }, // plan 4.5 FILL: OASAS naloxone rule + NYSDOH standing order / N-CAP
       ],
     },
     signs: {
@@ -108,7 +108,7 @@ export const PAGES = [
     faqH2: 'Drug Treatment FAQs',
     faqs: [
       { q: 'Do you treat marijuana addiction?', a: 'Yes. Many people come to us because marijuana use is affecting their motivation, relationships or work.' },
-      { q: 'Do you offer Suboxone or methadone?', a: 'No. We provide counseling. If medication could help, we can help you connect with a medical provider [confirm].' },
+      { q: 'Do you offer Suboxone or methadone?', a: 'No. We provide counseling. If medication or detox may help you, we’ll talk with you about next steps and where to go.' },
       { q: 'Do you offer detox?', a: 'No. If you may need detox, talk to a doctor first. We can help with outpatient care afterward.' },
       { q: 'Is treatment confidential?', a: 'Yes. Substance use records have extra federal protection (42 CFR Part 2), and we share information only with your written consent.' },
       { q: 'Does Medicaid cover drug counseling?', a: 'We accept most Medicaid plans.' },
@@ -193,7 +193,7 @@ export const HUB = {
     { q: 'What is the difference between outpatient and inpatient rehab?', a: 'Inpatient programs have you live at a facility. Outpatient treatment, which we provide, lets you live at home and attend sessions at our Queens clinics or by telehealth.' },
     { q: 'Do you offer detox?', a: 'No. If you may need detox, talk to your doctor first. We can help with outpatient care afterward.' },
     { q: 'Do you accept Medicaid for substance use treatment?', a: 'Yes, we accept most Medicaid plans.' },
-    { q: 'How often will I come in?', a: '[Confirm typical schedule.] Your counselor sets the schedule with you.' },
+    { q: 'How often will I come in?', a: 'Your counselor sets a schedule with you.' },
     { q: 'Can my family be involved?', a: 'Yes, family sessions are available.', link: { href: '/therapies/family-therapy/', label: 'Family Therapy' } },
     { q: 'Can I get treatment after a court or DWI referral?', a: 'Yes.', links: [{ href: '/who-we-serve/court-involved/', label: 'Court-Involved' }, { href: '/evaluations/dwi-evaluation/', label: 'DWI Evaluation' }] },
   ],

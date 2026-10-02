@@ -16,7 +16,8 @@ import { PAGED_PEOPLE, personHref } from '../../data/team.js';
 import { postsBy, postsReviewedBy } from '../../data/posts.js';
 
 export function getStaticPaths() {
-  return PAGED_PEOPLE.map((person) => ({ params: { slug: person.slug }, props: { person } }));
+  // Only real people get a page; placeholders (e.g. clinical-director) are not built (BRACKETS-FILL-PLAN 2.1)
+  return PAGED_PEOPLE.filter((person) => !person.placeholder).map((person) => ({ params: { slug: person.slug }, props: { person } }));
 }
 
 const { person: p } = Astro.props;

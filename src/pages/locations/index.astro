@@ -8,8 +8,7 @@ import PageHero from '../../components/PageHero.astro';
 import ClinicsMap from '../../components/ClinicsMap.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import { SITE, CLINICS, fullAddress } from '../../data/site.js';
-import { SERVICE_TABLE, HUB_COMMUNITIES } from '../../data/locations.js';
-import ComingSoon from '../../components/ComingSoon.astro';
+import { HUB_COMMUNITIES } from '../../data/locations.js';
 
 const crumbs = [{ name: 'Locations', href: '/locations/' }];
 const schema = [
@@ -21,11 +20,6 @@ const schema = [
     about: { '@id': `${SITE.url}/#organization` },
     hasPart: CLINICS.filter((c) => c.status === 'open').map((c) => ({ '@id': `${SITE.url}${c.href}#clinic` })),
   },
-];
-const cols = [
-  { key: 'rp', label: 'Rego Park' },
-  { key: 'fm', label: 'Fresh Meadows' },
-  { key: 'th', label: 'Telehealth' },
 ];
 ---
 <Base
@@ -63,7 +57,7 @@ const cols = [
                 <address class="mt-3 space-y-2 not-italic">
                   <span class="flex items-start gap-2"><Icon name="pin" size={20} class="mt-0.5 flex-none text-harbor" />{fullAddress(c)}</span>
                   <a href={c.phoneHref} class="flex items-center gap-2 font-bold text-harbor hover:underline" data-cta="call" data-location={c.id}><Icon name="phone" size={20} class="flex-none" />{c.phone}</a>
-                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Hours: [confirm]'}</span>
+                  <span class="flex items-start gap-2 text-slate"><Icon name="clock" size={20} class="mt-0.5 flex-none text-harbor" />{c.hours ?? 'Call for hours.'}</span>
                 </address>
               ) : (
                 <p class="mt-3 text-slate">Address and opening date coming soon.</p>
@@ -86,49 +80,14 @@ const cols = [
     </div>
   </section>
 
-  {/* Services at a glance */}
-  <section class="section-y bg-white" aria-labelledby="table-title">
-    <div class="container-x">
-      <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <h2 id="table-title">Services at Each Clinic</h2>
-        <ComingSoon />
-      </div>
-      <div class="mt-8 overflow-x-auto rounded-[var(--radius-panel)] border border-line">
-        <table class="w-full min-w-[640px] border-collapse text-left">
-          <caption class="sr-only">Services offered at each clinic and by telehealth</caption>
-          <thead class="bg-sky-wash">
-            <tr>
-              <th scope="col" class="p-4 font-display text-lg font-extrabold text-harbor lg:px-6">Service</th>
-              {cols.map((col) => <th scope="col" class="p-4 text-center font-display text-lg font-extrabold text-harbor">{col.label}</th>)}
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-line">
-            {SERVICE_TABLE.map((row: any) => (
-              <tr>
-                <th scope="row" class="p-4 font-normal lg:px-6"><a href={row.href} class="font-bold text-harbor hover:underline">{row.service}</a></th>
-                {cols.map((col) => (
-                  <td class="p-4 text-center">
-                    {row[col.key] ? (
-                      <span class="inline-flex items-center gap-1.5 text-success"><Icon name="check" size={20} strokeWidth={3} /><span class="text-base text-slate">[confirm]</span></span>
-                    ) : (
-                      <span class="text-base text-slate">[ ]</span>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+  {/* Per-clinic services table removed until confirmed (BRACKETS-FILL-PLAN 1.6, PENDING 1.11) */}
 
   {/* Communities we serve */}
   <section class="section-y relative overflow-hidden bg-sky-wash" aria-labelledby="communities-title">
     <NearbyRing class="pointer-events-none absolute hidden -right-40 -top-40 size-[480px] lg:block" />
     <div class="container-x relative">
       <h2 id="communities-title">Communities We Serve in Queens</h2>
-      <p class="lead measure mt-4">Our patients come from Rego Park, Forest Hills, Elmhurst, Middle Village, Kew Gardens, Fresh Meadows, Flushing, Hillcrest, Jamaica Estates and nearby neighborhoods [confirm list]. Telehealth is available for people anywhere in New York State [confirm].</p>
+      <p class="lead measure mt-4">Serving Rego Park, Fresh Meadows and nearby neighborhoods, including Forest Hills, Elmhurst, Middle Village, Kew Gardens, Flushing, Hillcrest and Jamaica Estates. Telehealth is available for many services. Ask us if it’s right for you.</p>
       <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Neighborhoods">
         {HUB_COMMUNITIES.map((h) => <li class="rounded-full border border-sky bg-white px-4 py-2 font-display font-bold text-harbor">{h}</li>)}
       </ul>

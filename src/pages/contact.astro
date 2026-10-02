@@ -13,8 +13,9 @@ const open = CLINICS.filter((c) => c.status === 'open');
 const yonkers = CLINICS.find((c) => c.id === 'yonkers')!;
 // [confirm] transit and parking per clinic
 const NEAR: Record<string, string> = {
-  'rego-park': '63rd Drive–Rego Park station, M and R trains [confirm] · [bus lines]',
-  'fresh-meadows': '[bus lines, parking]',
+  // BRACKETS-FILL-PLAN 1.3–1.4: no bus names, walk/ride times or parking until confirmed
+  'rego-park': 'Near the 63rd Drive–Rego Park station (M and R trains). Several bus lines stop nearby.',
+  'fresh-meadows': 'Close to Flushing. Use the map for directions.',
 };
 
 const schema = [
@@ -63,11 +64,11 @@ const schema = [
               </div>
               <div class="flex gap-3">
                 <dt><span class="sr-only">Phone</span><Icon name="phone" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd><a href={c.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location={`contact-${c.id}`}>{c.phone}</a>{c.id === 'fresh-meadows' && <span class="block text-base text-slate">[Own phone number? confirm]</span>}</dd>
+                <dd><a href={c.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location={`contact-${c.id}`}>{c.phone}</a></dd>
               </div>
               <div class="flex gap-3">
                 <dt><span class="sr-only">Hours</span><Icon name="clock" size={22} class="mt-0.5 text-harbor" /></dt>
-                <dd class="text-slate">{c.hours ?? '[Hours: confirm]'}</dd>
+                <dd class="text-slate">{c.hours ?? 'Call for hours.'}</dd>
               </div>
               <div class="flex gap-3">
                 <dt><span class="sr-only">Getting here</span><Icon name="subway" size={22} class="mt-0.5 text-harbor" /></dt>
@@ -113,7 +114,7 @@ const schema = [
           <li class="rounded-[var(--radius-card)] bg-porch p-5">
             <span class="icon-dot bg-white"><Icon name="scale" /></span>
             <h3 class="mt-4 text-lg">Referrals</h3>
-            <p class="mt-1 text-base text-slate">From courts, case managers and providers: [referral email or fax, confirm].</p>
+            <p class="mt-1 text-base text-slate">Referrals: fax {SITE.fax} or call <a href={SITE.phoneHref} class="font-bold text-harbor hover:underline" data-cta="call" data-location="contact-referrals">{SITE.phone}</a>.</p>
           </li>
           <li class="rounded-[var(--radius-card)] bg-porch p-5">
             <span class="icon-dot bg-white"><Icon name="telehealth" /></span>

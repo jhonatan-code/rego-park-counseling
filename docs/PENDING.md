@@ -204,6 +204,39 @@ Last update: 2026-10-01 (after the Remaining Pages brief, and `docs/DECISIONS-20
 | 7.x | ☑ "Call to check availability" everywhere (footer label, Fresh Meadows, MH hub, Yonkers text, FAQ). ☑ One callback line "We’ll call you back as soon as possible." (home, contact, thank-you, Yonkers inline confirmation, Our Team bands; thank-you H1 now "Thank You. We Received Your Request."). ☑ community-support-table.webp deleted, no stock stand-in: text blocks without a photo, icon tiles in the Family Therapy cards, Alcohol "families" band without a photo; removed from scripts/images.mjs. ☑ Form: lock + "Your information is private." + Privacy Policy · HIPAA Notice under the button; no badge/seal. **Add "and secure" only when the CTM BAA is signed (5.10).** ☑ lead.ts logs: never the form body; CTM error text and fetch errors now redact the visitor's name/phone, digit runs, emails, URLs and the key. ☑ Redirect crawl: see 7.13 | ☑ |
 | 7.13 | Redirect Map crawl vs the preview (bypass token), report `docs/REDIRECT-CRAWL.md`, script `scripts/crawl-redirect-map.mjs` (re-run after DNS). **Found and fixed:** all 133 "410" rows answered 404 (Astro's catch-all sent unknown paths to the static 404 before the vercel.json rewrites ran) → the 404 page now renders on demand so the middleware returns 410: re-crawl 133/133 ✓. **Counts reconciled:** 410 — map 133 rows = 131 unique paths (2 rows are slash/no-slash twins) = 131 in the build. 301 — map 270 rows vs 253 vercel.json rules: rules are per pattern, not per row (11 wildcards cover the /blog/…/page/N/, /author/, /category/ archive rows; ~55 no-slash post URLs are handled by Vercel's automatic 308 to the slash version, 1 hop; 58 rules are no-slash twins; 9 rules aren't map rows: /about/our-team/, the 2026-10-01 decisions, legacy fixes). Crawl: 266/270 301 rows OK, 0 multi-hop; 185/187 KEEP; 28/28 404. **Remaining differences, all intended or negligible:** /rego/ → /programs/ (7.4); /withdrawal-symptoms/ and /national-…-statistics/ now 301 (7.5); /addiction-treatments-for-couples/ → Family Therapy until couples is confirmed (2.9); 2 junk paths embedding our own URL (`/https://www.regoparkcounseling.com/…`, `/v/https://…`, 1 impr. each) end 404 on Vercel (paths with ":" never reach the function; the middleware rule works locally) — 404 drops them from the index anyway | ☑ |
 
+## 5c. Brackets plan applied (2026-10-02, `docs/BRACKETS-FILL-PLAN-2026-10-02.md`)
+
+**Result:** the built site (220 pages) shows **no `[…]` in visible text, meta tags, JSON-LD, alt text or /llms.txt**, except the
+three legal drafts (Privacy Policy dates, HIPAA Notice Privacy Officer, Telehealth Terms date — out of scope until counsel, 5.13).
+Every fallback is publishable copy; **every original question above stays open** (1.x, 2.x, 2a–2d, 3.x, 5a.x) so the real
+answer can replace the fallback. Nothing from the directories table was published.
+
+| Filled (FILL) | Value | Source |
+|---|---|---|
+| 1.1 Rego Park hours | Mon–Fri 9:00 AM–6:00 PM · Sun 9:00 AM–12:00 PM · Sat closed — page, footer, contact, location cards, `openingHoursSpecification` (Rego Park only) | RPC's current site + directory listings agree. **Emmanuel confirms still current** |
+| 4.5 Naloxone | "We can show you how to use naloxone and help you get a kit…co-pays of up to $40" (Drug Use Treatment) | [OASAS naloxone in OASAS settings](https://oasas.ny.gov/naloxone-administration-and-availability-oasas-settings) · [NYSDOH pharmacy standing order / N-CAP](https://www.health.ny.gov/diseases/aids/general/opioid_overdose_prevention/pharmacy_standing_order.htm). **Emmanuel confirms RPC follows the OASAS rule** |
+| 7.1 CORE services | "What CORE Includes": CPST, PSR, FST, Empowerment Services – Peer Support (not "we offer") | NYS OMH. Switch to "CORE Services We Offer" once Emmanuel confirms RPC's designation (2d.1) |
+| 7.2 CORE eligibility | Adults 21+ in HARP, HIV-SNP or MAP who meet high-risk criteria; practitioner recommends; NY Medicaid Choice 1-800-505-5678 | [NYS OMH CORE overview](https://omh.ny.gov/omhweb/bho/core/) |
+| 8.4 Referrals | "Referrals: fax (718) 770-7676 or call (718) 459-2558" (Contact) | Fax published on RPC's current site |
+| 9.2 Email | management@regoparkcounseling.com for privacy, telehealth terms, accessibility (provisional) | Address RPC publishes in directories. **Emmanuel confirms** (5a.2) |
+
+**Fallbacks published (summary):** Fresh Meadows "Call for hours" (no schema hours), main number for both clinics; no cross street, walk times, bus names or parking; accessibility = "tell us when you call"; neighborhoods as "Serving … including"; per-clinic services table and lists removed (clinic pages link the main hubs + "Ask us which services are available at this clinic"; `availableService` dropped from MedicalClinic schema); Yonkers "Opening soon. Join the list…" (no month, no service list); real photos only (Rego Park entrance; Fresh Meadows strip removed, map remains); team block removed from Home, Rego Park and Fresh Meadows; /our-team/ shows "Coming soon" with no placeholder cards and the placeholder person page (/our-team/clinical-director/) is no longer built; languages lines removed; "evidence-based talk therapy" (no CBT/EMDR named); "We serve adults"; telehealth = secure video + link, "available for many services"; groups = "counselor-led groups, ask which are running"; family: minors + telehealth FAQs removed; anger management: court block/FAQ removed, "counseling" (no group claim); MAT/detox = "we'll talk with you about next steps and where to go" (no provider named); general substances list; evaluations: no length, DDP FAQ, employer/school/board bullets, letters, Medicaid/payment rows; drug test, report, telehealth, location, cost fallbacks; insurance: copay, "Other insurance: call us and we'll check", no Medicare FAQ, no self-pay, no per-service coverage list, rides + applications fallbacks; CORE + counseling and SCN fallbacks (SCN FAQs removed; FAQ section hidden when empty); court: "With your written consent, we can share information…", missed-session FAQ removed; legal: call-recording sentence removed, telehealth platform/recording/location lines replaced, accessibility "We'll respond as soon as we can", "Last reviewed: October 2, 2026"; thank-you no "number starting with"; 3 example brackets in 2 blog posts rewritten (also in the importer).
+
+### Ask Emmanuel (directory conflicts, plan "First" table — nothing published)
+
+| Directories say | Site now | Question |
+|---|---|---|
+| IOP | Outpatient only | Is IOP offered today? |
+| Medication management; MAT (buprenorphine, naltrexone, acamprosate) | No medication claims | Does RPC itself prescribe or manage medication? (2a.1 blocker) |
+| Couples counseling | On hold | Offered? (2.9) |
+| Children and adolescents (RPC's own contact page says "children and adults") | "We serve adults" | What ages? (2d.10) |
+| CBT, DBT, MI, relapse prevention | "evidence-based talk therapy" | Which approaches? (2.2) |
+| Russian and other languages | No language lines | Which languages, at which clinic? (1.14, 3.3) |
+| Medicare, private insurance, self-pay, payment assistance | "Most Medicaid plans" only | Which are accepted? (2c.2) |
+| Joint Commission accreditation | Not claimed | Accredited? |
+
+**Cristofer:** clean the directory listings (also a NAP problem: recovered.org shows (718) 814-9986 and (718) 495-2555, not (718) 459-2558); confirm the Fresh Meadows address string from the Google Business Profile (RPC's site shows "7182 Parsons Blvd"; this site uses "71-82 Parsons Blvd" everywhere) (1.2).
+
 ## 6. Decisions made during the build (tell Julian / keep for the record)
 
 | # | Decision | Date |

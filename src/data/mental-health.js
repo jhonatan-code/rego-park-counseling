@@ -103,7 +103,7 @@ export const CONDITIONS = [
       h2: 'How Our Anxiety Therapy Works',
       cards: [
         { icon: 'compass', title: 'Understand what drives it.', text: 'Your counselor helps you spot the thoughts and situations that trigger your anxiety.' },
-        { icon: 'tools', title: 'Learn tools that work.', text: 'Practical skills for calming your body and challenging worry, using evidence-based approaches such as CBT [confirm].' },
+        { icon: 'tools', title: 'Learn tools that work.', text: 'Practical skills for calming your body and challenging worry, using evidence-based talk therapy.' },
         { icon: 'steps', title: 'Build confidence step by step.', text: 'Face what you have been avoiding at a pace that feels safe.' },
       ],
       line: { text: 'If you also use alcohol or other substances to cope with anxiety, we can treat both together.', href: '/substance-use/dual-diagnosis/', label: 'Dual Diagnosis' },
@@ -150,7 +150,7 @@ export const CONDITIONS = [
       h2: 'How Depression Therapy Helps',
       cards: [
         { icon: 'chat', title: 'A safe place to talk.', text: 'Share what you are carrying with someone trained to listen without judgment.' },
-        { icon: 'steps', title: 'Practical steps forward.', text: 'Work on thoughts, habits and routines that keep depression going, using approaches such as CBT [confirm].' },
+        { icon: 'steps', title: 'Practical steps forward.', text: 'Work on thoughts, habits and routines that keep depression going, using evidence-based talk therapy.' },
         { icon: 'family', title: 'Support around you.', text: 'Individual, group or family sessions, so the people close to you can help too.' },
       ],
       line: { text: 'For older adults, depression can look different. We also offer counseling for older adults.', href: '/who-we-serve/older-adults/', label: 'Older Adults' },
@@ -327,17 +327,11 @@ export const CONDITIONS = [
       cards: [
         { icon: 'compass', title: 'Find the triggers.', text: 'Understand what sets off your anger and what sits underneath it, like stress, trauma or substance use.' },
         { icon: 'tools', title: 'Practice new responses.', text: 'Learn skills to pause, calm down and communicate without blowing up.' },
-        { icon: 'users', title: 'Repair and prevent.', text: 'Rebuild trust with the people around you, individually or in group sessions.', link: { href: '/therapies/group-therapy/', label: 'Group Therapy' } },
+        { icon: 'users', title: 'Repair and prevent.', text: 'Rebuild trust with the people around you.' },
       ],
       line: { text: 'Anger and substance use often go together. We can help with both.', href: '/substance-use/', label: 'Substance Use' },
     },
-    court: {
-      gate: 'Confirm anger management is offered for court-referred clients, and the format',
-      h2: 'Court-Referred Anger Management',
-      text: 'If a court, lawyer or employer asked you to complete anger management, call us to ask about requirements and documentation.',
-      href: '/who-we-serve/court-involved/',
-      label: 'Court-Involved',
-    },
+    // Court-referred block removed until confirmed (BRACKETS-FILL-PLAN 3.9)
     expect: STD_EXPECT('what’s been happening'),
     whereH2: 'Anger Management in Rego Park and Fresh Meadows',
     telehealth: 'Prefer to stay home? Ask about telehealth.',
@@ -345,8 +339,8 @@ export const CONDITIONS = [
     posts: ['therapy-for-anger-management', 'how-to-control-your-anger', 'does-insurance-cover-anger-management-therapy', 'anger-management-strategies'],
     faqH2: 'Anger Management FAQs',
     faqs: [
-      { q: 'Do you offer anger management classes or individual sessions?', a: '[Confirm format.] We offer individual counseling and group sessions depending on your needs.' },
-      { q: 'Can I get anger management for court?', a: '[Confirm.] Call us to discuss what your court or lawyer requires.' },
+      { q: 'Do you offer anger management classes or individual sessions?', a: 'We offer counseling. Your counselor works with you on a plan that fits your needs.' },
+      // Court-referred FAQ removed until confirmed (BRACKETS-FILL-PLAN 3.9)
       { q: 'Does insurance cover anger management?', a: 'We accept most Medicaid plans. Coverage depends on your plan, so we check it before your first visit.' },
       { q: 'Is anger management only for people with a substance problem?', a: 'No. It is for anyone whose anger is causing problems. If substance use is part of it, we can treat both.' },
       { q: 'Can I do sessions by telehealth?', a: 'Telehealth is available for many patients.' },
@@ -368,7 +362,7 @@ export const HUB = {
   steps: [
     { title: 'First call.', text: 'Tell us what is going on and we check your insurance.' },
     { title: 'Assessment.', text: 'A licensed clinician meets with you to understand your needs and goals.' },
-    { title: 'Your plan.', text: 'Individual, group or family sessions, in person or by telehealth, usually once a week [confirm typical frequency].' },
+    { title: 'Your plan.', text: 'Your counselor sets a schedule with you.' },
   ],
   therapies: [
     { href: '/therapies/individual-therapy/', label: 'Individual Therapy', text: 'One-on-one sessions with your counselor.', image: '/images/home/counselor-talking-with-adult-client.webp', alt: 'Counselor listening to an adult client in a bright room' },
@@ -378,15 +372,15 @@ export const HUB = {
   why: [
     { icon: 'licensed', text: 'Licensed by New York State (OMH and OASAS), so we can treat mental health and substance use together' },
     { icon: 'subway', text: 'Near the trains and buses in Rego Park and Fresh Meadows' },
-    { icon: 'languages', text: 'Counselors who reflect the Queens community [add languages]' },
+    { icon: 'languages', text: 'Counselors who reflect the Queens community' },
     { icon: 'heart', text: 'No judgment, ever' },
   ],
   faqs: [
     { q: 'What is an outpatient mental health clinic?', a: 'A clinic where you visit for counseling sessions and go home the same day. You keep your normal routine while getting regular care from licensed clinicians.' },
     { q: 'Do you accept Medicaid?', a: 'Yes. We accept most Medicaid plans. Call us and we will confirm your coverage before your first appointment.' },
-    { q: 'Do I need a referral?', a: '[Confirm.] Most people call us directly. If a doctor, case manager or court referred you, let us know when you call.' },
+    { q: 'Do I need a referral?', a: 'You can call us directly. If a doctor, case manager or court referred you, let us know when you call.' },
     { q: 'Do you offer telehealth?', a: 'Yes, telehealth sessions are available for many services. Ask about it when you call.' },
-    { q: 'How soon can I be seen?', a: '[Confirm typical wait.] Call us and we will find the first available appointment at the clinic nearest you.' },
+    { q: 'How soon can I be seen?', a: 'Call to check availability.' },
     { q: 'Is my information private?', a: 'Yes. Your care is confidential and protected by HIPAA and New York State law.' },
   ],
 };

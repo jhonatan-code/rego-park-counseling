@@ -26,7 +26,7 @@ export const HELP_CARDS = [
     title: 'Substance Abuse and DWI Evaluations',
     href: '/evaluations/',
     icon: 'clipboard',
-    text: 'Professional assessments for court, the DMV or your employer.',
+    text: 'Professional assessments for court, probation or the DMV.',
     link: 'Book an evaluation',
     image: '/images/home/counselor-taking-notes-evaluation.webp',
     alt: 'Counselor taking notes while talking with a client',
@@ -44,7 +44,7 @@ export const CONDITIONS = [
   { group: 'Substance use and evaluations', label: 'Alcohol use treatment', href: '/substance-use/alcohol-use-treatment/', text: 'Drinking that’s hard to control' },
   { group: 'Substance use and evaluations', label: 'Drug use treatment', href: '/substance-use/drug-use-treatment/', text: 'Marijuana, cocaine, opioids, pills and more' },
   { group: 'Substance use and evaluations', label: 'Dual diagnosis', href: '/substance-use/dual-diagnosis/', text: 'Mental health and substance use together' },
-  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', href: '/evaluations/dwi-evaluation/', text: 'Assessments with fast scheduling' },
+  { group: 'Substance use and evaluations', label: 'DWI and court-ordered evaluations', href: '/evaluations/dwi-evaluation/', text: 'Call to check the next available appointment' },
 ];
 
 export const PROGRAMS = [
@@ -73,10 +73,10 @@ export const WHY = [
 // [bracket] are left out of the schema until confirmed).
 export const FAQS = [
   { q: 'Do you accept Medicaid?', a: 'Yes. Most of our patients use Medicaid, and we accept most Medicaid plans. Call us with your plan name and member ID, and we’ll confirm your coverage before your first visit. If you have a HARP plan, ask us about CORE services too.' },
-  { q: 'Where are your clinics in Queens?', a: 'Our main clinic is at 63-36 99th Street in Rego Park, NY 11374. Our second clinic is at [71-82 Parsons Boulevard] in Fresh Meadows, NY 11365, close to Flushing. A clinic in Yonkers is opening soon. You can also meet with us by telehealth.' },
+  { q: 'Where are your clinics in Queens?', a: 'Our main clinic is at 63-36 99th Street in Rego Park, NY 11374. Our second clinic is at 71-82 Parsons Blvd in Fresh Meadows, NY 11365, close to Flushing. A clinic in Yonkers is opening soon. You can also meet with us by telehealth.' },
   { q: 'Do you offer telehealth?', a: 'Yes. Many of our counseling services are available by secure video, so you can meet with a licensed counselor from home. Ask about telehealth when you call, and we’ll tell you which services are available that way.' },
   { q: 'Do you treat mental health and substance use together?', a: 'Yes. We are licensed by New York State for both mental health (OMH) and substance use (OASAS). If you are dealing with anxiety, depression or trauma along with alcohol or drug use, one team can build one plan that covers both.' },
-  { q: 'How do I get a substance abuse or DWI evaluation?', a: 'Call us or request a callback and tell us who asked for the evaluation and your deadline. We’ll schedule your appointment at our Rego Park clinic [confirm], explain what to bring, and let you know when your report will be ready.' },
+  { q: 'How do I get a substance abuse or DWI evaluation?', a: 'Call us or request a callback and tell us who asked for the evaluation and your deadline. Call to confirm the location for your evaluation. We’ll explain what to bring and how you receive your report.' },
   { id: 'first-visit', q: 'What happens at the first appointment?', a: 'You’ll meet with a licensed clinician who asks about what brings you in, your health and your goals. There’s no pressure to share more than you’re ready to. Together you’ll agree on a plan, whether that’s individual, group or family sessions, in person or by telehealth.' },
   { q: 'Is counseling confidential?', a: 'Yes. Your care is private and protected by HIPAA and New York State law. Substance use treatment records have extra protection under federal law (42 CFR Part 2). We share information only with your written permission, except in rare situations the law requires, like an emergency.' },
   { q: 'Are you connected to the Rego Park Counseling Center on Queens Boulevard?', a: 'No. Rego Park Counseling is an independent clinic located at 63-36 99th Street in Rego Park and in Fresh Meadows. We are not affiliated with other counseling centers in Queens that have similar names. If you’re looking for a different center, please contact them directly.' },

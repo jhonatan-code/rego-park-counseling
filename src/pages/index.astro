@@ -12,7 +12,6 @@ import { SITE, CLINICS, fullAddress } from '../data/site.js';
 import { HELP_CARDS, CONDITIONS, PROGRAMS, STEPS, WHY, FAQS, POSTS } from '../data/home.js';
 import { posts as ALL_POSTS, postUrl, postImage } from '../data/posts.js';
 import { clean } from '../data/mental-health.js';
-import ComingSoon from '../components/ComingSoon.astro';
 
 const HERO = '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp';
 const groups = [...new Set(CONDITIONS.map((c) => c.group))];
@@ -30,6 +29,7 @@ const schema = [
     geo: { '@type': 'GeoCoordinates', latitude: c.geo.lat, longitude: c.geo.lng },
     medicalSpecialty: 'https://schema.org/Psychiatric', // valid MedicalSpecialty value, full URL (schema.md rule 1)
     parentOrganization: { '@id': `${SITE.url}/#organization` },
+    ...(c.openingHours ? { openingHoursSpecification: c.openingHours.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes })) } : {}),
   })),
   {
     '@type': 'FAQPage',
@@ -348,34 +348,8 @@ const schema = [
     </div>
   </section>
 
-  {/* 11 · MEET THE TEAM — placeholders until the team photo session (brief: 3–6 real staff photos) */}
-  <section class="section-y bg-white" aria-labelledby="team-title">
-    <div class="container-x">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Our team</p>
-          <h2 id="team-title" class="mt-3">Meet Our Counselors</h2>
-          <p class="lead mt-3">Real people who listen. Get to know the team you’ll be working with.</p>
-        </div>
-        <a href="/our-team/" class="text-link inline-flex items-center gap-1.5">Meet the full team <Icon name="arrow-right" size={18} /></a>
-      </div>
-      <ul class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
-        {[1, 2, 3, 4].map(() => (
-          <li class="overflow-hidden rounded-[var(--radius-panel)] border border-line bg-porch">
-            <div class="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-sky-wash">
-              <NearbyRing class="absolute size-[300px] opacity-70" />
-              <Icon name="user" size={56} strokeWidth={1.5} class="relative text-harbor/40" />
-            </div>
-            <div class="p-4 lg:p-5">
-              <p class="font-display text-lg font-extrabold text-harbor">Counselor name</p>
-              <p class="text-base text-slate">Credential · Languages</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <ComingSoon class="mt-5" />
-    </div>
-  </section>
+  {/* 11 · Team block removed until real staff, photos and consent arrive (BRACKETS-FILL-PLAN 2.1; /our-team/ keeps
+      "Coming soon" and noindex) */}
 
   {/* 13 · FAQ — all answers in the HTML (feeds FAQPage schema) */}
   <section class="section-y" aria-labelledby="faq-title">

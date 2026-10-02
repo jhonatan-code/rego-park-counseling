@@ -31,7 +31,8 @@ const schema = [
   page.hub
     ? { '@type': 'CollectionPage', '@id': `${url}#webpage`, url, name: page.h1, isPartOf: { '@id': `${SITE.url}/#website` }, about: { '@id': `${SITE.url}/#organization` } }
     : { '@type': 'MedicalWebPage', '@id': `${url}#webpage`, url, name: page.h1, audience: { '@type': 'Patient' }, provider: { '@id': `${SITE.url}/#organization` }, isPartOf: { '@id': `${SITE.url}/#website` } },
-  { '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: faqs.filter((f: any) => clean(f.a)).map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) },
+  // FAQPage only when the page has answered questions (a page can lose all of them to the brackets plan)
+  ...(faqs.length ? [{ '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: faqs.filter((f: any) => clean(f.a)).map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: clean(f.a) } })) }] : []),
 ];
 const slug = page.path.split('/').filter(Boolean).join('-');
 ---
@@ -194,7 +195,7 @@ const slug = page.path.split('/').filter(Boolean).join('-');
   {page.where && <LocationCards title={page.where.h2} telehealth={page.where.telehealth} eyebrow={page.where.note ?? 'Where to get care'} />}
   {!page.hub && <InsuranceLine bg={page.where ? 'bg-white' : 'bg-white pt-16 lg:pt-24'} />}
   {page.related && <RelatedServices related={page.related} posts={page.posts ?? []} />}
-  <FaqList title={page.faqH2} faqs={page.faqs} />
+  {faqs.length > 0 && <FaqList title={page.faqH2} faqs={page.faqs} />}
   <CrisisNote samhsa={page.path.startsWith('/programs/') || page.path.startsWith('/who-we-serve/court')} />
   <FinalCta title={page.finalH2} text="We’ll check your Medicaid plan on the call." note={legal} />
 </Base>

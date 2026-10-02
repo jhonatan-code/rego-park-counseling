@@ -9,6 +9,9 @@ import { SITE, CLINICS } from './site.js';
 const rp = CLINICS.find((c) => c.id === 'rego-park');
 const ADDRESS = `${rp.street}, ${rp.city}, ${rp.region} ${rp.postal}`;
 const tel = `<a href="${SITE.phoneHref}" data-cta="call" data-location="legal">${SITE.phone}</a>`;
+// BRACKETS-FILL-PLAN 9.2 (FILL, provisional): the address RPC publishes in directories; Emmanuel confirms (PENDING 5a.2)
+const EMAIL = 'management@regoparkcounseling.com';
+const mail = `<a href="mailto:${EMAIL}">${EMAIL}</a>`;
 const contactLine = (email) => `${SITE.name} · ${ADDRESS} · ${tel} · ${email}`;
 
 export const PRIVACY_POLICY = {
@@ -24,7 +27,7 @@ export const PRIVACY_POLICY = {
       id: 'information-we-collect', title: 'Information We Collect',
       html: `<ul>
         <li><strong>Information you give us:</strong> your name, phone number, email, preferred clinic and the type of help you are looking for when you submit a form or call us.</li>
-        <li><strong>Call information:</strong> when you call a number on this website, our call tracking provider records the date, time, length of the call, the number you called from and the web page or ad that led to the call. [Confirm whether calls are recorded; if yes: “Calls may be recorded for quality and training.”]</li>
+        <li><strong>Call information:</strong> when you call a number on this website, our call tracking provider records the date, time, length of the call, the number you called from and the web page or ad that led to the call.</li>
         <li><strong>Website usage information:</strong> pages visited, device and browser type, approximate location (city level) and how you arrived at the site, including the ad you clicked if you came from one, collected through cookies and similar tools.</li>
       </ul>
       <p>Please do not share medical details through website forms. We will ask about your health privately, by phone or in person.</p>`,
@@ -70,7 +73,7 @@ export const PRIVACY_POLICY = {
     },
     {
       id: 'contact-us', title: 'Contact Us',
-      html: `<p>${contactLine('[privacy email]')}</p>`,
+      html: `<p>${contactLine(mail)}</p>`,
     },
   ],
 };
@@ -145,9 +148,9 @@ export const TELEHEALTH_TERMS = {
   sections: [
     {
       id: 'telehealth-sessions', title: 'Telehealth Sessions',
-      html: `<p><strong>How it works.</strong> Telehealth sessions take place over a secure video platform [name, e.g. the platform RPC uses — confirm] that is designed for health care and protects your information. You join with a link we send you; no account is needed [confirm].</p>
-      <p><strong>Your privacy.</strong> Sessions are not recorded [confirm]. Your counselor joins from a private space. We ask that you join from a private place too, and use your own device and a secure internet connection when you can.</p>
-      <p><strong>Who can use telehealth.</strong> Telehealth is available for many of our services for people located in New York State during the session [confirm]. Your counselor will tell you if a service needs to be in person.</p>
+      html: `<p><strong>How it works.</strong> Sessions use a secure video platform. We’ll send you a link.</p>
+      <p><strong>Your privacy.</strong> Your counselor joins from a private space. We ask that you join from a private place too, and use your own device and a secure internet connection when you can.</p>
+      <p><strong>Who can use telehealth.</strong> Telehealth is available for many services. Ask us if it’s right for you.</p>
       <p><strong>Limits and risks.</strong> Video sessions can be interrupted by connection problems. If a session drops, your counselor will call you at the number on file. Telehealth is not for emergencies.</p>
       <p><strong>Consent.</strong> Before your first telehealth session, we ask for your consent to receive care by telehealth. You can choose in-person care instead at any time.</p>
       <p><strong>Emergencies.</strong> If you are in danger, call <a href="tel:911">911</a>. For a mental health or substance use crisis, call or text <a href="tel:988">988</a>.</p>`,
@@ -163,7 +166,7 @@ export const TELEHEALTH_TERMS = {
     },
     {
       id: 'contact', title: 'Contact',
-      html: `<p>${contactLine('[email]')}</p>`,
+      html: `<p>${contactLine(mail)}</p>`,
     },
   ],
 };
@@ -175,7 +178,7 @@ export const ACCESSIBILITY = {
   title: 'Accessibility Statement | Rego Park Counseling',
   description: 'Rego Park Counseling aims to meet WCAG 2.1 Level AA. How this website was built, known limitations, clinic access and how to tell us about a problem.',
   h1: 'Accessibility Statement',
-  dates: 'Last reviewed: [launch date]',
+  dates: 'Last reviewed: October 2, 2026',
   approved: true,
   intro: 'Rego Park Counseling wants everyone, including people with disabilities, to be able to use this website and reach our services.',
   sections: [
@@ -197,12 +200,12 @@ export const ACCESSIBILITY = {
     },
     {
       id: 'at-our-clinics', title: 'Accessibility at Our Clinics',
-      html: `<p>[Confirm for each clinic: step-free entrance, elevator, accessible restroom, nearby accessible parking or transit.] If you need an accommodation for your visit, such as a sign language interpreter or another language, tell us when you call and we will do our best to arrange it [confirm].</p>`,
+      html: `<p>If you need help getting into the building or another accommodation, tell us when you call.</p>`,
     },
     {
       id: 'need-help', title: 'Need Help or Found a Problem?',
       html: `<p>If any part of this website is hard to use, please tell us and we will help you get the information another way.</p>
-      <p>Call ${tel} · Email [accessibility email] · We aim to respond within [2 business days].</p>`,
+      <p>Call ${tel} · Email ${mail} · We’ll respond as soon as we can.</p>`,
     },
   ],
 };
