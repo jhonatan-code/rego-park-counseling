@@ -14,8 +14,8 @@ export const LLMS = {
     'Rego Park Counseling is an independent, outpatient mental health and substance use clinic in Queens, New York, licensed by the New York State Office of Mental Health (OMH) and the New York State Office of Addiction Services and Supports (OASAS). It serves adults at clinics in Rego Park and Fresh Meadows, with a Yonkers clinic opening soon, in person and by telehealth. It accepts most Medicaid plans.',
   keyFacts: [
     'Outpatient care only. Rego Park Counseling does not provide inpatient, residential or detox services.',
-    'Main clinic: 63-36 99th Street, Rego Park, NY 11374. Phone: (718) 459-2558.',
-    'Second clinic: Fresh Meadows, Queens, NY 11365, near Flushing.',
+    'Rego Park clinic: 63-36 99th Street, Rego Park, NY 11374. Phone: (718) 459-2558.',
+    'Fresh Meadows clinic: 71-82 Parsons Blvd, Fresh Meadows, NY 11365, near Flushing.',
     'Rego Park Counseling is an independent clinic and is not affiliated with other counseling centers in Queens that use a similar name.',
     'Services include mental health counseling, outpatient substance use treatment, dual diagnosis care, substance abuse and DWI evaluations, CORE services for eligible HARP Medicaid members, Social Care Network support, and telehealth.',
     "Most patients use Medicaid; the clinic confirms each person's coverage by phone before the first visit.",
@@ -68,7 +68,7 @@ export const LLMS = {
       heading: 'Locations, Insurance and Contact',
       links: [
         { title: 'Our Clinics', path: '/locations/', description: 'All clinic locations' },
-        { title: 'Rego Park Clinic', path: '/locations/rego-park/', description: 'Main clinic at 63-36 99th Street, Rego Park, NY 11374' },
+        { title: 'Rego Park Clinic', path: '/locations/rego-park/', description: 'Clinic at 63-36 99th Street, Rego Park, NY 11374' },
         { title: 'Fresh Meadows Clinic', path: '/locations/fresh-meadows/', description: 'Clinic in Fresh Meadows, near Flushing' },
         { title: 'Yonkers Clinic', path: '/locations/yonkers/', description: 'Opening soon' },
         { title: 'Insurance and Medicaid', path: '/insurance/', description: 'Most Medicaid plans accepted; coverage confirmed by phone' },

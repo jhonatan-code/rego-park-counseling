@@ -73,7 +73,7 @@ export const WHY = [
 // [bracket] are left out of the schema until confirmed).
 export const FAQS = [
   { q: 'Do you accept Medicaid?', a: 'Yes. Most of our patients use Medicaid, and we accept most Medicaid plans. Call us with your plan name and member ID, and we’ll confirm your coverage before your first visit. If you have a HARP plan, ask us about CORE services too.' },
-  { q: 'Where are your clinics in Queens?', a: 'Our main clinic is at 63-36 99th Street in Rego Park, NY 11374. Our second clinic is at 71-82 Parsons Blvd in Fresh Meadows, NY 11365, close to Flushing. A clinic in Yonkers is opening soon. You can also meet with us by telehealth.' },
+  { q: 'Where are your clinics in Queens?', a: 'We have clinics at 63-36 99th Street in Rego Park, NY 11374, and at 71-82 Parsons Blvd in Fresh Meadows, NY 11365, close to Flushing. A clinic in Yonkers is opening soon. You can also meet with us by telehealth.' },
   { q: 'Do you offer telehealth?', a: 'Yes. Many of our counseling services are available by secure video, so you can meet with a licensed counselor from home. Ask about telehealth when you call, and we’ll tell you which services are available that way.' },
   { q: 'Do you treat mental health and substance use together?', a: 'Yes. We are licensed by New York State for both mental health (OMH) and substance use (OASAS). If you are dealing with anxiety, depression or trauma along with alcohol or drug use, one team can build one plan that covers both.' },
   { q: 'How do I get a substance abuse or DWI evaluation?', a: 'Call us or request a callback and tell us who asked for the evaluation and your deadline. Call to confirm the location for your evaluation. We’ll explain what to bring and how you receive your report.' },

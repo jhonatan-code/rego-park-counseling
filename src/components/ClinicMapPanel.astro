@@ -48,7 +48,7 @@ const bgClass = { white: 'bg-white', porch: 'bg-porch', wash: 'bg-sky-wash' }[bg
             <GoogleMap clinic={c} defer={c !== first} />
           </div>
           <div class="flex flex-col justify-center gap-3 border-t border-line p-6 lg:border-l lg:border-t-0 lg:p-8">
-            <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{c.id === 'rego-park' ? 'Main clinic' : 'Second clinic'}</p>
+            <p class="text-sm font-bold uppercase tracking-[0.1em] text-slate">{c.label}</p>
             <h3 class="text-2xl lg:text-[28px]">{c.name}</h3>
             <address class="not-italic text-ink">{fullAddress(c)}</address>
             {c.reference && <p class="text-ink">{c.reference}</p>}

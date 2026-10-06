@@ -20,7 +20,7 @@ export const CLINIC_PAGES = {
     title: 'Counseling in Rego Park, Queens | Mental Health & Substance Use',
     description: 'Rego Park Counseling at 63-36 99th Street, Rego Park, NY 11374. Licensed outpatient mental health and substance use care, evaluations and telehealth. Most Medicaid plans.',
     h1: 'Counseling in Rego Park, Queens',
-    sub: 'Our main clinic, near the 63rd Drive–Rego Park station (M and R trains), offering mental health and substance use care for adults.',
+    sub: 'Our Rego Park clinic, near the 63rd Drive–Rego Park station (M and R trains), offering mental health and substance use care for adults.',
     photos: [
       { src: '/images/clinics/rego-park-counseling-clinic-63-36-99th-street.webp', alt: 'Front of the 63-36 99th Street building in Rego Park', label: 'Building front' },
       { label: 'Entrance and signage' },

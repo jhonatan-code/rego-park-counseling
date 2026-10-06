@@ -19,7 +19,7 @@ export const CLINICS = [
   {
     id: 'rego-park',
     name: 'Rego Park',
-    label: 'Main clinic',
+    label: 'Queens, NY', // was "Main clinic": client asked 2026-10-05 that all locations be presented equally
     status: 'open',
     street: '63-36 99th Street',
     city: 'Rego Park',

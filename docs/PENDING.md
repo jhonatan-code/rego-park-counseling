@@ -341,3 +341,11 @@ answer can replace the fallback. Nothing from the directories table was publishe
 
 - Home: all body copy and the 8 FAQ answers in `src/data/home.js` are working drafts.
 - Hand-picked home posts (Medicaid + 2 evaluation posts) — confirm.
+
+## 8. Client review feedback (Emmanuel, 2026-10-04/05)
+
+| # | Item | Status |
+|---|---|---|
+| 8.1 | No "main clinic" / "second clinic": present all locations equally | ☑ 2026-10-05: removed sitewide (clinic labels, map panel, Home hero badge + FAQ, Rego Park page intro, llms.txt, image alts). Rego Park's card label is now "Queens, NY" |
+| 8.2 | Elizabeth's reply names the locations "Rego Park, Flushing and Yonkers"; the site and NAP say **Fresh Meadows** (71-82 Parsons Blvd, Fresh Meadows, NY 11365, "close to Flushing"). Keep Fresh Meadows unless the Google Business Profile says Flushing; the NAP must match the GBP | ☐ E/Jh confirm |
+| 8.3 | Form leads: client wants **both** (1) an email notification to admin@regoparkcounseling.com and (2) a call to the admissions phone the moment a form is submitted. Both are CallTrackingMetrics FormReactor settings (notification email + "call the business on submit"), not site code; the site already posts every lead to FormReactor | ☐ CTM owner (Oriana) — then test one live submission |
