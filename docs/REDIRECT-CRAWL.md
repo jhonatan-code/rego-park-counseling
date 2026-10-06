@@ -1,17 +1,17 @@
-# Redirect Map crawl — 2026-10-01
+# Redirect Map crawl — 2026-10-06
 
-Base: https://rego-park-counseling.vercel.app · 618 rows from RPC_Sitemap_Redirect_Map_v2.xlsx ("Redirect Map") · bypass token sent.
+Base: https://www.regoparkcounseling.com · 618 rows from RPC_Sitemap_Redirect_Map_v2.xlsx ("Redirect Map") · bypass token sent.
 
 ## Counts
 
 | | Map v2 | Build (vercel.json) | Crawl OK | Crawl failing |
 |---|---|---|---|---|
-| 301 | 270 | 253 redirect rules | 266 | 2 (+2 intended) |
+| 301 | 270 | 256 redirect rules | 266 | 2 (+2 intended) |
 | 410 | 133 | 131 rewrites to /api/gone/ | 133 | 0 |
 | KEEP | 187 | — | 185 | 0 (+2 intended) |
 | 404 | 28 | — | 28 | 0 |
 
-Build rules whose source is not a 301 row of the map (variants without slash, decisions of 2026-10-01, legacy links): 9.
+Build rules whose source is not a 301 row of the map (variants without slash, decisions of 2026-10-01, legacy links): 11.
 
 ## Intended differences from map v2 (4): approved decisions, not bugs
 
