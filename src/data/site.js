@@ -188,6 +188,9 @@ export const live = (links = []) => links.filter((l) => !l.pending);
 export const SOCIAL = [
   { label: 'Instagram', href: 'https://www.instagram.com/regoparkcounseling/', icon: 'instagram' },
   { label: 'Yelp', href: 'https://www.yelp.com/biz/rego-park-counseling-queens', icon: 'yelp' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/rego-park-counseling/', icon: 'linkedin' },
+  { label: 'Bluesky', href: 'https://bsky.app/profile/regoparkcounseling.bsky.social', icon: 'bluesky' },
+  { label: 'Pinterest', href: 'https://www.pinterest.com/RegoParkCounseling/', icon: 'pinterest' },
 ];
 
 export const LEGAL = [
