@@ -54,7 +54,11 @@ export const CLINICS = [
     postal: '11365',
     phone: '(718) 459-2558',
     phoneHref: 'tel:+17184592558',
-    hours: 'Call for hours.', // plan 1.1 FALLBACK; no schema hours until confirmed
+    // Emmanuel 2026-10-06 email: same hours as Rego Park, Sunday closed
+    hours: 'Monday–Friday 9:00 AM – 6:00 PM · Saturday and Sunday closed',
+    openingHours: [
+      { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
+    ],
     href: '/locations/fresh-meadows/',
     directions: 'https://www.google.com/maps/dir/?api=1&destination=71-82+Parsons+Blvd%2C+Fresh+Meadows%2C+NY+11365',
     geo: { lat: 40.7276, lng: -73.8107 }, // approximate (Parsons Blvd at 71st Ave); refine from the GBP pin

@@ -49,7 +49,7 @@ const schema = [
     medicalSpecialty: page.specialty,
     // availableService omitted until the services at each clinic are confirmed (PENDING 1.11)
     parentOrganization: { '@id': `${SITE.url}/#organization` },
-    // Only confirmed hours (site.js CLINICS.openingHours): Rego Park yes, Fresh Meadows "Call for hours"
+    // Only confirmed hours (site.js CLINICS.openingHours): Rego Park and Fresh Meadows confirmed; Yonkers pending
     ...(c.openingHours ? { openingHoursSpecification: c.openingHours.map((h: any) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes })) } : {}),
   },
   {

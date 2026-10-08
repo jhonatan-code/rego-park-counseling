@@ -112,6 +112,7 @@ export const CLINIC_PAGES = {
     faqH2: 'Fresh Meadows Clinic FAQs',
     faqs: [
       { q: 'Is this clinic close to Flushing?', a: 'Yes. It is in Fresh Meadows, close to Flushing. Use the map for directions.' },
+      { q: 'What are your hours?', a: 'Monday to Friday, 9:00 AM to 6:00 PM. We are closed on Saturday and Sunday. Call ahead to book a visit.' },
       { q: 'Can I start mental health counseling here right away?', a: 'Call to check availability.' },
       { q: 'Do you treat older adults?', a: 'Yes. We serve adults of every age. Ask us which services are available at this clinic.', link: { href: '/who-we-serve/older-adults/', label: 'Older Adults' } },
       { q: 'Do you accept Medicaid here?', a: 'Yes, we accept most Medicaid plans.' },
